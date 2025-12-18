@@ -111,10 +111,37 @@ class Program
 }
 ```
 
+```csharp simple programm
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Enter Your Age: ");
+        string? input = Console.ReadLine();
+
+        if (int.TryParse(input, out int age))
+        {
+            bool isAdult = age >= 18;
+            Console.WriteLine("Adult? " + isAdult);
+        }
+        else
+        {
+            Console.WriteLine("Invalid Age");
+        }
+    }
+}
+
+```
+
 ---
 
 ## 8. Conclusion
 
 C# and the .NET Framework together provide a robust, secure, and efficient environment for application development. Features such as MSIL, CLS, and CLR ensure platform independence, language interoperability, and managed execution, making .NET suitable for both academic study and enterprise-level software development.
 
+
+
+dll vs exe
+BCL
+Console.Write vs Console.WriteLine
 ---
