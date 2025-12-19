@@ -1,4 +1,4 @@
-````md
+```
 # C# Notes & Practice Programs
 
 ## Note:
@@ -12,7 +12,7 @@
 - `#region` is important for code organization  
   (e.g., `#region Variable Declaration` → `#endregion`).
 
----
+```
 
 ## Started Conditionals and Loops
 
