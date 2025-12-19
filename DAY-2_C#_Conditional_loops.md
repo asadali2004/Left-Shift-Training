@@ -1,18 +1,201 @@
-```
-# C# Notes & Practice Programs
 
-## Note:
-- **Main method** is the entry point in C#.
-- **Comments** are important in industry-level programming (always provide a summary for methods and programs).
-- **Namespace** of a project usually comes from the solution name declared.
-- In **C#/.NET**, the names of **Classes, Functions, and Properties** start with a capital letter.
-- **Instance variables and methods** can be removed from program memory by **Garbage Collection**, but **static variables** stay until program exit.
-- **Variable declaration should not be inside loops** (it allocates memory repeatedly).
-- `?` declaration method usage: **static vs object declaration**.
-- `#region` is important for code organization  
-  (e.g., `#region Variable Declaration` → `#endregion`).
+---
 
+# 📘 C# Notes – Conditionals & Loops (Beginner Friendly)
+
+> These notes are written for **learning + revision**, following **industry-style coding practices**.
+
+---
+
+## 🔹 Core C# Basics (Must Know)
+
+### 1️⃣ Entry Point
+
+* `Main()` method is the **entry point** of every C# program.
+* Program execution **always starts from `Main()`**.
+
+---
+
+### 2️⃣ Naming Conventions (Industry Standard)
+
+* **Class names** → `PascalCase`
+* **Method names** → `PascalCase`
+* **Properties** → `PascalCase`
+* **Local variables** → `camelCase`
+
+✅ Example:
+
+```csharp
+class Program
+{
+    public static void Main() { }
+}
 ```
+
+---
+
+### 3️⃣ Importance of Comments
+
+* Comments improve **readability**, **maintenance**, and **team collaboration**.
+* XML comments (`///`) are used in **professional .NET projects**.
+
+✅ Used for:
+
+* Program summary
+* Method purpose
+* Parameters
+* Return values
+
+---
+
+### 4️⃣ Namespace
+
+* Namespace usually comes from the **solution or project name**.
+* Helps avoid **class name conflicts**.
+
+---
+
+### 5️⃣ Memory & Garbage Collection
+
+* **Instance variables & methods**
+
+  * Cleared automatically by **Garbage Collector**
+* **Static variables**
+
+  * Stay in memory **until program exits**
+
+---
+
+### 6️⃣ Variable Declaration Rule
+
+❌ Avoid declaring variables inside loops
+✅ Declare them **once outside** the loop
+
+Reason:
+
+* Prevents repeated memory allocation
+* Improves performance
+
+---
+
+### 7️⃣ Nullable (`?`) Usage
+
+* `string?` allows null values
+* Helps avoid **runtime null reference exceptions**
+
+---
+
+### 8️⃣ `#region` Usage
+
+* Used to **organize large code files**
+* Makes code easier to navigate in Visual Studio
+
+Example:
+
+```csharp
+#region Variable Declaration
+#endregion
+```
+
+---
+
+## 🔹 Conditionals & Loops – Example Program
+
+### 🔸 Goal
+
+* Take user input
+* Check **Odd / Even**
+* Exit when user enters `q`
+
+---
+
+### 🔸 Key Concepts Used
+
+* `while` loop
+* `if-else`
+* `int.TryParse()`
+* Object method call
+* String comparison (case-insensitive)
+
+---
+
+### ✅ Sample Program (Well Structured)
+
+```csharp
+using System;
+
+/// <summary>
+/// Sample program to check Odd or Even numbers
+/// </summary>
+class Program
+{
+    /// <summary>
+    /// Checks whether a number is Even
+    /// </summary>
+    /// <param name="num">Input number</param>
+    /// <returns>true if even, false if odd</returns>
+    public bool IsEven(int num)
+    {
+        return num % 2 == 0;
+    }
+
+    /// <summary>
+    /// Entry point of the program
+    /// </summary>
+    public static void Main()
+    {
+        Program pro = new Program();
+
+        #region Variable Initialization
+        Console.Write("Enter number (q to quit): ");
+        string? choice = Console.ReadLine();
+        int number;
+        #endregion
+
+        #region Process
+        while (!string.Equals(choice?.Trim(), "q", StringComparison.OrdinalIgnoreCase))
+        {
+            if (int.TryParse(choice, out number))
+            {
+                Console.WriteLine(pro.IsEven(number) ? "Even" : "Odd");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+            }
+
+            Console.Write("Enter number (q to quit): ");
+            choice = Console.ReadLine();
+        }
+        #endregion
+
+        Console.WriteLine("Program exited successfully.");
+    }
+}
+```
+
+---
+
+## 📝 What You Learn From This Program
+
+* Proper **method documentation**
+* Safe input handling using `TryParse`
+* Clean loop exit condition
+* Object vs static method usage
+* Professional formatting & regions
+
+---
+
+## ✅ GitHub Tip (Very Important)
+
+For **notes-style repos**:
+
+* Put **explanations first**
+* Then code
+* Avoid dumping multiple programs back-to-back
+* Use headings, bullets, and short explanations
+
+---
 
 ## Started Conditionals and Loops
 
