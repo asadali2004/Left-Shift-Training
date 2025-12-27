@@ -57,24 +57,16 @@ Department → Section → Student
 ```csharp
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace ExamSchedulerSystem
+// 10 students, 2 semester, 5 examiners, 5 exams
+
+namespace Day6_Interface
 {
-    #region Enums
-    
-    /// <summary>
-    /// Enumeration representing academic semesters.
-    /// </summary>
     public enum Semester
     {
         Sem1, Sem2, Sem3, Sem4, Sem5, Sem6, Sem7, Sem8
     }
-    
-    #endregion
 
-    #region Core Entities
-    
     /// <summary>
     /// Represents a business or organizational department with a unique identifier and name.
     /// </summary>
@@ -85,67 +77,45 @@ namespace ExamSchedulerSystem
 
         public Department(int id, string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Department name cannot be empty.", nameof(name));
-            
             DepartmentId = id;
             DepartmentName = name;
         }
-
-        public override string ToString() => $"[Dept-{DepartmentId}] {DepartmentName}";
     }
 
     /// <summary>
     /// Represents an individual person with a unique identifier and name.
-    /// Can hold multiple roles within the system.
     /// </summary>
     public class Person
     {
         public int PersonId { get; }
         public string Name { get; }
-        
+
         private readonly List<Role> roles = new();
-        public IReadOnlyList<Role> Roles => roles.AsReadOnly();
 
         public Person(int id, string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Person name cannot be empty.", nameof(name));
-            
             PersonId = id;
             Name = name;
         }
 
         public void AddRole(Role role)
         {
-            if (role == null)
-                throw new ArgumentNullException(nameof(role));
-            
             roles.Add(role);
         }
-
-        public override string ToString() => $"[Person-{PersonId}] {Name}";
     }
-    
-    #endregion
 
-    #region Role Hierarchy
-    
-    /// <summary>
-    /// Abstract base class for all roles that a person can have.
-    /// </summary>
     public abstract class Role
     {
         protected Person Person { get; }
 
         protected Role(Person person)
         {
-            Person = person ?? throw new ArgumentNullException(nameof(person));
+            Person = person;
         }
     }
 
     /// <summary>
-    /// Represents the Head of Department role with authority to manage examinations.
+    /// Represents the head of a department, providing operations for managing departmental examinations and examiners.
     /// </summary>
     public class HOD : Role
     {
@@ -154,81 +124,48 @@ namespace ExamSchedulerSystem
         public HOD(Person person, Department department)
             : base(person)
         {
-            Department = department ?? throw new ArgumentNullException(nameof(department));
+            Department = department;
         }
 
         public void ScheduleExam(Examination exam, DateTime examDate)
         {
-            if (exam == null)
-                throw new ArgumentNullException(nameof(exam));
-            
-            Console.WriteLine($"[HOD {Person.Name}] Scheduling {exam.ExamName} on {examDate:dd-MMM-yyyy}");
             exam.Schedule(examDate);
         }
 
         public void AssignExaminer(Examination exam, Examiner examiner)
         {
-            if (exam == null)
-                throw new ArgumentNullException(nameof(exam));
-            if (examiner == null)
-                throw new ArgumentNullException(nameof(examiner));
-            
-            Console.WriteLine($"[HOD {Person.Name}] Assigning {examiner.Person.Name} to {exam.ExamName}");
             exam.AssignExaminer(examiner);
         }
 
         public void AssignExamToSection(Examination exam, Section section)
         {
-            if (exam == null)
-                throw new ArgumentNullException(nameof(exam));
-            if (section == null)
-                throw new ArgumentNullException(nameof(section));
-            
-            Console.WriteLine($"[HOD {Person.Name}] Assigning {exam.ExamName} to {section.SectionName}");
             exam.AssignToSection(section);
         }
-
-        public override string ToString() => $"HOD of {Department.DepartmentName}";
     }
 
     /// <summary>
-    /// Represents an examiner role responsible for overseeing examinations.
+    /// Represents a role responsible for overseeing and managing examinations assigned to a specific person.
     /// </summary>
     public class Examiner : Role
     {
         private readonly List<Examination> assignedExams = new();
-        public IReadOnlyList<Examination> AssignedExams => assignedExams.AsReadOnly();
 
-        public Examiner(Person person) : base(person) { }
+        public Examiner(Person person)
+            : base(person) { }
 
         internal void AssignExam(Examination exam)
         {
-            if (exam == null)
-                throw new ArgumentNullException(nameof(exam));
-            
             assignedExams.Add(exam);
         }
-
-        public void DisplayAssignedExams()
-        {
-            Console.WriteLine($"\n[Examiner: {Person.Name}]");
-            Console.WriteLine($"Total Exams Assigned: {assignedExams.Count}");
-            foreach (var exam in assignedExams)
-            {
-                Console.WriteLine($"  • {exam.ExamName} ({exam.Semester}) - {exam.ExamDate:dd-MMM-yyyy}");
-            }
-        }
-
-        public override string ToString() => $"Examiner {Person.Name}";
     }
-    
-    #endregion
 
-    #region Academic Entities
-    
     /// <summary>
-    /// Represents an academic examination with scheduling and assignment capabilities.
+    /// Represents an academic examination, including its identifying information, scheduled date, assigned examiner,
+    /// and associated section.
     /// </summary>
+    /// <remarks>Use the Examination class to manage the details and scheduling of an exam within a specific
+    /// semester. The class provides methods to assign an examiner and associate the exam with a section. Once
+    /// scheduled, the exam date and assignments can be updated as needed.</remarks>
     public class Examination
     {
         public int ExamId { get; }
@@ -237,16 +174,9 @@ namespace ExamSchedulerSystem
         public DateTime ExamDate { get; private set; }
         public Examiner AssignedExaminer { get; private set; }
         public Section AssignedSection { get; private set; }
-        
-        public bool IsScheduled => ExamDate != default;
-        public bool HasExaminer => AssignedExaminer != null;
-        public bool HasSection => AssignedSection != null;
 
         public Examination(int id, string name, Semester semester)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Exam name cannot be empty.", nameof(name));
-            
             ExamId = id;
             ExamName = name;
             Semester = semester;
@@ -254,36 +184,24 @@ namespace ExamSchedulerSystem
 
         public void Schedule(DateTime date)
         {
-            if (date < DateTime.Now)
-                throw new ArgumentException("Cannot schedule exam in the past.");
-            
             ExamDate = date;
         }
 
         public void AssignExaminer(Examiner examiner)
         {
-            if (examiner == null)
-                throw new ArgumentNullException(nameof(examiner));
-            
             AssignedExaminer = examiner;
             examiner.AssignExam(this);
         }
 
         public void AssignToSection(Section section)
         {
-            if (section == null)
-                throw new ArgumentNullException(nameof(section));
-            
             AssignedSection = section;
             section.AssignExam(this);
         }
-
-        public override string ToString() => 
-            $"[Exam-{ExamId}] {ExamName} | {Semester} | {(IsScheduled ? ExamDate.ToString("dd-MMM-yyyy") : "Not Scheduled")}";
     }
 
     /// <summary>
-    /// Represents a student enrolled in the system.
+    /// Represents a student with a unique identifier and name.
     /// </summary>
     public class Student
     {
@@ -292,19 +210,16 @@ namespace ExamSchedulerSystem
 
         public Student(int id, string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Student name cannot be empty.", nameof(name));
-            
             StudentId = id;
             StudentName = name;
         }
-
-        public override string ToString() => $"[Student-{StudentId}] {StudentName}";
     }
 
-    /// <summary>
-    /// Represents an academic section grouping students and exams.
-    /// </summary>
+   /// <summary>
+   /// Represents an academic section within a department for a specific semester.
+   /// </summary>
+   /// <remarks>A section groups students and examinations under a particular department and semester. Use this
+   /// class to manage section-level information and associate students and exams with the section.</remarks>
     public class Section
     {
         public int SectionId { get; }
@@ -314,66 +229,27 @@ namespace ExamSchedulerSystem
 
         private readonly List<Student> students = new();
         private readonly List<Examination> exams = new();
-        
-        public IReadOnlyList<Student> Students => students.AsReadOnly();
-        public IReadOnlyList<Examination> Exams => exams.AsReadOnly();
 
         public Section(int id, string name, Semester semester, Department department)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Section name cannot be empty.", nameof(name));
-            
             SectionId = id;
             SectionName = name;
             Semester = semester;
-            Department = department ?? throw new ArgumentNullException(nameof(department));
+            Department = department;
         }
 
         public void AddStudent(Student student)
         {
-            if (student == null)
-                throw new ArgumentNullException(nameof(student));
-            
             students.Add(student);
         }
 
         internal void AssignExam(Examination exam)
         {
-            if (exam == null)
-                throw new ArgumentNullException(nameof(exam));
-            
             exams.Add(exam);
         }
-
-        public void DisplaySectionInfo()
-        {
-            Console.WriteLine($"\n╔══════════════════════════════════════════════════════════════╗");
-            Console.WriteLine($"║ Section: {SectionName,-50} ║");
-            Console.WriteLine($"╠══════════════════════════════════════════════════════════════╣");
-            Console.WriteLine($"║ Department: {Department.DepartmentName,-47} ║");
-            Console.WriteLine($"║ Semester: {Semester,-49} ║");
-            Console.WriteLine($"║ Total Students: {students.Count,-45} ║");
-            Console.WriteLine($"║ Total Exams: {exams.Count,-48} ║");
-            Console.WriteLine($"╚══════════════════════════════════════════════════════════════╝");
-            
-            Console.WriteLine("\nStudents:");
-            foreach (var student in students)
-            {
-                Console.WriteLine($"  • {student.StudentName}");
-            }
-            
-            Console.WriteLine("\nScheduled Exams:");
-            foreach (var exam in exams)
-            {
-                Console.WriteLine($"  • {exam.ExamName,-20} | {exam.ExamDate:dd-MMM-yyyy} | Examiner: {exam.AssignedExaminer?.Person.Name ?? "TBA"}");
-            }
-        }
-
-        public override string ToString() => $"[Section] {SectionName} - {Semester}";
     }
-    
-    #endregion
 }
+
 ```
 
 ---
@@ -384,65 +260,43 @@ namespace ExamSchedulerSystem
 
 ```csharp
 using System;
-using ExamSchedulerSystem;
+using System.Collections.Generic;
+using Day6_Interface;
 
 class Program
 {
     static void Main()
     {
-        Console.WriteLine("╔═══════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║       UNIVERSITY EXAM SCHEDULING SYSTEM v2.0             ║");
-        Console.WriteLine("╚═══════════════════════════════════════════════════════════╝\n");
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 1: CREATE DEPARTMENT
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 1: Department Setup ───");
-        Department cse = new Department(1, "Computer Science & Engineering");
-        Console.WriteLine($"✓ Created: {cse}\n");
+        Department cse = new Department(1, "Computer Science");
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 2: CREATE SECTIONS
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 2: Section Creation ───");
+
         Section sem1Section = new Section(1, "CSE-Sem1-A", Semester.Sem1, cse);
         Section sem2Section = new Section(2, "CSE-Sem2-A", Semester.Sem2, cse);
-        Console.WriteLine($"✓ Created: {sem1Section}");
-        Console.WriteLine($"✓ Created: {sem2Section}\n");
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 3: ENROLL STUDENTS
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 3: Student Enrollment ───");
-        Console.WriteLine("Enrolling Semester 1 Students...");
+
         for (int i = 1; i <= 5; i++)
         {
-            var student = new Student(i, $"Rajesh Kumar {i}");
-            sem1Section.AddStudent(student);
-            Console.WriteLine($"  ✓ {student.StudentName}");
+            sem1Section.AddStudent(new Student(i, $"Student-S1-{i}"));
         }
 
-        Console.WriteLine("\nEnrolling Semester 2 Students...");
         for (int i = 6; i <= 10; i++)
         {
-            var student = new Student(i, $"Priya Sharma {i - 5}");
-            sem2Section.AddStudent(student);
-            Console.WriteLine($"  ✓ {student.StudentName}");
+            sem2Section.AddStudent(new Student(i, $"Student-S2-{i - 5}"));
         }
-        Console.WriteLine();
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 4: CREATE PERSONNEL (HOD & EXAMINERS)
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 4: Personnel Setup ───");
-        Person hodPerson = new Person(1, "Dr. Ramesh Rao");
-        Person p1 = new Person(2, "Prof. Anita Desai");
-        Person p2 = new Person(3, "Dr. Vikram Singh");
-        Person p3 = new Person(4, "Prof. Meena Patel");
-        Person p4 = new Person(5, "Dr. Suresh Kumar");
-        Person p5 = new Person(6, "Prof. Kavita Reddy");
+
+        Person hodPerson = new Person(1, "Dr. Rao");
+
+        Person p1 = new Person(2, "Examiner-1");
+        Person p2 = new Person(3, "Examiner-2");
+        Person p3 = new Person(4, "Examiner-3");
+        Person p4 = new Person(5, "Examiner-4");
+        Person p5 = new Person(6, "Examiner-5");
+
 
         HOD hod = new HOD(hodPerson, cse);
+
         Examiner e1 = new Examiner(p1);
         Examiner e2 = new Examiner(p2);
         Examiner e3 = new Examiner(p3);
@@ -456,89 +310,51 @@ class Program
         p4.AddRole(e4);
         p5.AddRole(e5);
 
-        Console.WriteLine($"✓ HOD: {hodPerson.Name}");
-        Console.WriteLine($"✓ Examiner: {p1.Name}");
-        Console.WriteLine($"✓ Examiner: {p2.Name}");
-        Console.WriteLine($"✓ Examiner: {p3.Name}");
-        Console.WriteLine($"✓ Examiner: {p4.Name}");
-        Console.WriteLine($"✓ Examiner: {p5.Name}\n");
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 5: CREATE EXAMINATIONS
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 5: Examination Creation ───");
-        Examination exam1 = new Examination(101, "Mathematics-I", Semester.Sem1);
-        Examination exam2 = new Examination(102, "Programming in C#", Semester.Sem1);
-        Examination exam3 = new Examination(103, "Data Structures & Algorithms", Semester.Sem2);
-        Examination exam4 = new Examination(104, "Database Management Systems", Semester.Sem2);
+        Examination exam1 = new Examination(101, "Maths", Semester.Sem1);
+        Examination exam2 = new Examination(102, "Programming", Semester.Sem1);
+        Examination exam3 = new Examination(103, "DSA", Semester.Sem2);
+        Examination exam4 = new Examination(104, "DBMS", Semester.Sem2);
         Examination exam5 = new Examination(105, "Operating Systems", Semester.Sem2);
-        
-        Console.WriteLine($"✓ {exam1}");
-        Console.WriteLine($"✓ {exam2}");
-        Console.WriteLine($"✓ {exam3}");
-        Console.WriteLine($"✓ {exam4}");
-        Console.WriteLine($"✓ {exam5}\n");
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 6: SCHEDULE EXAMS (HOD Action)
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 6: Exam Scheduling ───");
+
         hod.ScheduleExam(exam1, new DateTime(2025, 3, 10));
         hod.ScheduleExam(exam2, new DateTime(2025, 3, 12));
         hod.ScheduleExam(exam3, new DateTime(2025, 4, 5));
         hod.ScheduleExam(exam4, new DateTime(2025, 4, 8));
         hod.ScheduleExam(exam5, new DateTime(2025, 4, 12));
-        Console.WriteLine();
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 7: ASSIGN EXAMINERS (HOD Action)
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 7: Examiner Assignment ───");
+
         hod.AssignExaminer(exam1, e1);
         hod.AssignExaminer(exam2, e2);
         hod.AssignExaminer(exam3, e3);
         hod.AssignExaminer(exam4, e4);
         hod.AssignExaminer(exam5, e5);
-        Console.WriteLine();
 
-        // ═══════════════════════════════════════════════════════════
-        // STEP 8: ASSIGN EXAMS TO SECTIONS (HOD Action)
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("─── Step 8: Section-Exam Assignment ───");
+        // =========================
+        // ASSIGN EXAMS TO SECTIONS
+        // =========================
         hod.AssignExamToSection(exam1, sem1Section);
         hod.AssignExamToSection(exam2, sem1Section);
+
         hod.AssignExamToSection(exam3, sem2Section);
         hod.AssignExamToSection(exam4, sem2Section);
         hod.AssignExamToSection(exam5, sem2Section);
-        Console.WriteLine();
 
-        // ═══════════════════════════════════════════════════════════
-        // SYSTEM SUMMARY & REPORTS
-        // ═══════════════════════════════════════════════════════════
-        Console.WriteLine("\n\n╔═══════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                    SYSTEM SUMMARY                         ║");
-        Console.WriteLine("╚═══════════════════════════════════════════════════════════╝");
+        // =========================
+        // SYSTEM SUMMARY
+        // =========================
+        Console.WriteLine("Exam Scheduling System Initialized Successfully");
+        Console.WriteLine("------------------------------------------------");
 
-        // Display Section Information
-        sem1Section.DisplaySectionInfo();
-        sem2Section.DisplaySectionInfo();
+        Console.WriteLine("Semester 1 Exams Assigned");
+        Console.WriteLine("Maths, Programming");
 
-        // Display Examiner Workload
-        Console.WriteLine("\n\n╔═══════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                  EXAMINER WORKLOAD                        ║");
-        Console.WriteLine("╚═══════════════════════════════════════════════════════════╝");
-        
-        e1.DisplayAssignedExams();
-        e2.DisplayAssignedExams();
-        e3.DisplayAssignedExams();
-        e4.DisplayAssignedExams();
-        e5.DisplayAssignedExams();
-
-        Console.WriteLine("\n\n╔═══════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║     ✓ Exam Scheduling System Initialized Successfully    ║");
-        Console.WriteLine("╚═══════════════════════════════════════════════════════════╝");
+        Console.WriteLine("\nSemester 2 Exams Assigned");
+        Console.WriteLine("DSA, DBMS, Operating Systems");
     }
 }
+
 ```
 
 ---
