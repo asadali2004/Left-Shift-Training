@@ -1,4 +1,4 @@
-# 📌 C# Indexers – In-Depth Notes (Beginner → Architect Level)
+#  C# Indexer
 
 ## 1️⃣ What is an Indexer?
 
@@ -279,7 +279,7 @@ public int this[int index]
 
 ---
 
-## 1️⃣9️⃣ Partial Classes — In-Depth
+# Partial Classes — In-Depth
 
 ### What is a Partial Class?
 A **partial class** lets you split the definition of a single class across **multiple files**. At compile time, all parts are combined into one class. This is useful for separating **generated code** from **hand-written code**, improving maintainability for large types.
@@ -355,7 +355,7 @@ namespace MyApp.Models
 
 ---
 
-## 2️⃣0️⃣ Static Classes — In-Depth
+# Static Classes — In-Depth
 
 ### What is a Static Class?
 A **static class** cannot be instantiated and can contain only **static members**. It’s ideal for **utility functions**, **constants**, and **extension methods**.
