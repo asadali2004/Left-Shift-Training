@@ -550,3 +550,144 @@ Date of Birth: 1998-08-20
 
 ---
 
+## Example 5: Static Classes and Members
+
+### Overview
+This example demonstrates **static classes** in C#. A static class cannot be instantiated and can only contain static members. Static classes are ideal for utility methods and shared functionality that doesn't require object state.
+
+### Key Learning Points
+- Understanding static classes and their restrictions
+- Static constructors and when they execute
+- Accessing static members without creating instances
+- Static constructor execution (runs only once per AppDomain)
+
+---
+
+### Code Implementation
+
+#### StaticLearning.cs
+```csharp
+using System;
+
+namespace Learning_Indexer
+{
+    /// <summary>
+    /// Provides static members for managing and retrieving a roll number value.
+    /// This class demonstrates static class functionality with utility methods.
+    /// </summary>
+    /// <remarks>
+    /// This class cannot be instantiated. All members are static and shared 
+    /// across the application domain.
+    /// </remarks>
+    public static class StaticLearning
+    {
+        public static int RollNo; // Static variable - shared across all access points
+
+        /// <summary>
+        /// Static constructor - called automatically once before first use.
+        /// </summary>
+        static StaticLearning()
+        {
+            RollNo = 2;
+            Console.WriteLine("Static constructor called - initializing RollNo");
+        }
+
+        /// <summary>
+        /// Static method to retrieve the current RollNo value.
+        /// </summary>
+        /// <returns>The current RollNo value</returns>
+        public static int GetRollNo()
+        {
+            return RollNo;
+        }
+
+        /// <summary>
+        /// Static method to count the number of characters in a string.
+        /// </summary>
+        /// <param name="sentence">The string to count characters from</param>
+        /// <returns>The number of characters in the string</returns>
+        public static int WordCount(this string sentence)
+        {
+            return sentence.Length;
+        }
+    }
+}
+```
+
+#### Program.cs
+```csharp
+using System;
+
+namespace Learning_Indexer
+{
+    /// <summary>
+    /// Provides the entry point for the application.
+    /// Purpose: To demonstrate static classes and members in C#.
+    /// Learning Outcome: Understand how static classes work and when to use them.
+    /// </summary>
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("=== Static Class Demo ===");
+            Console.WriteLine();
+
+            // First call to static class - triggers static constructor
+            int rollNo1 = StaticLearning.GetRollNo();
+            Console.WriteLine("First call - Roll No: " + rollNo1);
+
+            // Second call to static class - constructor NOT called again
+            int rollNo2 = StaticLearning.GetRollNo();
+            Console.WriteLine("Second call - Roll No: " + rollNo2);
+
+            Console.WriteLine();
+
+            // Using static utility method
+            string name = "Hello World";
+            int count = StaticLearning.WordCount(name);
+            Console.WriteLine("String: " + name);
+            Console.WriteLine("Number of characters in the string: " + count);
+        }
+    }
+}
+```
+
+### Expected Output
+```
+=== Static Class Demo ===
+
+Static constructor called - initializing RollNo
+First call - Roll No: 2
+Second call - Roll No: 2
+
+String: Hello World
+Number of characters in the string: 11
+```
+
+### How It Works
+1. **Static Class**: The `StaticLearning` class is marked as `static`, meaning it cannot be instantiated
+2. **Static Constructor**: Runs automatically once before the first access to any static member
+3. **Static Members**: All fields and methods must be static
+4. **No Instance Required**: Methods are called directly on the class: `StaticLearning.GetRollNo()`
+5. **Shared State**: The `RollNo` variable is shared across all access points in the application
+6. **Single Initialization**: The static constructor runs only once, not on every method call
+
+### Key Characteristics of Static Classes
+- **Cannot be instantiated**: No `new` keyword allowed
+- **Cannot inherit or be inherited**: Implicitly sealed
+- **Only static members**: All fields, properties, and methods must be static
+- **Thread-safe initialization**: Static constructor guarantees single execution
+- **Application-wide lifetime**: Static members exist for the entire application duration
+
+### When to Use Static Classes
+- **Utility Methods**: Math helpers, string formatters, validation functions
+- **Extension Methods**: Extension methods must be in a static class
+- **Constants and Configuration**: Shared values across the application
+- **Stateless Operations**: Methods that don't require object state
+
+### When NOT to Use Static Classes
+- **When state management is needed**: Use instance classes instead
+- **For dependency injection**: Static classes don't work well with DI containers
+- **When testability is important**: Static dependencies are harder to mock
+- **For polymorphism**: Static classes cannot implement interfaces or inherit
+
