@@ -481,6 +481,155 @@ foreach (var email in emails)
 
 ---
 
+## Advanced Example: IDisposable Pattern
+
+### Example 5: Proper Resource Management with IDisposable
+
+**Purpose:** Demonstrate proper implementation of IDisposable for resource cleanup
+
+```csharp
+using System;
+using System.Collections;
+
+namespace RegEx
+{
+    /// <summary>
+    /// Demonstrates the proper implementation of IDisposable pattern for resource management.
+    /// </summary>
+    /// <remarks>
+    /// This class shows how to properly manage resources and implement the dispose pattern.
+    /// The IDisposable interface ensures proper cleanup of managed and unmanaged resources.
+    /// </remarks>
+    public class BigMan : IDisposable
+    {
+        private bool _disposed = false; // Track disposal state
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BigMan"/> class.
+        /// </summary>
+        public BigMan()
+        {
+            // Initialize the Names collection
+            Names = new ArrayList();
+        }
+
+        /// <summary>
+        /// Gets or sets the list of names.
+        /// </summary>
+        public ArrayList Names { get; set; }
+
+        /// <summary>
+        /// Releases all resources used by the <see cref="BigMan"/> instance.
+        /// </summary>
+        /// <param name="disposing">
+        /// True if called from Dispose(); false if called from finalizer.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed resources
+                    if (Names != null)
+                    {
+                        Names.Clear();
+                        Names = null;
+                    }
+                }
+
+                // Dispose unmanaged resources here (if any)
+                
+                _disposed = true;
+            }
+        }
+
+        /// <summary>
+        /// Releases all resources used by the <see cref="BigMan"/> instance.
+        /// </summary>
+        public void Dispose()
+        {
+            // Call Dispose with true (called from user code)
+            Dispose(true);
+            
+            // Suppress finalization since we've already cleaned up
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Finalizer (destructor) for cleanup in case Dispose wasn't called.
+        /// </summary>
+        ~BigMan()
+        {
+            // Call Dispose with false (called from finalizer)
+            Dispose(false);
+        }
+    }
+}
+```
+
+**Usage Example:**
+
+```csharp
+// ✅ RECOMMENDED: Using 'using' statement for automatic disposal
+using (var bigMan = new BigMan())
+{
+    bigMan.Names.Add("Alice");
+    bigMan.Names.Add("Bob");
+    bigMan.Names.Add("Charlie");
+    
+    Console.WriteLine($"Total names: {bigMan.Names.Count}");
+} // Dispose is automatically called here
+
+// ✅ ALTERNATIVE: Manual disposal
+var bigMan2 = new BigMan();
+try
+{
+    bigMan2.Names.Add("David");
+    Console.WriteLine($"Total names: {bigMan2.Names.Count}");
+}
+finally
+{
+    bigMan2.Dispose(); // Explicit disposal
+}
+```
+
+**Key Concepts:**
+
+| Component | Purpose |
+|-----------|---------|
+| **`_disposed` flag** | Prevents multiple disposal calls |
+| **`Dispose(bool)`** | Protected method for actual cleanup |
+| **`Dispose()`** | Public method called by users |
+| **Finalizer `~BigMan()`** | Backup cleanup if Dispose() not called |
+| **`GC.SuppressFinalize()`** | Prevents finalizer from running twice |
+
+**IDisposable Pattern Flow:**
+
+```
+User calls Dispose()
+    ↓
+Dispose(disposing: true)
+    ↓
+Clean up managed resources
+    ↓
+Set _disposed = true
+    ↓
+GC.SuppressFinalize(this)
+    ↓
+Finalizer won't run
+```
+
+**Best Practices Demonstrated:**
+- ✅ Implements full dispose pattern
+- ✅ Prevents multiple disposal with `_disposed` flag
+- ✅ Separates managed and unmanaged resource cleanup
+- ✅ Uses finalizer as safety net
+- ✅ Suppresses finalization when disposed properly
+- ✅ Virtual `Dispose(bool)` allows inheritance
+
+---
+
 ## Additional Practice Exercises
 
 ### Exercise 1: Email Validation
@@ -504,6 +653,3 @@ Create a pattern that requires:
 
 ---
 
-**Practice File Created by:** Senior Architecture Team  
-**Last Updated:** December 30, 2025  
-**Related Topics:** Regular Expressions, Pattern Matching, Memory Management, Garbage Collection
