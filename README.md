@@ -50,3 +50,9 @@ The training follows a **structured, industry-aligned curriculum**, combining co
 
 ---
 
+### 📂 Folder Naming Convention
+
+- Day folders use a zero-padded format for proper ordering on GitHub: `DAY01_...`, `DAY02_...`, ..., `DAY12_...`.
+- When creating new day folders, follow: `DAYNN_<Topic>` where `NN` is two digits (e.g., `DAY13_Async_Programming`).
+- Non-day folders (e.g., `Practice_Questions`, `Scenario_Based_Solutions`) remain unchanged.
+
