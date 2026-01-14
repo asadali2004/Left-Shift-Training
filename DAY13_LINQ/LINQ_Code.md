@@ -127,8 +127,10 @@ var findName = names.Where(n => n == "Bob");
 var findName2 = names.Select(n => n.ToUpper());
 var findName3 = names.OrderByDescending(n => n);
 ```
+**Practice Code (fixed for clarity):**
+
+```csharp
 using System;
-using System.Data.Common;
 using System.Linq;
 
 namespace Learning_LINQ
@@ -144,25 +146,31 @@ namespace Learning_LINQ
 
         public static void LinqExample()
         {
-            string[] names = { "Asad", "BoB", "Varav", "Abhi"};
+            string[] names = { "Asad", "BoB", "Varav", "Abhi" };
 
+            // Case-insensitive check for "Bob"
             foreach (var item in names)
             {
-                if (item == "Bob")
+                if (string.Equals(item, "Bob", StringComparison.OrdinalIgnoreCase))
                 {
-                    System.Console.WriteLine("Bob is present");
+                    Console.WriteLine("Bob is present");
                 }
             }
-            var findName = from name in names where name == "Bob" select name;
-            var findName2 = from Capname in names select Capname.ToUpper();
-            var findName3 = from Ordername in names orderby Ordername descending select Ordername;
+
+            // LINQ query using case-insensitive comparison
+            var findName = from name in names
+                           where string.Equals(name, "Bob", StringComparison.OrdinalIgnoreCase)
+                           select name;
+
+            var findName2 = from capName in names select capName.ToUpper();
+            var findName3 = from orderName in names orderby orderName descending select orderName;
 
             foreach (var n in findName)
             {
-                System.Console.WriteLine(IsPlindrom(n));
+                Console.WriteLine(IsPlindrom(n));
             }
-
         }
+
         public static string IsPlindrom(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -185,33 +193,30 @@ namespace Learning_LINQ
         public static void LinqExample2()
         {
             var procCollection = from p in System.Diagnostics.Process.GetProcesses()
-                                 select new MyProcess() { Name = p.ProcessName, Id = p.Id };
+                                 select new MyProcess { Name = p.ProcessName, Id = p.Id };
 
             foreach (var proc in procCollection)
             {
-                System.Console.WriteLine($"Process Name = {proc.Name} Id = {proc.Id}");
+                Console.WriteLine($"Process Name = {proc.Name} Id = {proc.Id}");
             }
         }
-        
-        // Anonymous Data Type where we dont have to create a class and we can use it directly so its called anonymous data type
-        public static void LinqExample3(){
+
+        public static void LinqExample3()
+        {
             var procCollection = from p in System.Diagnostics.Process.GetProcesses()
                                  select new { Name = p.ProcessName, Id = p.Id };
 
-            foreach(var proc in procCollection)
+            foreach (var proc in procCollection)
             {
-                System.Console.WriteLine($"Process Name = {proc.Name} Id = {proc.Id}");
+                Console.WriteLine($"Process Name = {proc.Name} Id = {proc.Id}");
             }
         }
 
         private class MyProcess
         {
-            public MyProcess()
-            {
-            }
-
             public string Name { get; set; }
             public int Id { get; set; }
         }
     }
 }
+```
