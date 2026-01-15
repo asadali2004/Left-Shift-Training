@@ -126,6 +126,9 @@ namespace Practice
     public class PersonImplementation
     {
         // Method to concatenate names and addresses of all persons in the list
+        /// <summary>
+        /// Concatenates names and addresses of all persons in the list.
+        /// </summary>
         public string GetName(IList<Person> person)
         {
             string result = "";
@@ -137,6 +140,9 @@ namespace Practice
         }
 
         // Method to calculate the average age of all persons in the list
+        /// <summary>
+        /// Calculates the average age of all persons in the list.
+        /// </summary>
         public double Average(IList<Person> person)
         {
             double totalAge = 0;
@@ -148,6 +154,9 @@ namespace Practice
         }
 
         // Method to find the maximum age among all persons in the list
+        /// <summary>
+        /// Finds the maximum age among all persons in the list.
+        /// </summary>
         public int MaxAge(IList<Person> person)
         {
             int maxAge = 0;

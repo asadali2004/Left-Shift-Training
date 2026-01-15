@@ -63,12 +63,18 @@ namespace Practice
     public class Source
     {
         // Method to add three integers
+        /// <summary>
+        /// Adds three integer values and returns the sum.
+        /// </summary>
         public int Add(int a, int b, int c)
         {
             return a + b + c;
         }
 
         // Method to add three doubles
+        /// <summary>
+        /// Adds three double values and returns the sum.
+        /// </summary>
         public double Add(double a, double b, double c)
         {
             return a + b + c;
