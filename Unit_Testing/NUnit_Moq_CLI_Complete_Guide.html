@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NUnit + Moq Complete Guide (CLI Based)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;background:#f8fafc;color:#1f2937;line-height:1.8;margin:0;padding:20px}
+.container{max-width:1200px;margin:auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
+h1,h2,h3{color:#0f766e}
+pre{background:#0f172a;color:#e5e7eb;padding:14px;border-radius:8px;overflow-x:auto}
+.note{background:#ecfeff;border-left:6px solid #06b6d4;padding:14px;margin:16px 0}
+.warn{background:#fff7ed;border-left:6px solid #f97316;padding:14px;margin:16px 0}
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{border:1px solid #e5e7eb;padding:10px;text-align:left}
+th{background:#f0fdfa}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>NUnit + Moq Complete Guide (CLI Based)</h1>
+
+<div class="note">
+This guide shows how to set up <b>NUnit with CLI + NuGet commands</b>, use <b>Moq</b>, build a <b>real-world project</b>, and prepare for <b>interviews</b>.
+</div>
+
+<h2>1. Create Solution using CLI</h2>
+<pre>dotnet new sln -n EmployeeApp
+cd EmployeeApp</pre>
+
+<h2>2. Create Business Logic Project</h2>
+<pre>dotnet new classlib -n EmployeeApp.Core
+dotnet sln add EmployeeApp.Core</pre>
+
+<h3>Employee.cs</h3>
+<pre>
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Salary { get; set; }
+}
+</pre>
+
+<h3>IEmployeeRepository.cs</h3>
+<pre>
+using System.Collections.Generic;
+
+public interface IEmployeeRepository
+{
+    List<Employee> GetAll();
+}
+</pre>
+
+<h3>EmployeeService.cs</h3>
+<pre>
+using System.Collections.Generic;
+
+public class EmployeeService
+{
+    private readonly IEmployeeRepository repository;
+
+    public EmployeeService(IEmployeeRepository repository)
+    {
+        this.repository = repository;
+    }
+
+    public int GetEmployeeCount()
+    {
+        return repository.GetAll().Count;
+    }
+}
+</pre>
+
+<h2>3. Create NUnit Test Project (CLI)</h2>
+<pre>
+dotnet new nunit -n EmployeeApp.Tests
+dotnet sln add EmployeeApp.Tests
+dotnet add EmployeeApp.Tests reference EmployeeApp.Core
+</pre>
+
+<h2>4. Install NUnit + Moq using NuGet CLI</h2>
+<pre>
+dotnet add EmployeeApp.Tests package NUnit
+dotnet add EmployeeApp.Tests package NUnit3TestAdapter
+dotnet add EmployeeApp.Tests package Microsoft.NET.Test.Sdk
+dotnet add EmployeeApp.Tests package Moq
+</pre>
+
+<h2>5. NUnit + Moq Test Class</h2>
+
+<h3>EmployeeServiceTests.cs</h3>
+<pre>
+using NUnit.Framework;
+using Moq;
+using System.Collections.Generic;
+
+[TestFixture]
+public class EmployeeServiceTests
+{
+    [Test]
+    public void GetEmployeeCount_ReturnsCorrectCount()
+    {
+        var mockRepo = new Mock<IEmployeeRepository>();
+        mockRepo.Setup(r => r.GetAll()).Returns(new List<Employee>
+        {
+            new Employee{Id=1,Name="Ravi"},
+            new Employee{Id=2,Name="Anu"}
+        });
+
+        var service = new EmployeeService(mockRepo.Object);
+
+        int count = service.GetEmployeeCount();
+
+        Assert.AreEqual(2, count);
+    }
+}
+</pre>
+
+<div class="note">
+<b>Moq</b> creates fake objects so we can test business logic without real databases.
+</div>
+
+<h2>6. Run Tests using CLI</h2>
+<pre>dotnet test</pre>
+
+<h2>7. Real-World NUnit Project Flow</h2>
+<pre>
+Controller / UI
+      ↓
+Service Layer
+      ↓
+Repository (Mocked using Moq)
+      ↓
+NUnit Assertions
+</pre>
+
+<h2>8. Common NUnit Interview Questions & Answers</h2>
+
+<table>
+<tr><th>Question</th><th>Answer</th></tr>
+<tr>
+<td>What is NUnit?</td>
+<td>Open-source unit testing framework for .NET</td>
+</tr>
+<tr>
+<td>[Test] vs [TestCase]?</td>
+<td>[Test] = single test, [TestCase] = parameterized test</td>
+</tr>
+<tr>
+<td>What is Moq?</td>
+<td>Mocking framework to simulate dependencies</td>
+</tr>
+<tr>
+<td>Purpose of NUnit3TestAdapter?</td>
+<td>To run tests in IDE / CLI</td>
+</tr>
+<tr>
+<td>What is Arrange-Act-Assert?</td>
+<td>Test pattern for clean test cases</td>
+</tr>
+</table>
+
+<h2>9. Best Practices</h2>
+<ul>
+<li>One assertion per test</li>
+<li>Mock external dependencies</li>
+<li>Keep tests independent</li>
+<li>Use meaningful test names</li>
+</ul>
+
+<div class="warn">
+Avoid testing private methods directly.
+</div>
+
+<h2>10. Summary</h2>
+<ul>
+<li>NUnit is essential for C# developers</li>
+<li>Moq helps isolate dependencies</li>
+<li>CLI-based setup is CI/CD friendly</li>
+<li>Commonly asked in interviews</li>
+</ul>
+
+<div class="note">
+<b>Memory rule:</b> NUnit tests logic, Moq fakes dependencies.
+</div>
+
+</div>
+</body>
+</html>

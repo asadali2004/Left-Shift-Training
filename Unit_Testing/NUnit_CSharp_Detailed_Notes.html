@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NUnit in C#.NET – Detailed Beginner Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f8fafc;
+  color:#1f2937;
+  line-height:1.8;
+  margin:0;
+  padding:20px;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  background:#ffffff;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+h1,h2,h3{
+  color:#0f766e;
+}
+code,pre{
+  background:#0f172a;
+  color:#e5e7eb;
+  padding:14px;
+  border-radius:8px;
+  display:block;
+  overflow-x:auto;
+}
+.note{
+  background:#ecfeff;
+  border-left:6px solid #06b6d4;
+  padding:15px;
+  margin:18px 0;
+}
+.warn{
+  background:#fff7ed;
+  border-left:6px solid #f97316;
+  padding:15px;
+  margin:18px 0;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:18px 0;
+}
+th,td{
+  border:1px solid #e5e7eb;
+  padding:12px;
+  text-align:left;
+}
+th{
+  background:#f0fdfa;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>NUnit in C#.NET – Detailed Beginner Notes with Examples</h1>
+
+<div class="note">
+<b>NUnit</b> is a popular <b>unit testing framework</b> for C#.NET used to test individual units of code automatically.
+</div>
+
+<h2>1. Why Unit Testing?</h2>
+<ul>
+<li>Ensures code works as expected</li>
+<li>Finds bugs early</li>
+<li>Improves code quality</li>
+<li>Makes refactoring safe</li>
+</ul>
+
+<h2>2. What is NUnit?</h2>
+<p>
+<b>NUnit</b> is an open-source testing framework inspired by JUnit.
+It allows developers to write and execute tests using attributes.
+</p>
+
+<h2>3. NUnit Architecture (Simple)</h2>
+<pre>
+Your Code (Class / Method)
+        ↓
+NUnit Test Case
+        ↓
+Assertions (Expected vs Actual)
+        ↓
+Test Result (Pass / Fail)
+</pre>
+
+<h2>4. Required NuGet Packages</h2>
+<table>
+<tr><th>Package</th><th>Purpose</th></tr>
+<tr><td>NUnit</td><td>Core testing framework</td></tr>
+<tr><td>NUnit3TestAdapter</td><td>Runs tests in Visual Studio</td></tr>
+<tr><td>Microsoft.NET.Test.Sdk</td><td>Test execution support</td></tr>
+</table>
+
+<h2>5. Sample Coding Class (Business Logic)</h2>
+
+<h3>Calculator.cs</h3>
+<pre>
+using System;
+
+namespace CalculatorApp
+{
+    public class Calculator
+    {
+        public int Add(int a, int b)
+        {
+            return a + b;
+        }
+
+        public int Subtract(int a, int b)
+        {
+            return a - b;
+        }
+
+        public int Multiply(int a, int b)
+        {
+            return a * b;
+        }
+
+        public int Divide(int a, int b)
+        {
+            if (b == 0)
+                throw new DivideByZeroException("Divider cannot be zero");
+
+            return a / b;
+        }
+    }
+}
+</pre>
+
+<div class="note">
+This class contains simple business logic that we will test using NUnit.
+</div>
+
+<h2>6. Creating NUnit Test Class</h2>
+
+<h3>CalculatorTests.cs</h3>
+<pre>
+using NUnit.Framework;
+using CalculatorApp;
+using System;
+
+namespace CalculatorApp.Tests
+{
+    [TestFixture]
+    public class CalculatorTests
+    {
+        private Calculator calculator;
+
+        [SetUp]
+        public void Setup()
+        {
+            calculator = new Calculator();
+        }
+
+        [Test]
+        public void Add_WhenCalled_ReturnsCorrectSum()
+        {
+            int result = calculator.Add(10, 5);
+            Assert.AreEqual(15, result);
+        }
+
+        [Test]
+        public void Subtract_WhenCalled_ReturnsCorrectResult()
+        {
+            int result = calculator.Subtract(10, 3);
+            Assert.AreEqual(7, result);
+        }
+
+        [Test]
+        public void Multiply_WhenCalled_ReturnsCorrectResult()
+        {
+            int result = calculator.Multiply(4, 5);
+            Assert.AreEqual(20, result);
+        }
+
+        [Test]
+        public void Divide_ByZero_ThrowsException()
+        {
+            Assert.Throws<DivideByZeroException>(() => calculator.Divide(10, 0));
+        }
+    }
+}
+</pre>
+
+<h2>7. Important NUnit Attributes</h2>
+<table>
+<tr><th>Attribute</th><th>Description</th></tr>
+<tr><td>[TestFixture]</td><td>Marks a class as test class</td></tr>
+<tr><td>[Test]</td><td>Marks a test method</td></tr>
+<tr><td>[SetUp]</td><td>Runs before each test</td></tr>
+<tr><td>[TearDown]</td><td>Runs after each test</td></tr>
+<tr><td>[TestCase]</td><td>Parameterized tests</td></tr>
+</table>
+
+<h2>8. Parameterized Test Example</h2>
+<pre>
+[TestCase(2, 3, 5)]
+[TestCase(5, 5, 10)]
+[TestCase(-1, 1, 0)]
+public void Add_WithMultipleInputs_ReturnsCorrectSum(int a, int b, int expected)
+{
+    int result = calculator.Add(a, b);
+    Assert.AreEqual(expected, result);
+}
+</pre>
+
+<h2>9. Common Assertions</h2>
+<table>
+<tr><th>Assertion</th><th>Purpose</th></tr>
+<tr><td>Assert.AreEqual</td><td>Check equality</td></tr>
+<tr><td>Assert.IsTrue</td><td>Check true condition</td></tr>
+<tr><td>Assert.IsFalse</td><td>Check false condition</td></tr>
+<tr><td>Assert.Throws</td><td>Check exceptions</td></tr>
+<tr><td>Assert.NotNull</td><td>Check object not null</td></tr>
+</table>
+
+<h2>10. Test Execution Flow</h2>
+<pre>
+[TestFixture] Loaded
+    ↓
+[SetUp] runs
+    ↓
+[Test] executes
+    ↓
+Assert validates result
+    ↓
+Pass / Fail
+</pre>
+
+<h2>11. Best Practices</h2>
+<ul>
+<li>One assertion per test (recommended)</li>
+<li>Test method names should be descriptive</li>
+<li>Do not write logic inside test</li>
+<li>Keep tests independent</li>
+<li>Test positive and negative scenarios</li>
+</ul>
+
+<div class="warn">
+<b>Avoid:</b> Testing private methods directly. Test through public methods.
+</div>
+
+<h2>12. Summary</h2>
+<ul>
+<li>NUnit is a powerful testing framework for C#</li>
+<li>Separates business logic and testing</li>
+<li>Improves reliability and maintainability</li>
+<li>Essential skill for .NET developers</li>
+</ul>
+
+<div class="note">
+<b>One-line memory rule:</b> NUnit = Safety net for your C# code.
+</div>
+
+</div>
+</body>
+</html>
