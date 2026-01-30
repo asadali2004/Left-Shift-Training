@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering C# Delegates: Action, Func, and Predicate</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        h1, h2, h3 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        code { background-color: #e8eff7; padding: 2px 5px; border-radius: 4px; font-family: 'Consolas', monospace; color: #c7254e; }
+        pre { background-color: #282c34; color: #abb2bf; padding: 15px; border-radius: 8px; overflow-x: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .keyword { color: #c678dd; }
+        .type { color: #e5c07b; }
+        .method { color: #61afef; }
+        .comment { color: #5c6370; font-style: italic; }
+        .scenario { background-color: #fff; border-left: 5px solid #3498db; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .answer-section { background-color: #e9f7ef; border-left: 5px solid #27ae60; padding: 15px; margin-top: 10px; border-radius: 0 8px 8px 0; }
+        .level-tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .beginner { background-color: #2ecc71; color: white; }
+        .intermediate { background-color: #f1c40f; color: black; }
+        .advanced { background-color: #e74c3c; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Mastering Action, Func, and Predicate in C#</h1>
+    <p>In modern C# development, delegates allow us to pass methods as arguments. To simplify this, .NET provides built-in generic delegates: <code>Action</code>, <code>Func</code>, and <code>Predicate</code>.</p>
+
+    <hr>
+
+    <h2>1. The Big Three: Definitions</h2>
+    
+    <h3>Action&lt;T&gt;</h3>
+    <p>Used for methods that <strong>perform an operation</strong> but <strong>do not return a value</strong> (void).</p>
+    <pre><code>Action&lt;string&gt; log = message => Console.WriteLine(message);</code></pre>
+
+    <h3>Func&lt;T, TResult&gt;</h3>
+    <p>Used for methods that <strong>transform data</strong> or <strong>calculate a value</strong>. The last type parameter is always the return type.</p>
+    <pre><code>Func&lt;int, int, int&gt; add = (a, b) => a + b; // Returns an int</code></pre>
+
+    <h3>Predicate&lt;T&gt;</h3>
+    <p>A specialized version of <code>Func&lt;T, bool&gt;</code>. Used for <strong>testing a condition</strong>. It always returns a <code>bool</code>.</p>
+    <pre><code>Predicate&lt;int&gt; isEven = x => x % 2 == 0;</code></pre>
+
+    <hr>
+
+    <h2>2. Coding Challenges & Scenarios</h2>
+
+    <div class="scenario">
+        <span class="level-tag beginner">Beginner</span>
+        <h3>Question 1: The Notification Dispatcher (Action)</h3>
+        <p><strong>Scenario:</strong> You are building a system that processes orders. Once an order is processed, you need to perform various "side effects" like printing a receipt or sending an email. Create a generic method <code>ProcessTask&lt;T&gt;</code> that takes an item and an <code>Action</code> to perform on that item.</p>
+    </div>
+
+    <div class="answer-section">
+        <strong>Answer:</strong>
+        <pre><code>public class NotificationSystem
+{
+    public void ProcessTask&lt;T&gt;(T item, Action&lt;T&gt; action)
+    {
+        Console.WriteLine("Initializing process...");
+        action(item);
+        Console.WriteLine("Process complete.");
+    }
+}
+
+// Usage
+var system = new NotificationSystem();
+system.ProcessTask("Order #1234", msg => Console.WriteLine($"Sending Email: {msg}"));
+system.ProcessTask(500.50m, price => Console.WriteLine($"Logging Transaction: ${price}"));</code></pre>
+    </div>
+
+    <div class="scenario">
+        <span class="level-tag intermediate">Intermediate</span>
+        <h3>Question 2: The Generic Data Filter (Predicate)</h3>
+        <p><strong>Scenario:</strong> You have a list of various objects (Products, Users, etc.). Write a generic method <code>FilterData&lt;T&gt;</code> that accepts a <code>List&lt;T&gt;</code> and a <code>Predicate&lt;T&gt;</code>, returning a new list containing only the items that match the criteria.</p>
+    </div>
+
+    <div class="answer-section">
+        <strong>Answer:</strong>
+        <pre><code>public static List&lt;T&gt; FilterData&lt;T&gt;(List&lt;T&gt; items, Predicate&lt;T&gt; condition)
+{
+    List&lt;T&gt; result = new List&lt;T&gt;();
+    foreach (var item in items)
+    {
+        if (condition(item)) 
+            result.Add(item);
+    }
+    return result;
+}
+
+// Usage: Filtering high-value products
+var expensiveProducts = FilterData(productList, p => p.Price > 1000);</code></pre>
+    </div>
+
+    <div class="scenario">
+        <span class="level-tag intermediate">Intermediate</span>
+        <h3>Question 3: The Currency Converter (Func)</h3>
+        <p><strong>Scenario:</strong> You are building a global shopping cart. You need a method <code>CalculateTotal&lt;T&gt;</code> that takes an object, a quantity, and a <code>Func</code> delegate that defines how to calculate the price. This allows different calculation logic for different regions (Tax, VAT, etc.).</p>
+    </div>
+
+    <div class="answer-section">
+        <strong>Answer:</strong>
+        <pre><code>public decimal CalculateTotal&lt;T&gt;(T item, int qty, Func&lt;T, int, decimal&gt; priceCalculator)
+{
+    return priceCalculator(item, qty);
+}
+
+// Usage:
+var total = CalculateTotal(myProduct, 3, (p, q) => (p.BasePrice * q) * 1.15m); // 15% Tax</code></pre>
+    </div>
+
+    <div class="scenario">
+        <span class="level-tag advanced">Advanced</span>
+        <h3>Question 4: The Resilient Pipeline (Action, Func, Predicate Combined)</h3>
+        <p><strong>Scenario:</strong> Create a generic <code>PipelineProcessor&lt;T&gt;</code>. It should have a method that takes an input <code>T</code>, a <code>Predicate&lt;T&gt;</code> to validate it, a <code>Func&lt;T, T&gt;</code> to transform it, and an <code>Action&lt;T&gt;</code> to log the final result. If validation fails, it should log an error instead.</p>
+    </div>
+
+    <div class="answer-section">
+        <strong>Answer:</strong>
+        <pre><code>public class PipelineProcessor&lt;T&gt;
+{
+    public void Execute(
+        T input, 
+        Predicate&lt;T&gt; isValid, 
+        Func&lt;T, T&gt; transformer, 
+        Action&lt;T&gt; onSuccess, 
+        Action&lt;string&gt; onFailure)
+    {
+        if (isValid(input))
+        {
+            T result = transformer(input);
+            onSuccess(result);
+        }
+        else
+        {
+            onFailure($"Validation failed for input: {input}");
+        }
+    }
+}
+
+// Usage: Processing a Username
+var processor = new PipelineProcessor&lt;string&gt;();
+processor.Execute(
+    "admin_user",
+    u => u.Length > 5,               // Predicate
+    u => u.ToUpper(),                // Func
+    res => Console.WriteLine(res),   // Action (Success)
+    err => Console.WriteLine(err)    // Action (Failure)
+);</code></pre>
+    </div>
+
+    <hr>
+    
+    <h2>Summary Table</h2>
+    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; background-color: white;">
+        <tr style="background-color: #3498db; color: white;">
+            <th>Delegate</th>
+            <th>Input Parameters</th>
+            <th>Return Type</th>
+            <th>Primary Use Case</th>
+        </tr>
+        <tr>
+            <td><strong>Action</strong></td>
+            <td>0 to 16</td>
+            <td><code>void</code></td>
+            <td>Logging, Printing, Database Updates</td>
+        </tr>
+        <tr>
+            <td><strong>Func</strong></td>
+            <td>0 to 16</td>
+            <td><code>TResult</code></td>
+            <td>Calculations, Data Transformations, Mappings</td>
+        </tr>
+        <tr>
+            <td><strong>Predicate</strong></td>
+            <td>Exactly 1</td>
+            <td><code>bool</code></td>
+            <td>Filtering, Validation, Condition Checking</td>
+        </tr>
+    </table>
+
+</body>
+</html>
+</code>
+
+### How to use this:
+1.  Copy the code block above.
+2.  Save it as an `.html` file (e.g., `CSharpMastery.html`).
+3.  Open it in your browser for a clean, readable study guide.
+
+**Would you like me to create a more complex "Real World" project example using these delegates, such as a custom Event Bus or a Middleware pipeline?**

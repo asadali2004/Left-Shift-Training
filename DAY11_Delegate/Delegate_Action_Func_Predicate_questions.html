@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ItTechGenie — C# Scenario Questions (Generics, Action, Func, Predicate) — Medium & Hard</title>
+  <style>
+    :root{
+      --brand:#04AA6D;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --chip:#eef2ff;
+      --mid:#2563eb;
+      --hard:#b91c1c;
+    }
+    body{
+      margin:0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    header{
+      background:var(--brand);
+      color:#fff;
+      padding:22px 16px;
+      text-align:center;
+    }
+    header h1{ margin:0; font-size:22px; }
+    header p{ margin:8px 0 0; opacity:.95; }
+    .container{ max-width:1100px; margin:0 auto; padding:18px; }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:18px;
+      margin:14px 0;
+      box-shadow:0 1px 2px rgba(0,0,0,.05);
+    }
+    h2{ color:var(--brand); margin:0 0 10px; }
+    .meta{ color:var(--muted); font-size:13px; margin:6px 0 0; }
+    .chip{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--border);
+      background:var(--chip);
+      margin:4px 6px 0 0;
+      color:#1f2937;
+    }
+    .level{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:600;
+      border:1px solid var(--border);
+      margin-left:6px;
+    }
+    .mid{ background:#eff6ff; color:var(--mid); border-color:#bfdbfe; }
+    .hard{ background:#fef2f2; color:var(--hard); border-color:#fecaca; }
+    .q{
+      border:1px solid var(--border);
+      border-left:6px solid var(--brand);
+      border-radius:10px;
+      padding:14px;
+      margin:12px 0;
+      background:#fff;
+    }
+    .q h3{ margin:0 0 8px; font-size:16px; }
+    .q .desc{ margin:8px 0; }
+    .req{
+      margin:10px 0 0;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#f9fafb;
+      border:1px dashed var(--border);
+    }
+    ul{ margin:8px 0 0 18px; }
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      padding:14px 0 6px;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>ItTechGenie — C# Scenario Based Questions</h1>
+  <p>Topics: Generics, Action, Func, Predicate | Difficulty: Medium (5) + Hard (5)</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Instructions</h2>
+    <p class="meta">
+      Each question is scenario-based and expects you to implement using <b>Generics</b> + <b>Action</b> + <b>Func</b> + <b>Predicate</b>
+      (not necessarily all four in every question, but the required topics are clearly mentioned per question).
+    </p>
+    <div>
+      <span class="chip">Generic &lt;T&gt;</span>
+      <span class="chip">Action&lt;...&gt;</span>
+      <span class="chip">Func&lt;...&gt;</span>
+      <span class="chip">Predicate&lt;T&gt;</span>
+    </div>
+  </div>
+
+  <!-- ================= MEDIUM ================= -->
+  <div class="card">
+    <h2>Medium Level — 5 Questions</h2>
+
+    <div class="q">
+      <h3>Q1. Generic Filter for HR Portal <span class="level mid">Medium</span></h3>
+      <div class="desc">
+        Scenario: In an HR portal, you maintain lists of employees, contractors, and interns. You need a single reusable
+        method to filter any list based on a condition (e.g., salary &gt; 50K, experience &gt; 2 years, department = "IT").
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create a generic method <code>Filter&lt;T&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; rule)</code></li>
+          <li>Demonstrate with an <code>Employee</code> list: filter employees with Salary &ge; 50000</li>
+          <li>Print the filtered employees</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Predicate, Action (printing/logging)</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q2. Audit Logger Wrapper for Any Operation <span class="level mid">Medium</span></h3>
+      <div class="desc">
+        Scenario: You want a common audit wrapper that logs "START" and "END" for different operations like
+        bill calculation, report generation, or file upload.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>RunWithAudit&lt;TResult&gt;(string title, Func&lt;TResult&gt; work, Action&lt;string&gt; logger)</code></li>
+          <li>Use it to calculate an electricity bill with tax and return the final amount</li>
+          <li>Logger prints time-stamped messages</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Func, Action</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q3. Generic Mapper for API DTO Conversion <span class="level mid">Medium</span></h3>
+      <div class="desc">
+        Scenario: Your backend returns domain objects (e.g., <code>Product</code>) but the UI expects DTOs (e.g., <code>ProductDto</code>).
+        You need a generic mapper to convert lists efficiently.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>Map&lt;TSource, TResult&gt;(IEnumerable&lt;TSource&gt; items, Func&lt;TSource, TResult&gt; selector)</code></li>
+          <li>Convert <code>Product</code> to <code>ProductDto</code> and compute a field like <code>DisplayPrice</code></li>
+          <li>Print the mapped DTO list</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Func, Action</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q4. Customer Eligibility Rules (Multiple Predicates) <span class="level mid">Medium</span></h3>
+      <div class="desc">
+        Scenario: A finance app approves a customer for a loan if multiple conditions are met
+        (e.g., age range, salary threshold, credit score, no blacklist).
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>ValidateAll&lt;T&gt;(T obj, params Predicate&lt;T&gt;[] rules)</code></li>
+          <li>Define at least 3 rules for a <code>Customer</code> object and validate it</li>
+          <li>Print "Approved" or "Rejected"</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Predicate, Action</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q5. Batch Processor for Notifications <span class="level mid">Medium</span></h3>
+      <div class="desc">
+        Scenario: A notification service sends messages to different recipients. You want a reusable batch processor
+        that can perform an action on each item and also optionally filter items.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>ProcessBatch&lt;T&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; filter, Action&lt;T&gt; action)</code></li>
+          <li>Use it to send a message only to users with <code>IsActive = true</code></li>
+          <li>Action prints: "Sent to: {user}"</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Predicate, Action</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= HARD ================= -->
+  <div class="card">
+    <h2>Hard Level — 5 Questions</h2>
+
+    <div class="q">
+      <h3>Q6. Predicate Composition Engine (AND / OR Rules) <span class="level hard">Hard</span></h3>
+      <div class="desc">
+        Scenario: In an e-commerce platform, you apply multiple filters dynamically:
+        in-stock AND category match AND price range. Sometimes filters are OR-based as well.
+        You need a rule composition engine.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create generic methods: <code>And&lt;T&gt;(Predicate&lt;T&gt; a, Predicate&lt;T&gt; b)</code> and <code>Or&lt;T&gt;(...)</code></li>
+          <li>Combine 3+ rules for <code>Product</code> and filter a list</li>
+          <li>Print matched products</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Predicate, Action</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q7. Generic Pipeline: Validate → Transform → Execute <span class="level hard">Hard</span></h3>
+      <div class="desc">
+        Scenario: In a billing system, you receive an <code>Invoice</code>. You must validate it, compute final amount,
+        then save/print the result. This must be reusable for other types too.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>Process&lt;T, TResult&gt;(T input, Predicate&lt;T&gt; validator, Func&lt;T, TResult&gt; transformer, Action&lt;TResult&gt; executor)</code></li>
+          <li>Use it for Invoice: validate (amount &gt; 0), transform (add tax), execute (print/store)</li>
+          <li>Handle validation failure with exception or error message</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Predicate, Func, Action</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q8. Generic Cache Wrapper (GetOrAdd) for Expensive Computations <span class="level hard">Hard</span></h3>
+      <div class="desc">
+        Scenario: A risk engine calculates a customer risk score (expensive). You must cache results by key
+        to avoid recalculations.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>Cache&lt;TKey, TValue&gt;</code> with method <code>GetOrAdd(TKey key, Func&lt;TKey, TValue&gt; factory)</code></li>
+          <li>Demonstrate by computing risk score for same customer id twice</li>
+          <li>Print "Computing..." only once and show cached value next time</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Func, Action</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q9. Generic Retry Engine for Unstable Operations <span class="level hard">Hard</span></h3>
+      <div class="desc">
+        Scenario: Payment gateway calls may fail due to network issues. Implement a reusable retry engine
+        that retries an operation and logs each attempt.
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>Retry(Action work, int maxAttempts, Action&lt;string&gt; logger)</code></li>
+          <li>Simulate failure for first 2 attempts and success on 3rd attempt</li>
+          <li>Log each attempt and final status</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Action, Generics (optional extension), Func (optional extension)</div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h3>Q10. Generic Report Builder (Filter + Sort + Project) <span class="level hard">Hard</span></h3>
+      <div class="desc">
+        Scenario: You are building a reusable report generator. For any type <code>T</code>,
+        you should be able to:
+        <ul>
+          <li>Filter items using Predicate</li>
+          <li>Sort items using Func (key selector)</li>
+          <li>Project items to a printable string using Func</li>
+          <li>Print using Action</li>
+        </ul>
+      </div>
+      <div class="req">
+        <b>Requirements:</b>
+        <ul>
+          <li>Create <code>BuildReport&lt;T, TKey&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; filter, Func&lt;T, TKey&gt; orderBy, Func&lt;T, string&gt; projector, Action&lt;string&gt; printer)</code></li>
+          <li>Use it for Employee list: filter salary &gt; 50K, order by name, project to "Name - Salary"</li>
+          <li>Print the report lines</li>
+        </ul>
+        <div class="meta"><b>Topics:</b> Generics, Predicate, Func, Action</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © ItTechGenie — Practice Set: Generics + Action + Func + Predicate (Medium & Hard)
+  </div>
+
+</div>
+</body>
+</html>

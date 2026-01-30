@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ItTechGenie — C# Predicate, Action, Func (Strong Mastery) — Detailed Notes + Scenario Questions</title>
+  <style>
+    :root{
+      --brand:#04AA6D;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --code:#111827;
+      --codeText:#e5e7eb;
+      --border:#e5e7eb;
+      --blue:#2563eb;
+      --amber:#f59e0b;
+    }
+    body{
+      margin:0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    header{
+      background:var(--brand);
+      color:#fff;
+      padding:22px 18px;
+      text-align:center;
+    }
+    header h1{ margin:0; font-size:22px; }
+    header p{ margin:8px 0 0; opacity:.95; }
+    .container{ max-width:1100px; margin:0 auto; padding:18px; }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:18px;
+      margin:14px 0;
+      box-shadow:0 1px 2px rgba(0,0,0,.05);
+    }
+    h2{ color:var(--brand); margin-top:0; }
+    h3{ margin-top:20px; }
+    .tag{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      background:#fff;
+      margin-right:8px;
+    }
+    .note{
+      background:#ecfeff;
+      border:1px solid #cffafe;
+      border-left:5px solid #06b6d4;
+      padding:12px;
+      border-radius:10px;
+      margin:12px 0;
+    }
+    .warn{
+      background:#fffbeb;
+      border:1px solid #fde68a;
+      border-left:5px solid var(--amber);
+      padding:12px;
+      border-radius:10px;
+      margin:12px 0;
+    }
+    pre{
+      margin:12px 0;
+      background:var(--code);
+      color:var(--codeText);
+      padding:14px;
+      border-radius:10px;
+      overflow:auto;
+      font-size:13px;
+    }
+    code{ font-family: Consolas, "Courier New", monospace; }
+    ul{ margin-top:8px; }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .q{
+      background:#f0fdf4;
+      border:1px solid #bbf7d0;
+      border-left:5px solid var(--brand);
+      padding:12px;
+      border-radius:10px;
+      margin:12px 0 8px;
+    }
+    .a{
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+      border-left:5px solid var(--blue);
+      padding:12px;
+      border-radius:10px;
+      margin:8px 0 14px;
+    }
+    .small{ color:var(--muted); font-size:13px; }
+    .kpi{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .kpi .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:13px;
+    }
+    .toc a{ color:var(--blue); text-decoration:none; }
+    .toc a:hover{ text-decoration:underline; }
+    .hr{ height:1px; background:var(--border); margin:16px 0; }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>ItTechGenie — C# Predicate, Action & Func (Detailed Mastery Notes)</h1>
+  <p>Basics → Many Examples → Generic Utilities → Scenario Questions (Beginner/Intermediate/Advanced)</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="kpi">
+      <span class="pill"><b>Goal:</b> Make you strong in Predicate / Action / Func</span>
+      <span class="pill"><b>Focus:</b> Real-world + Generics + Clean patterns</span>
+      <span class="pill"><b>Includes:</b> 12 scenario coding Qs with solutions</span>
+    </div>
+
+    <div class="hr"></div>
+
+    <h2 id="toc">Table of Contents</h2>
+    <div class="toc small">
+      <ul>
+        <li><a href="#core-idea">Core Idea: Delegates & Generic Delegates</a></li>
+        <li><a href="#predicate">Predicate&lt;T&gt; — What, Why, How + Many Examples</a></li>
+        <li><a href="#action">Action — What, Why, How + Many Examples</a></li>
+        <li><a href="#func">Func — What, Why, How + Many Examples</a></li>
+        <li><a href="#generic-utils">Generic Utility Methods (Filter/Map/ForEach/Validate/Compose)</a></li>
+        <li><a href="#beginner">Beginner Scenario Questions (4) + Answers</a></li>
+        <li><a href="#intermediate">Intermediate Scenario Questions (4) + Answers</a></li>
+        <li><a href="#advanced">Advanced Scenario Questions (4) + Answers</a></li>
+        <li><a href="#tips">Best Practices + Mistakes to Avoid</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" id="core-idea">
+    <h2>1) Core Idea: Delegates & Generic Delegates</h2>
+
+    <p>
+      In C#, a <b>delegate</b> is like a <b>type-safe function pointer</b> — it allows you to store a method (or lambda)
+      in a variable and pass it to another method.
+    </p>
+
+    <p>
+      Instead of writing many custom delegates, C# provides <b>generic delegates</b>:
+    </p>
+
+    <ul>
+      <li><b>Predicate&lt;T&gt;</b> → takes <b>T</b> and returns <b>bool</b> (used for validation / filtering)</li>
+      <li><b>Action</b> → takes parameters but returns <b>void</b> (used for printing / logging / side effects)</li>
+      <li><b>Func</b> → takes parameters and returns a value (used for calculation / transformation)</li>
+    </ul>
+
+    <div class="note">
+      <b>Key Learning:</b> These delegates help you write <b>reusable + generic</b> code (works for any type T),
+      which is exactly how LINQ, List methods, and modern C# APIs work internally.
+    </div>
+
+    <pre><code>// Think of it like this:
+// Predicate&lt;T&gt;  : T -> bool
+// Action&lt;T&gt;     : T -> void
+// Func&lt;T,R&gt;     : T -> R</code></pre>
+  </div>
+
+  <div class="card" id="predicate">
+    <h2>2) Predicate&lt;T&gt; — Basic Explanation + Examples</h2>
+    <span class="tag">Returns bool</span><span class="tag">Validation</span><span class="tag">Filtering</span>
+
+    <h3>2.1 What is Predicate&lt;T&gt;?</h3>
+    <p>
+      A <b>Predicate&lt;T&gt;</b> represents a method that:
+      <br><b>takes one input of type T</b> and <b>returns true/false</b>.
+    </p>
+
+    <pre><code>// Signature
+public delegate bool Predicate&lt;in T&gt;(T obj);</code></pre>
+
+    <h3>2.2 Why do we use it?</h3>
+    <ul>
+      <li>To keep validation logic separate and reusable</li>
+      <li>To pass conditions into generic methods (Filter, Find, RemoveAll)</li>
+      <li>To build “rules” easily (e.g., eligibility, security checks, approvals)</li>
+    </ul>
+
+    <h3>2.3 Basic Example (Numbers)</h3>
+    <pre><code>Predicate&lt;int&gt; isEven = n =&gt; n % 2 == 0;
+
+Console.WriteLine(isEven(4)); // True
+Console.WriteLine(isEven(5)); // False</code></pre>
+
+    <h3>2.4 Real-world Example (Student Pass Rule)</h3>
+    <pre><code>Predicate&lt;int&gt; isPass = marks =&gt; marks &gt;= 40;
+
+Console.WriteLine(isPass(39)); // False
+Console.WriteLine(isPass(75)); // True</code></pre>
+
+    <h3>2.5 Using Predicate with List&lt;T&gt; (Find/FindAll/RemoveAll)</h3>
+    <pre><code>var marks = new List&lt;int&gt; { 12, 45, 78, 35, 90 };
+
+// Find first passing mark
+int firstPass = marks.Find(m =&gt; m &gt;= 40);
+
+// Find all passing marks
+List&lt;int&gt; allPass = marks.FindAll(m =&gt; m &gt;= 40);
+
+// Remove all failing marks (modifies list)
+marks.RemoveAll(m =&gt; m &lt; 40);</code></pre>
+
+    <h3>2.6 Predicate with Custom Class (Filtering Customers)</h3>
+    <pre><code>public class Customer
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string City { get; set; } = "";
+    public double TotalPurchase { get; set; }
+}
+
+var customers = new List&lt;Customer&gt;
+{
+    new Customer { Id=1, Name="Asha", City="Chennai", TotalPurchase=12000 },
+    new Customer { Id=2, Name="Ravi", City="Coimbatore", TotalPurchase=4000 },
+    new Customer { Id=3, Name="Meera", City="Chennai", TotalPurchase=9000 }
+};
+
+Predicate&lt;Customer&gt; isPremium = c =&gt; c.TotalPurchase &gt;= 8000;
+
+var premiumCustomers = customers.FindAll(c =&gt; isPremium(c));</code></pre>
+
+    <div class="warn">
+      <b>Important:</b> Predicate is best when your final output is <b>true/false</b>.
+      If you want to compute a value (like discount), use <b>Func</b>.
+      If you want to do an action (like log/print), use <b>Action</b>.
+    </div>
+  </div>
+
+  <div class="card" id="action">
+    <h2>3) Action — Basic Explanation + Examples</h2>
+    <span class="tag">Returns void</span><span class="tag">Side Effects</span><span class="tag">Logging/Printing</span>
+
+    <h3>3.1 What is Action?</h3>
+    <p>
+      <b>Action</b> is a generic delegate that:
+      <br><b>takes input parameters</b> but <b>returns nothing (void)</b>.
+    </p>
+
+    <pre><code>// Common forms
+Action action0;                  // () -&gt; void
+Action&lt;T&gt; action1;                // (T) -&gt; void
+Action&lt;T1, T2&gt; action2;            // (T1, T2) -&gt; void
+// ... available up to 16 parameters</code></pre>
+
+    <h3>3.2 Why do we use it?</h3>
+    <ul>
+      <li>To pass “do something” behavior (print, log, notify, save)</li>
+      <li>To build reusable workflows: “for each item do X”</li>
+      <li>To reduce duplication (same loop, different operation)</li>
+    </ul>
+
+    <h3>3.3 Basic Example (Print)</h3>
+    <pre><code>Action&lt;string&gt; print = msg =&gt; Console.WriteLine(msg);
+print("Hello ItTechGenie");</code></pre>
+
+    <h3>3.4 Real-world Example (Notify User)</h3>
+    <pre><code>Action&lt;string, string&gt; notify =
+    (user, message) =&gt; Console.WriteLine($"Notify {user}: {message}");
+
+notify("Admin", "Server CPU High!");</code></pre>
+
+    <h3>3.5 Action with List.ForEach</h3>
+    <pre><code>var names = new List&lt;string&gt; { "Asha", "Ravi", "Meera" };
+
+names.ForEach(n =&gt; Console.WriteLine($"Welcome {n}")); </code></pre>
+
+    <h3>3.6 Action for Auditing (Generic Logging)</h3>
+    <pre><code>Action&lt;string&gt; audit = msg =&gt;
+    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {msg}");
+
+audit("User logged in");
+audit("User changed password");</code></pre>
+  </div>
+
+  <div class="card" id="func">
+    <h2>4) Func — Basic Explanation + Examples</h2>
+    <span class="tag">Returns value</span><span class="tag">Calculation</span><span class="tag">Transformation</span>
+
+    <h3>4.1 What is Func?</h3>
+    <p>
+      <b>Func</b> is a generic delegate that:
+      <br><b>takes input parameters</b> and <b>returns a result</b>.
+    </p>
+
+    <pre><code>// Common forms
+Func&lt;TResult&gt; f0;                   // () -&gt; TResult
+Func&lt;T, TResult&gt; f1;                 // (T) -&gt; TResult
+Func&lt;T1, T2, TResult&gt; f2;            // (T1, T2) -&gt; TResult
+// ... available up to 16 parameters, last one is always TResult</code></pre>
+
+    <h3>4.2 Why do we use it?</h3>
+    <ul>
+      <li>To compute results: tax, discount, score, eligibility points</li>
+      <li>To transform objects: DTO mapping, formatting, conversion</li>
+      <li>To build generic reusable functions: Map/Select pipelines</li>
+    </ul>
+
+    <h3>4.3 Basic Example (Square)</h3>
+    <pre><code>Func&lt;int, int&gt; square = n =&gt; n * n;
+Console.WriteLine(square(6)); // 36</code></pre>
+
+    <h3>4.4 Real-world Example (Discount Calculation)</h3>
+    <pre><code>Func&lt;double, double, double&gt; applyDiscount =
+    (price, percent) =&gt; price - (price * percent / 100.0);
+
+Console.WriteLine(applyDiscount(1000, 10)); // 900</code></pre>
+
+    <h3>4.5 Transforming Data (Convert to Display Text)</h3>
+    <pre><code>Func&lt;double, string&gt; priceLabel = p =&gt; $"₹{p:0.00}";
+Console.WriteLine(priceLabel(2499.5)); // ₹2499.50</code></pre>
+
+    <h3>4.6 Func with LINQ (Select / Where)</h3>
+    <pre><code>var prices = new List&lt;double&gt; { 100, 200, 500 };
+
+// Func used by Select to transform
+var withTax = prices.Select(p =&gt; p * 1.18).ToList();
+
+// Predicate-like condition used by Where
+var expensive = prices.Where(p =&gt; p &gt;= 200).ToList();</code></pre>
+  </div>
+
+  <div class="card" id="generic-utils">
+    <h2>5) Generic Utility Methods (Strong Practice with Generics)</h2>
+
+    <p class="small">
+      These are real-world reusable helpers you can write once and use for any type:
+      Customer, Product, Student, Order, etc.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>5.1 Filter&lt;T&gt; using Predicate&lt;T&gt;</h3>
+        <pre><code>public static List&lt;T&gt; Filter&lt;T&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; condition)
+{
+    var result = new List&lt;T&gt;();
+    foreach (var item in items)
+    {
+        if (condition(item))
+            result.Add(item);
+    }
+    return result;
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>5.2 ForEach&lt;T&gt; using Action&lt;T&gt;</h3>
+        <pre><code>public static void ForEachItem&lt;T&gt;(IEnumerable&lt;T&gt; items, Action&lt;T&gt; action)
+{
+    foreach (var item in items)
+        action(item);
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>5.3 Map&lt;TSource, TResult&gt; using Func</h3>
+        <pre><code>public static List&lt;TResult&gt; Map&lt;TSource, TResult&gt;(
+    IEnumerable&lt;TSource&gt; items,
+    Func&lt;TSource, TResult&gt; selector)
+{
+    var result = new List&lt;TResult&gt;();
+    foreach (var item in items)
+        result.Add(selector(item));
+    return result;
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>5.4 Validate&lt;T&gt; using multiple Predicate rules</h3>
+        <pre><code>public static bool ValidateAll&lt;T&gt;(T obj, params Predicate&lt;T&gt;[] rules)
+{
+    foreach (var rule in rules)
+    {
+        if (!rule(obj)) return false;
+    }
+    return true;
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>Why this matters:</b> Many interview + real projects are about building <b>reusable generic logic</b> like this.
+      Once you master these patterns, LINQ and modern APIs become very easy.
+    </div>
+  </div>
+
+  <!-- ===================== BEGINNER QUESTIONS ===================== -->
+  <div class="card" id="beginner">
+    <h2>6) Beginner Level — 4 Scenario Based Coding Questions (with Answers)</h2>
+    <p class="small">Focus: Simple usage of Predicate/Action/Func with generics + lists.</p>
+
+    <div class="q">
+      <b>Beginner Q1 — Library Book Availability (Predicate&lt;T&gt;)</b><br/>
+      Scenario: You have a list of <code>Book</code>. Find all books that are <b>Available</b> (IsAvailable = true).  
+      Use a <b>Predicate&lt;Book&gt;</b> and return a new list.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Book
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = "";
+    public bool IsAvailable { get; set; }
+}
+
+public class Program
+{
+    public static List&lt;T&gt; Filter&lt;T&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; condition)
+    {
+        var result = new List&lt;T&gt;();
+        foreach (var item in items)
+            if (condition(item)) result.Add(item);
+        return result;
+    }
+
+    public static void Main()
+    {
+        var books = new List&lt;Book&gt;
+        {
+            new Book{ Id=1, Title="C# Basics", IsAvailable=true },
+            new Book{ Id=2, Title="LINQ Deep", IsAvailable=false },
+            new Book{ Id=3, Title="OOP Patterns", IsAvailable=true }
+        };
+
+        Predicate&lt;Book&gt; available = b =&gt; b.IsAvailable;
+
+        var availableBooks = Filter(books, available);
+
+        foreach (var b in availableBooks)
+            Console.WriteLine(b.Title);
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Beginner Q2 — Print Customer Greetings (Action&lt;T&gt;)</b><br/>
+      Scenario: You have a list of customers. Print <code>"Welcome, {Name}"</code> for each customer using a generic <b>ForEach</b> method and <b>Action&lt;Customer&gt;</b>.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Customer
+{
+    public string Name { get; set; } = "";
+}
+
+public class Program
+{
+    public static void ForEachItem&lt;T&gt;(IEnumerable&lt;T&gt; items, Action&lt;T&gt; action)
+    {
+        foreach (var item in items) action(item);
+    }
+
+    public static void Main()
+    {
+        var customers = new List&lt;Customer&gt;
+        {
+            new Customer{ Name="Asha" },
+            new Customer{ Name="Ravi" },
+            new Customer{ Name="Meera" }
+        };
+
+        Action&lt;Customer&gt; greet = c =&gt; Console.WriteLine($"Welcome, {c.Name}");
+
+        ForEachItem(customers, greet);
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Beginner Q3 — Convert Product Prices to INR Label (Func)</b><br/>
+      Scenario: You have a list of product prices. Convert each to a display label like <code>₹999.00</code> using a generic <b>Map</b> method and <b>Func&lt;double,string&gt;</b>.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Program
+{
+    public static List&lt;TResult&gt; Map&lt;TSource, TResult&gt;(
+        IEnumerable&lt;TSource&gt; items,
+        Func&lt;TSource, TResult&gt; selector)
+    {
+        var result = new List&lt;TResult&gt;();
+        foreach (var item in items) result.Add(selector(item));
+        return result;
+    }
+
+    public static void Main()
+    {
+        var prices = new List&lt;double&gt; { 199.5, 999, 2499.99 };
+
+        Func&lt;double, string&gt; toInr = p =&gt; $"₹{p:0.00}";
+
+        var labels = Map(prices, toInr);
+
+        foreach (var l in labels)
+            Console.WriteLine(l);
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Beginner Q4 — Student Eligibility Check (Predicate + Generic ValidateAll)</b><br/>
+      Scenario: A student is eligible if <code>Age &gt;= 18</code> and <code>Marks &gt;= 60</code>.  
+      Use <b>ValidateAll&lt;Student&gt;</b> with multiple Predicate rules.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+
+public class Student
+{
+    public string Name { get; set; } = "";
+    public int Age { get; set; }
+    public int Marks { get; set; }
+}
+
+public class Program
+{
+    public static bool ValidateAll&lt;T&gt;(T obj, params Predicate&lt;T&gt;[] rules)
+    {
+        foreach (var rule in rules)
+            if (!rule(obj)) return false;
+        return true;
+    }
+
+    public static void Main()
+    {
+        var s = new Student { Name="Ravi", Age=19, Marks=72 };
+
+        Predicate&lt;Student&gt; ruleAge = st =&gt; st.Age &gt;= 18;
+        Predicate&lt;Student&gt; ruleMarks = st =&gt; st.Marks &gt;= 60;
+
+        bool eligible = ValidateAll(s, ruleAge, ruleMarks);
+        Console.WriteLine($"Eligible: {eligible}");
+    }
+}</code></pre>
+    </div>
+  </div>
+
+  <!-- ===================== INTERMEDIATE QUESTIONS ===================== -->
+  <div class="card" id="intermediate">
+    <h2>7) Intermediate Level — 4 Scenario Based Coding Questions (with Answers)</h2>
+    <p class="small">Focus: Generic services, reusable rules, transformation, and clean separation of concerns.</p>
+
+    <div class="q">
+      <b>Intermediate Q1 — Generic Search in Repository (Predicate&lt;T&gt;)</b><br/>
+      Scenario: Create a generic in-memory repository that stores items and provides <code>FindAll(Predicate&lt;T&gt;)</code>.  
+      Use it for <code>Employee</code> to find employees with Salary ≥ 50000.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Repository&lt;T&gt;
+{
+    private readonly List&lt;T&gt; _items = new();
+
+    public void Add(T item) =&gt; _items.Add(item);
+
+    public List&lt;T&gt; FindAll(Predicate&lt;T&gt; condition)
+    {
+        var result = new List&lt;T&gt;();
+        foreach (var item in _items)
+            if (condition(item)) result.Add(item);
+        return result;
+    }
+}
+
+public class Employee
+{
+    public string Name { get; set; } = "";
+    public double Salary { get; set; }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        var repo = new Repository&lt;Employee&gt;();
+        repo.Add(new Employee { Name="Asha", Salary=60000 });
+        repo.Add(new Employee { Name="Ravi", Salary=42000 });
+        repo.Add(new Employee { Name="Meera", Salary=80000 });
+
+        Predicate&lt;Employee&gt; highPaid = e =&gt; e.Salary &gt;= 50000;
+
+        var result = repo.FindAll(highPaid);
+
+        foreach (var e in result)
+            Console.WriteLine($"{e.Name} - {e.Salary}");
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Intermediate Q2 — Generic Audit Wrapper (Action + Func)</b><br/>
+      Scenario: You want to audit operations. Create a generic method:
+      <br/><code>RunWithAudit&lt;TResult&gt;(string title, Func&lt;TResult&gt; work, Action&lt;string&gt; logger)</code>  
+      Use it to compute total bill and log start/end.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+
+public class Program
+{
+    public static TResult RunWithAudit&lt;TResult&gt;(
+        string title,
+        Func&lt;TResult&gt; work,
+        Action&lt;string&gt; logger)
+    {
+        logger($"START: {title}");
+        var result = work();
+        logger($"END: {title} | Result = {result}");
+        return result;
+    }
+
+    public static void Main()
+    {
+        Action&lt;string&gt; log = msg =&gt; Console.WriteLine($"{DateTime.Now:HH:mm:ss} | {msg}");
+
+        var total = RunWithAudit(
+            "Calculate Bill",
+            work: () =&gt;
+            {
+                double amount = 1200;
+                double tax = amount * 0.18;
+                return amount + tax;
+            },
+            logger: log
+        );
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Intermediate Q3 — Order Validation Rules Engine (Multiple Predicates)</b><br/>
+      Scenario: An order is valid if:
+      <ul>
+        <li>Amount &gt; 0</li>
+        <li>Customer is not blocked</li>
+        <li>PaymentMode is "UPI" or "CARD"</li>
+      </ul>
+      Build a generic rules validator and validate an <code>Order</code>.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+
+public class Order
+{
+    public double Amount { get; set; }
+    public bool IsCustomerBlocked { get; set; }
+    public string PaymentMode { get; set; } = "";
+}
+
+public class Program
+{
+    public static bool ValidateAll&lt;T&gt;(T obj, params Predicate&lt;T&gt;[] rules)
+    {
+        foreach (var rule in rules)
+            if (!rule(obj)) return false;
+        return true;
+    }
+
+    public static void Main()
+    {
+        var order = new Order
+        {
+            Amount = 1500,
+            IsCustomerBlocked = false,
+            PaymentMode = "UPI"
+        };
+
+        Predicate&lt;Order&gt; r1 = o =&gt; o.Amount &gt; 0;
+        Predicate&lt;Order&gt; r2 = o =&gt; !o.IsCustomerBlocked;
+        Predicate&lt;Order&gt; r3 = o =&gt; o.PaymentMode == "UPI" || o.PaymentMode == "CARD";
+
+        bool ok = ValidateAll(order, r1, r2, r3);
+        Console.WriteLine($"Order Valid: {ok}");
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Intermediate Q4 — Generic Mapper (Func&lt;TSource,TResult&gt;)</b><br/>
+      Scenario: Convert a list of <code>Employee</code> into a list of <code>EmployeeDto</code> using a generic map method.  
+      Add a derived field: Grade = "A" if Salary &gt;= 70000 else "B".
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public double Salary { get; set; }
+}
+
+public class EmployeeDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string Grade { get; set; } = "";
+}
+
+public class Program
+{
+    public static List&lt;TResult&gt; Map&lt;TSource, TResult&gt;(
+        IEnumerable&lt;TSource&gt; items,
+        Func&lt;TSource, TResult&gt; selector)
+    {
+        var result = new List&lt;TResult&gt;();
+        foreach (var item in items) result.Add(selector(item));
+        return result;
+    }
+
+    public static void Main()
+    {
+        var employees = new List&lt;Employee&gt;
+        {
+            new Employee{ Id=1, Name="Asha", Salary=82000 },
+            new Employee{ Id=2, Name="Ravi", Salary=55000 },
+        };
+
+        Func&lt;Employee, EmployeeDto&gt; mapper = e =&gt; new EmployeeDto
+        {
+            Id = e.Id,
+            Name = e.Name,
+            Grade = e.Salary &gt;= 70000 ? "A" : "B"
+        };
+
+        var dtos = Map(employees, mapper);
+
+        foreach (var d in dtos)
+            Console.WriteLine($"{d.Id} {d.Name} Grade:{d.Grade}");
+    }
+}</code></pre>
+    </div>
+  </div>
+
+  <!-- ===================== ADVANCED QUESTIONS ===================== -->
+  <div class="card" id="advanced">
+    <h2>8) Advanced Level — 4 Scenario Based Coding Questions (with Answers)</h2>
+    <p class="small">Focus: Composing delegates, pipelines, reusable generic engines, clean patterns used in real systems.</p>
+
+    <div class="q">
+      <b>Advanced Q1 — Generic Processing Pipeline (Validate + Transform + Execute)</b><br/>
+      Scenario: Build a generic pipeline:
+      <ul>
+        <li><b>Predicate&lt;T&gt;</b> to validate input</li>
+        <li><b>Func&lt;T, TResult&gt;</b> to transform</li>
+        <li><b>Action&lt;TResult&gt;</b> to execute (e.g., store/log)</li>
+      </ul>
+      Use it for an <code>Invoice</code> → calculate final amount → print result.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+
+public class Invoice
+{
+    public string InvoiceNo { get; set; } = "";
+    public double Amount { get; set; }
+}
+
+public class Program
+{
+    public static void Process&lt;T, TResult&gt;(
+        T input,
+        Predicate&lt;T&gt; validator,
+        Func&lt;T, TResult&gt; transformer,
+        Action&lt;TResult&gt; executor)
+    {
+        if (!validator(input))
+            throw new Exception("Validation failed!");
+
+        TResult result = transformer(input);
+        executor(result);
+    }
+
+    public static void Main()
+    {
+        var invoice = new Invoice { InvoiceNo="INV-101", Amount=2000 };
+
+        Predicate&lt;Invoice&gt; validate = inv =&gt; inv.Amount &gt; 0 && !string.IsNullOrWhiteSpace(inv.InvoiceNo);
+        Func&lt;Invoice, double&gt; computeFinal = inv =&gt; inv.Amount + (inv.Amount * 0.18); // 18% tax
+        Action&lt;double&gt; print = final =&gt; Console.WriteLine($"Final Payable: ₹{final:0.00}");
+
+        Process(invoice, validate, computeFinal, print);
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Advanced Q2 — Generic “Specification” Filter (Multiple Predicates + Composition)</b><br/>
+      Scenario: In an e-commerce app, filter products that are:
+      <ul>
+        <li>InStock</li>
+        <li>Price between min/max</li>
+        <li>Category matches</li>
+      </ul>
+      Create a generic <code>And&lt;T&gt;</code> composition method for predicates.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Product
+{
+    public string Name { get; set; } = "";
+    public string Category { get; set; } = "";
+    public double Price { get; set; }
+    public int Stock { get; set; }
+}
+
+public class Program
+{
+    public static Predicate&lt;T&gt; And&lt;T&gt;(Predicate&lt;T&gt; a, Predicate&lt;T&gt; b)
+        =&gt; x =&gt; a(x) && b(x);
+
+    public static List&lt;T&gt; Filter&lt;T&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; condition)
+    {
+        var result = new List&lt;T&gt;();
+        foreach (var item in items)
+            if (condition(item)) result.Add(item);
+        return result;
+    }
+
+    public static void Main()
+    {
+        var products = new List&lt;Product&gt;
+        {
+            new Product{ Name="Mouse", Category="Electronics", Price=599, Stock=10 },
+            new Product{ Name="Laptop", Category="Electronics", Price=55000, Stock=0 },
+            new Product{ Name="Notebook", Category="Stationery", Price=60, Stock=200 }
+        };
+
+        double min=100, max=1000;
+        string category="Electronics";
+
+        Predicate&lt;Product&gt; inStock = p =&gt; p.Stock &gt; 0;
+        Predicate&lt;Product&gt; priceRange = p =&gt; p.Price &gt;= min && p.Price &lt;= max;
+        Predicate&lt;Product&gt; cat = p =&gt; p.Category == category;
+
+        var spec = And(And(inStock, priceRange), cat);
+
+        var result = Filter(products, spec);
+
+        foreach (var p in result)
+            Console.WriteLine($"{p.Name} ₹{p.Price} Stock:{p.Stock}");
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Advanced Q3 — Generic Retry Engine (Action + Exception Handling)</b><br/>
+      Scenario: A payment gateway call may fail due to network issues.  
+      Create a generic retry method:
+      <br/><code>Retry(Action work, int maxAttempts, Action&lt;string&gt; logger)</code>
+      <br/>Use it to simulate a payment call that fails twice and succeeds on third attempt.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+
+public class Program
+{
+    public static void Retry(Action work, int maxAttempts, Action&lt;string&gt; logger)
+    {
+        for (int attempt = 1; attempt &lt;= maxAttempts; attempt++)
+        {
+            try
+            {
+                logger($"Attempt {attempt}");
+                work();
+                logger("Success");
+                return;
+            }
+            catch (Exception ex)
+            {
+                logger($"Failed: {ex.Message}");
+                if (attempt == maxAttempts) throw;
+            }
+        }
+    }
+
+    public static void Main()
+    {
+        Action&lt;string&gt; log = msg =&gt; Console.WriteLine($"{DateTime.Now:HH:mm:ss} | {msg}");
+
+        int failCount = 0;
+
+        Action pay = () =&gt;
+        {
+            failCount++;
+            if (failCount &lt;= 2) throw new Exception("Network error");
+            Console.WriteLine("Payment processed!");
+        };
+
+        Retry(pay, maxAttempts: 3, logger: log);
+    }
+}</code></pre>
+    </div>
+
+    <div class="q">
+      <b>Advanced Q4 — Generic Cache Wrapper (Func + Dictionary Cache)</b><br/>
+      Scenario: For an expensive operation (like computing customer risk score), cache the result.  
+      Build:
+      <br/><code>GetOrAdd&lt;TKey, TValue&gt;(TKey key, Func&lt;TKey, TValue&gt; factory)</code>
+      <br/>Use it to compute risk score for a customer id.
+    </div>
+    <div class="a">
+      <pre><code>using System;
+using System.Collections.Generic;
+
+public class Cache&lt;TKey, TValue&gt;
+{
+    private readonly Dictionary&lt;TKey, TValue&gt; _store = new();
+
+    public TValue GetOrAdd(TKey key, Func&lt;TKey, TValue&gt; factory)
+    {
+        if (_store.TryGetValue(key, out var value))
+            return value;
+
+        value = factory(key);
+        _store[key] = value;
+        return value;
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        var cache = new Cache&lt;int, double&gt;();
+
+        Func&lt;int, double&gt; expensiveRiskScore = customerId =&gt;
+        {
+            // Simulate expensive calculation
+            Console.WriteLine("Computing risk score (expensive)...");
+            return (customerId % 10) * 7.5 + 12.3;
+        };
+
+        // First time: computes
+        var score1 = cache.GetOrAdd(101, expensiveRiskScore);
+        Console.WriteLine($"Score: {score1}");
+
+        // Second time: returns from cache
+        var score2 = cache.GetOrAdd(101, expensiveRiskScore);
+        Console.WriteLine($"Score: {score2}");
+    }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="card" id="tips">
+    <h2>9) Best Practices + Common Mistakes</h2>
+
+    <h3>9.1 Best Practices</h3>
+    <ul>
+      <li><b>Name your delegates clearly:</b> <code>isEligible</code>, <code>calculateTax</code>, <code>logAudit</code></li>
+      <li><b>Keep delegates small:</b> one responsibility per lambda (easy to test)</li>
+      <li><b>Prefer Func/Predicate for pure logic</b> (no side effects). Use Action only for side effects.</li>
+      <li><b>Use generics to avoid duplication</b> (works for Customer/Product/Student/Order)</li>
+      <li><b>Compose rules</b> (And/Or) for scalable business validations</li>
+    </ul>
+
+    <h3>9.2 Common Mistakes</h3>
+    <div class="warn">
+      <ul>
+        <li><b>Mixing side effects inside Func/Predicate:</b> avoid printing/logging inside validation.</li>
+        <li><b>Huge lambdas:</b> break them into small methods and pass as delegates.</li>
+        <li><b>Null handling:</b> ensure objects/strings aren’t null before using.</li>
+      </ul>
+    </div>
+
+    <div class="note">
+      <b>Mini Practice Tip:</b> Try rewriting your loops using:
+      <br/>✅ Predicate for “which items”
+      <br/>✅ Func for “how to convert”
+      <br/>✅ Action for “what to do with each”
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Done ✅</h2>
+    <p class="small">
+      If you want, I can next create a <b>single complete mini console project</b> that demonstrates all three delegates together
+      using a real domain (Billing / HR / Library / E-Commerce) with a menu-driven UI and unit-test-friendly design.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
