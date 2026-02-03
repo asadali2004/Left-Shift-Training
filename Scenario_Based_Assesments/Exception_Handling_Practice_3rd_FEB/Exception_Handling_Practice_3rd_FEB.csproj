@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Exception_Handling_Practice_3rd_FEB</AssemblyName>
+    <RootNamespace>Exception_Handling_Practice_3rd_FEB</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <StartupObject>BonusCalculator</StartupObject>
+  </PropertyGroup>
+
+</Project>

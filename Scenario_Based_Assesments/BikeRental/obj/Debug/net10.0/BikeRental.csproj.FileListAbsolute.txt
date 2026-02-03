@@ -1,0 +1,15 @@
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.GeneratedMSBuildEditorConfig.editorconfig
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.AssemblyInfoInputs.cache
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.AssemblyInfo.cs
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.csproj.CoreCompileInputs.cache
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.sourcelink.json
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\bin\Debug\net10.0\BikeRental.exe
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\bin\Debug\net10.0\BikeRental.deps.json
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\bin\Debug\net10.0\BikeRental.runtimeconfig.json
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\bin\Debug\net10.0\BikeRental.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\bin\Debug\net10.0\BikeRental.pdb
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\refint\BikeRental.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.pdb
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\BikeRental.genruntimeconfig.cache
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\BikeRental\obj\Debug\net10.0\ref\BikeRental.dll

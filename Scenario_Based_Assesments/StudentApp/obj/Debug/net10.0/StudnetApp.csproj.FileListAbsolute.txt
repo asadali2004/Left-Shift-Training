@@ -1,0 +1,14 @@
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.GeneratedMSBuildEditorConfig.editorconfig
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.AssemblyInfoInputs.cache
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.AssemblyInfo.cs
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.csproj.CoreCompileInputs.cache
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\bin\Debug\net10.0\StudnetApp.exe
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\bin\Debug\net10.0\StudnetApp.deps.json
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\bin\Debug\net10.0\StudnetApp.runtimeconfig.json
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\bin\Debug\net10.0\StudnetApp.dll
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\bin\Debug\net10.0\StudnetApp.pdb
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.dll
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\refint\StudnetApp.dll
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.pdb
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\StudnetApp.genruntimeconfig.cache
+E:\DotNet_Learning\C#_Practice_Projects\Generic_Practice\StudnetApp\obj\Debug\net10.0\ref\StudnetApp.dll

@@ -1,0 +1,18 @@
+<Solution>
+  <Project Path="LMS/LMS.csproj" />
+  <Project Path="Hotel_Room_Booking_System/Hotel_Room_Booking_System.csproj" />
+  <Project Path="Employee_Management_System/Employee_Management_System.csproj" />
+  <Project Path="Restaurant_Management_System/Restaurant_Management_System.csproj" />
+  <Project Path="BikeRental/BikeRental.csproj" />
+  <Project Path="Exception_Handling_Practice_3rd_FEB/Exception_Handling_Practice_3rd_FEB.csproj" />
+  <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
+  <Project Path="Flip_Key/Flip_Key.csproj" />
+  <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
+  <Project Path="Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
+  <Project Path="String_Based_Assessments/WordWand/WordWand.csproj" />
+  <Project Path="String_Based_Assessments/MyNameIsYours/MyNameIsYours.csproj" />
+  <Project Path="String_Based_Assessments/PasswordGenerator/PasswordGenerator.csproj" />
+  <Project Path="String_Based_Assessments/GoAirSecurity/GoAirSecurity.csproj" />
+  <Project Path="String_Based_Assessments/ShopValidator/ShopValidator.csproj" />
+  <Project Path="StudentApp/StudentApp.csproj" />
+</Solution>

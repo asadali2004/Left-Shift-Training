@@ -1,0 +1,15 @@
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\bin\Debug\net10.0\01_LMS.exe
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\bin\Debug\net10.0\01_LMS.deps.json
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\bin\Debug\net10.0\01_LMS.runtimeconfig.json
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\bin\Debug\net10.0\01_LMS.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\bin\Debug\net10.0\01_LMS.pdb
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.GeneratedMSBuildEditorConfig.editorconfig
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.AssemblyInfoInputs.cache
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.AssemblyInfo.cs
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.csproj.CoreCompileInputs.cache
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\refint\01_LMS.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.pdb
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.genruntimeconfig.cache
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\ref\01_LMS.dll
+E:\DotNet_Learning\C#_Practice_Projects\Scenerio_Based_Practice\01_LMS\obj\Debug\net10.0\01_LMS.sourcelink.json
