@@ -13,11 +13,11 @@
   <Project Path="04_String_Based_Assessments/GoAirSecurity/GoAirSecurity.csproj" />
   <Project Path="04_String_Based_Assessments/ShopValidator/ShopValidator.csproj" />
   
-  <!-- M1_Practice Projects -->
-  <Project Path="M1_Practice/Stream_Buzz/Stream_Buzz.csproj" />
-  <Project Path="M1_Practice/Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
-  <Project Path="M1_Practice/Flip_Key/Flip_Key.csproj" />
-  <Project Path="M1_Practice/Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
+  <!-- M1_Practice Projects (Root-level references preserve GitHub URLs) -->
+  <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
+  <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
+  <Project Path="Flip_Key/Flip_Key.csproj" />
+  <Project Path="Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
   
   <!-- Questions_Practice Projects (21 Practice Scenarios) -->
   <Project Path="Questions_Practice/01_Library_Management_System/01_Library_Management_System.csproj" />

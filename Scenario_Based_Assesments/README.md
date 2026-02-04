@@ -23,7 +23,7 @@ Scenario_Based_Assesments/
 │   ├── GoAirSecurity/
 │   └── ShopValidator/
 │
-├── M1_Practice/                               # Mixed Practice Projects
+├── M1_Practice/                               # Mixed Practice (Organized Folder)
 │   ├── Stream_Buzz/                           # StreamBuzz Engagement Tracker
 │   ├── Factory-Robot-Hazard-Analyzer/         # Custom Exceptions & Validation
 │   ├── Flip_Key/                              # String Manipulation & ASCII
@@ -51,8 +51,18 @@ Scenario_Based_Assesments/
 │   ├── 20_Real_Estate_Property_Management/
 │   └── 21_Social_Media_Post_Management/
 │
+├── Stream_Buzz/                               # Root-Level (Preserves GitHub URLs)
+├── Factory-Robot-Hazard-Analyzer/             # Root-Level (Preserves GitHub URLs)
+├── Flip_Key/                                  # Root-Level (Preserves GitHub URLs)
+├── Nunit-Assement-Q1/                         # Root-Level (Preserves GitHub URLs)
+│
 └── Scenario_Based_Assesments.slnx             # Solution File
 ```
+
+> **📝 Note:** The 4 projects (Stream_Buzz, Factory-Robot-Hazard-Analyzer, Flip_Key, Nunit-Assement-Q1) exist in both locations:
+> - **Root-level** - Preserves GitHub URL accessibility for shared external links
+> - **M1_Practice folder** - Organized categorization for project management
+> - Both locations are synchronized and contain the same code
 
 ---
 
