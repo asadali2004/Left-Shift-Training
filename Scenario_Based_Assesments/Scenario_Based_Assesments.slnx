@@ -1,18 +1,43 @@
 <Solution>
-  <Project Path="LMS/LMS.csproj" />
-  <Project Path="Hotel_Room_Booking_System/Hotel_Room_Booking_System.csproj" />
-  <Project Path="Employee_Management_System/Employee_Management_System.csproj" />
-  <Project Path="Restaurant_Management_System/Restaurant_Management_System.csproj" />
-  <Project Path="BikeRental/BikeRental.csproj" />
-  <Project Path="Exception_Handling_Practice_3rd_FEB/Exception_Handling_Practice_3rd_FEB.csproj" />
-  <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
-  <Project Path="Flip_Key/Flip_Key.csproj" />
-  <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
-  <Project Path="Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
-  <Project Path="String_Based_Assessments/WordWand/WordWand.csproj" />
-  <Project Path="String_Based_Assessments/MyNameIsYours/MyNameIsYours.csproj" />
-  <Project Path="String_Based_Assessments/PasswordGenerator/PasswordGenerator.csproj" />
-  <Project Path="String_Based_Assessments/GoAirSecurity/GoAirSecurity.csproj" />
-  <Project Path="String_Based_Assessments/ShopValidator/ShopValidator.csproj" />
-  <Project Path="StudentApp/StudentApp.csproj" />
+  <!-- 01_OOPs_Concepts Projects -->
+  <Project Path="01_OOPs_Concepts/BikeRental/BikeRental.csproj" />
+  <Project Path="01_OOPs_Concepts/StudentApp/StudentApp.csproj" />
+  
+  <!-- 03_Exception_Handling Projects -->
+  <Project Path="03_Exception_Handling/Exception_Handling_Practice_3rd_FEB/Exception_Handling_Practice_3rd_FEB.csproj" />
+  
+  <!-- 04_String_Based_Assessments Projects -->
+  <Project Path="04_String_Based_Assessments/WordWand/WordWand.csproj" />
+  <Project Path="04_String_Based_Assessments/MyNameIsYours/MyNameIsYours.csproj" />
+  <Project Path="04_String_Based_Assessments/PasswordGenerator/PasswordGenerator.csproj" />
+  <Project Path="04_String_Based_Assessments/GoAirSecurity/GoAirSecurity.csproj" />
+  <Project Path="04_String_Based_Assessments/ShopValidator/ShopValidator.csproj" />
+  
+  <!-- M1_Practice Projects -->
+  <Project Path="M1_Practice/Stream_Buzz/Stream_Buzz.csproj" />
+  <Project Path="M1_Practice/Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
+  <Project Path="M1_Practice/Flip_Key/Flip_Key.csproj" />
+  <Project Path="M1_Practice/Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
+  
+  <!-- Questions_Practice Projects (21 Practice Scenarios) -->
+  <Project Path="Questions_Practice/01_Library_Management_System/01_Library_Management_System.csproj" />
+  <Project Path="Questions_Practice/02_Hotel_Room_Booking_System/02_Hotel_Room_Booking_System.csproj" />
+  <Project Path="Questions_Practice/03_Employee_Management_System/03_Employee_Management_System.csproj" />
+  <Project Path="Questions_Practice/04_Restaurant_Menu_Management/04_Restaurant_Menu_Management.csproj" />
+  <Project Path="Questions_Practice/05_E-commerce_Product_Catalog/05_E-commerce_Product_Catalog.csproj" />
+  <Project Path="Questions_Practice/06_Student_Grade_Management_System/06_Student_Grade_Management_System.csproj" />
+  <Project Path="Questions_Practice/07_Movie_Theater_Booking_System/07_Movie_Theater_Booking_System.csproj" />
+  <Project Path="Questions_Practice/08_Gym_Membership_Management/08_Gym_Membership_Management.csproj" />
+  <Project Path="Questions_Practice/09_Car_Rental_Agency/09_Car_Rental_Agency.csproj" />
+  <Project Path="Questions_Practice/10_Hospital_Patient_Management/10_Hospital_Patient_Management.csproj" />
+  <Project Path="Questions_Practice/11_Online_Food_Delivery/11_Online_Food_Delivery.csproj" />
+  <Project Path="Questions_Practice/12_Music_Streaming_Service/12_Music_Streaming_Service.csproj" />
+  <Project Path="Questions_Practice/13_Bank_Account_Management/13_Bank_Account_Management.csproj" />
+  <Project Path="Questions_Practice/14_Flight_Booking_System/14_Flight_Booking_System.csproj" />
+  <Project Path="Questions_Practice/15_Task_Management_System/15_Task_Management_System.csproj" />
+  <Project Path="Questions_Practice/17_Inventory_Stock_Management/17_Inventory_Stock_Management.csproj" />
+  <Project Path="Questions_Practice/18_Event_Management_System/18_Event_Management_System.csproj" />
+  <Project Path="Questions_Practice/19_Courier_Delivery_Tracking/19_Courier_Delivery_Tracking.csproj" />
+  <Project Path="Questions_Practice/20_Real_Estate_Property_Management/20_Real_Estate_Property_Management.csproj" />
+  <Project Path="Questions_Practice/21_Social_Media_Post_Management/21_Social_Media_Post_Management.csproj" />
 </Solution>

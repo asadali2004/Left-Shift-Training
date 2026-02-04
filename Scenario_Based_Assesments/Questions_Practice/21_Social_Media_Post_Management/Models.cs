@@ -1,0 +1,2 @@
+using System; using System.Collections.Generic;
+namespace SocialMedia { public class User { public string UserId { get; set; } public string Username { get; set; } public string Email { get; set; } public int FollowersCount { get; set; } public DateTime JoinDate { get; set; } } public class Post { public string PostId { get; set; } public string UserId { get; set; } public string Content { get; set; } public DateTime PostedDate { get; set; } public int LikesCount { get; set; } public int CommentsCount { get; set; } public int SharesCount { get; set; } } }

@@ -1,0 +1,2 @@
+using System; using System.Collections.Generic;
+namespace BankManagement { public class Transaction { public string TransactionId { get; set; } public DateTime TransactionDate { get; set; } public string Type { get; set; } public double Amount { get; set; } public string Description { get; set; } } public class Account { public string AccountNumber { get; set; } public string AccountHolder { get; set; } public string AccountType { get; set; } public double Balance { get; set; } public List<Transaction> TransactionHistory { get; set; } } }
