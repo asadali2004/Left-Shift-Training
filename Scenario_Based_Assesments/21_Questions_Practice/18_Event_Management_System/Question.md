@@ -1,4 +1,3 @@
-````md
 # Question 18: Event Management System
 
 ## Scenario
