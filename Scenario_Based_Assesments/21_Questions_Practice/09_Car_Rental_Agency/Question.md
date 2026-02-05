@@ -22,15 +22,79 @@ A car rental company needs to manage its fleet and rentals.
 - `double TotalCost`
 
 ### In class RentalManager:
-- `void AddCar(string license, string make, string model, string type, double rate)`
-- `bool RentCar(string license, string customer, DateTime start, int days)`
-- `Dictionary<string, List<RentalCar>> GroupCarsByType()`
-- `List<Rental> GetActiveRentals()`
-- `double CalculateTotalRentalRevenue()`
+
+#### Method 1
+```csharp
+public void AddCar(string license, string make, string model, string type, double rate)
+```
+- Adds car to inventory
+
+#### Method 2
+```csharp
+public bool RentCar(string license, string customer, DateTime start, int days)
+```
+- Creates rental if car available
+
+#### Method 3
+```csharp
+public Dictionary<string, List<RentalCar>> GroupCarsByType()
+```
+- Groups available cars by type
+
+#### Method 4
+```csharp
+public List<Rental> GetActiveRentals()
+```
+- Returns current rentals
+
+#### Method 5
+```csharp
+public double CalculateTotalRentalRevenue()
+```
+- Sum of all rental costs
 
 ## Sample Use Cases:
-- Add cars to inventory
-- Process rentals
-- Check car availability by type
-- Track active rentals
-- Calculate revenue
+1. Add cars to inventory
+2. Process rentals
+3. Check car availability by type
+4. Track active rentals
+5. Calculate revenue
+csharp
+// In class RentalCar:
+// - string LicensePlate
+// - string Make
+// - string Model
+// - string CarType (Sedan/SUV/Van)
+// - bool IsAvailable
+// - double DailyRate
+
+// In class Rental:
+// - int RentalId
+// - string LicensePlate
+// - string CustomerName
+// - DateTime StartDate
+// - DateTime EndDate
+// - double TotalCost
+
+// In class RentalManager:
+public void AddCar(string license, string make, string model, 
+                   string type, double rate)
+
+public bool RentCar(string license, string customer, 
+                    DateTime start, int days)
+// Creates rental if car available
+
+public Dictionary<string, List<RentalCar>> GroupCarsByType()
+// Groups available cars by type
+
+public List<Rental> GetActiveRentals()
+// Returns current rentals
+
+public double CalculateTotalRentalRevenue()
+// Sum of all rental costs
+Use Cases:
+•	Add cars to inventory
+•	Process rentals
+•	Check car availability by type
+•	Track active rentals
+•	Calculate revenue
