@@ -1,4 +1,3 @@
-````md
 # Question 16: E-Learning Platform
 
 ## Scenario
