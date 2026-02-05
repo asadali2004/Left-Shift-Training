@@ -1,6 +1,6 @@
 using System;
 
-namespace EMS
+namespace EmployeeManagementSystem
 {
     public class Employee
     {
