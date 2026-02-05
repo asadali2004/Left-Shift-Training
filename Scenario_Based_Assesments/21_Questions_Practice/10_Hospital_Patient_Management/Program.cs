@@ -27,7 +27,7 @@ namespace HospitalManagement
             manager.ScheduleAppointment(2, 2, DateTime.Today.AddHours(14));
             manager.ScheduleAppointment(3, 1, DateTime.Today.AddHours(15));
             manager.ScheduleAppointment(4, 4, DateTime.Today.AddHours(11));
-            manager.ScheduleAppointment(5, 5, DateTime.Tomorrow.AddHours(9));
+            manager.ScheduleAppointment(5, 5, DateTime.Today.AddDays(1).AddHours(9));
             
             // Add medical history
             manager.Patients[1].MedicalHistory.Add("Hypertension diagnosed 2020");
