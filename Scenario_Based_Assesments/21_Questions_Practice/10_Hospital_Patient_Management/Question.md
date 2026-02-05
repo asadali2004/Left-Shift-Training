@@ -58,36 +58,3 @@ public List<Appointment> GetTodayAppointments()
 3. View doctors by specialization
 4. Check daily appointments
 5. Manage medical history
-csharp
-// In class Patient:
-// - int PatientId
-// - string Name
-// - int Age
-// - string BloodGroup
-// - List<string> MedicalHistory
-
-// In class Doctor:
-// - int DoctorId
-// - string Name
-// - string Specialization
-// - List<DateTime> AvailableSlots
-
-// In class Appointment:
-// - int AppointmentId
-// - int PatientId
-// - int DoctorId
-// - DateTime AppointmentTime
-// - string Status (Scheduled/Completed/Cancelled)
-
-// In class HospitalManager:
-public void AddPatient(string name, int age, string bloodGroup)
-public void AddDoctor(string name, string specialization)
-public bool ScheduleAppointment(int patientId, int doctorId, DateTime time)
-public Dictionary<string, List<Doctor>> GroupDoctorsBySpecialization()
-public List<Appointment> GetTodayAppointments()
-Use Cases:
-•	Register patients and doctors
-•	Schedule appointments
-•	View doctors by specialization
-•	Check daily appointments
-•	Manage medical history
