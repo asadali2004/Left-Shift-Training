@@ -6,34 +6,69 @@ namespace GymMembership
 {
     public class GymManager
     {
-        // TODO: Add collections to store members and classes
+        // Store all members and classes
+        public Dictionary<int, Member> Members = new Dictionary<int, Member>();
+        public List<FitnessClass> Classes = new List<FitnessClass>();
+        private int nextMemberId = 1;
         
+        // Add member with expiry date
         public void AddMember(string name, string membershipType, int months)
         {
-            // TODO: Creates membership with expiry date
+            int memberId = nextMemberId++;
+            Members.Add(memberId, new Member
+            {
+                MemberId = memberId,
+                Name = name,
+                MembershipType = membershipType,
+                JoinDate = DateTime.Now,
+                ExpiryDate = DateTime.Now.AddMonths(months)
+            });
         }
 
+        // Add new fitness class
         public void AddClass(string className, string instructor, DateTime schedule, int maxParticipants)
         {
-            // TODO: Adds new fitness class
+            Classes.Add(new FitnessClass
+            {
+                ClassName = className,
+                Instructor = instructor,
+                Schedule = schedule,
+                MaxParticipants = maxParticipants,
+                RegisteredMembers = new List<string>()
+            });
         }
 
+        // Register member for class
         public bool RegisterForClass(int memberId, string className)
         {
-            // TODO: Registers member if class has space
+            if (Members.ContainsKey(memberId))
+            {
+                var fitnessClass = Classes.FirstOrDefault(c => c.ClassName == className);
+                if (fitnessClass != null && fitnessClass.RegisteredMembers.Count < fitnessClass.MaxParticipants)
+                {
+                    string memberName = Members[memberId].Name;
+                    if (!fitnessClass.RegisteredMembers.Contains(memberName))
+                    {
+                        fitnessClass.RegisteredMembers.Add(memberName);
+                        return true;
+                    }
+                }
+            }
             return false;
         }
 
+        // Group members by membership type
         public Dictionary<string, List<Member>> GroupMembersByMembershipType()
         {
-            // TODO: Groups members by their plan
-            return new Dictionary<string, List<Member>>();
+            return Members.Values.GroupBy(m => m.MembershipType).ToDictionary(g => g.Key, g => g.ToList());
         }
 
+        // Get classes scheduled for next 7 days
         public List<FitnessClass> GetUpcomingClasses()
         {
-            // TODO: Returns classes scheduled for next 7 days
-            return new List<FitnessClass>();
+            DateTime now = DateTime.Now;
+            DateTime weekLater = now.AddDays(7);
+            return Classes.Where(c => c.Schedule >= now && c.Schedule <= weekLater).ToList();
         }
     }
 }
