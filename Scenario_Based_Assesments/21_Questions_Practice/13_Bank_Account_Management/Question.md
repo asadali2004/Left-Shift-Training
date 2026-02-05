@@ -37,3 +37,12 @@ public List<Transaction> GetAccountStatement(
     DateTime from,
     DateTime to
 );
+
+---
+##Use Cases
+
+*Open different types of accounts
+*Process deposits and withdrawals
+*Group accounts by type
+*Generate account statements
+*Check account balances
