@@ -1,4 +1,3 @@
-````md
 # Question 17: Inventory Stock Management
 
 ## Scenario
