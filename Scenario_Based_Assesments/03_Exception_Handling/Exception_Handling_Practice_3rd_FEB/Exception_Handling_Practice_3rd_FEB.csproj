@@ -7,7 +7,36 @@
     <RootNamespace>Exception_Handling_Practice_3rd_FEB</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <StartupObject>BonusCalculator</StartupObject>
+    <!-- Uncomment the one you want to run -->
+    <!-- 1. Banking Withdrawal Validation -->
+    <!-- <StartupObject>BankAccount</StartupObject> -->
+    
+    <!-- 2. File Reading with Resource Safety -->
+    <!-- <StartupObject>FileReader</StartupObject> -->
+    
+    <!-- 3. Employee Bonus Processing -->
+    <!-- <StartupObject>BonusCalculator</StartupObject> -->
+    
+    <!-- 4. Custom Exception – Login Attempts -->
+    <!-- <StartupObject>LoginSystem</StartupObject> -->
+    
+    <!-- 5. Exception Propagation Across Layers -->
+    <!-- <StartupObject>ExceptionPropagation</StartupObject> -->
+    
+    <!-- 6. Safe Numeric Input Handling -->
+    <!-- <StartupObject>InputHandler</StartupObject> -->
+    
+    <!-- 7. Database Connection Simulation -->
+    <!-- <StartupObject>DatabaseConnection</StartupObject> -->
+    
+    <!-- 8. File Upload Validation -->
+    <!-- <StartupObject>FileUpload</StartupObject> -->
+    
+    <!-- 9. Rethrowing Exception Correctly -->
+    <!-- <StartupObject>ExceptionRethrow</StartupObject> -->
+    
+    <!-- 10. Order Processing System -->
+    <StartupObject>OrderProcessor</StartupObject>
   </PropertyGroup>
 
 </Project>
