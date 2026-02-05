@@ -1,2 +1,29 @@
-using System; using System.Collections.Generic;
-namespace CourierTracking { public class Package { public string TrackingNumber { get; set; } public string Sender { get; set; } public string Recipient { get; set; } public string OriginLocation { get; set; } public string DestinationLocation { get; set; } public double Weight { get; set; } public double ShippingCost { get; set; } } public class DeliveryStatus { public string TrackingNumber { get; set; } public string Status { get; set; } public string CurrentLocation { get; set; } public DateTime UpdateTime { get; set; } public string Notes { get; set; } } }
+using System;
+using System.Collections.Generic;
+
+namespace _19_Courier_Delivery_Tracking
+{
+    // Represents a package
+    public class Package
+    {
+        public string TrackingNumber { get; set; }
+        public string SenderName { get; set; }
+        public string ReceiverName { get; set; }
+        public string DestinationAddress { get; set; }
+        public double Weight { get; set; }
+        public string PackageType { get; set; } // Document / Parcel / Fragile
+        public double ShippingCost { get; set; }
+    }
+
+    // Represents delivery status
+    public class DeliveryStatus
+    {
+        public string TrackingNumber { get; set; }
+        public List<string> Checkpoints { get; set; }
+            = new List<string>();
+
+        public string CurrentStatus { get; set; } // Dispatched / InTransit / Delivered
+        public DateTime EstimatedDelivery { get; set; }
+        public DateTime ActualDelivery { get; set; }
+    }
+}
