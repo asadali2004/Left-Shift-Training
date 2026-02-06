@@ -17,6 +17,7 @@
   <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
   <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
   <Project Path="Flip_Key/Flip_Key.csproj" />
+  <Project Path="GymStream/GymStream.csproj" />
   <Project Path="Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
   
   <!-- Questions_Practice Projects (21 Practice Scenarios) -->
