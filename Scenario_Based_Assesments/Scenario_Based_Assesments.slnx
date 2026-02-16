@@ -15,6 +15,7 @@
   
   <!-- M1_Practice Projects (Root-level references preserve GitHub URLs) -->
   <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
+  <Project Path="E-Commerce Inventory System/E-Commerce Inventory System.csproj" />
   <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
   <Project Path="Flip_Key/Flip_Key.csproj" />
   <Project Path="Global-Cargo-Solutions/Global-Cargo-Solutions.csproj" />
@@ -42,4 +43,5 @@
   <Project Path="Questions_Practice/19_Courier_Delivery_Tracking/19_Courier_Delivery_Tracking.csproj" />
   <Project Path="Questions_Practice/20_Real_Estate_Property_Management/20_Real_Estate_Property_Management.csproj" />
   <Project Path="Questions_Practice/21_Social_Media_Post_Management/21_Social_Media_Post_Management.csproj" />
+  <Project Path="University Course Registration System/University Course Registration System.csproj" />
 </Solution>
