@@ -40,6 +40,38 @@
     <IsActive>true</IsActive>
     <CreatedOn>2025-01-10T00:00:00+05:30</CreatedOn>
   </Table>
+  <Table>
+    <CustomerId>5606</CustomerId>
+    <FullName>Transaction Customer 1</FullName>
+    <City>Pune</City>
+    <Segment>Corporate</Segment>
+    <IsActive>true</IsActive>
+    <CreatedOn>2026-02-16T00:00:00+05:30</CreatedOn>
+  </Table>
+  <Table>
+    <CustomerId>5930</CustomerId>
+    <FullName>Transaction Customer 1</FullName>
+    <City>Pune</City>
+    <Segment>Corporate</Segment>
+    <IsActive>true</IsActive>
+    <CreatedOn>2026-02-16T00:00:00+05:30</CreatedOn>
+  </Table>
+  <Table>
+    <CustomerId>6147</CustomerId>
+    <FullName>Transaction Customer 2</FullName>
+    <City>Kolkata</City>
+    <Segment>Retail</Segment>
+    <IsActive>true</IsActive>
+    <CreatedOn>2026-02-16T00:00:00+05:30</CreatedOn>
+  </Table>
+  <Table>
+    <CustomerId>6734</CustomerId>
+    <FullName>Transaction Customer 2</FullName>
+    <City>Kolkata</City>
+    <Segment>Retail</Segment>
+    <IsActive>true</IsActive>
+    <CreatedOn>2026-02-16T00:00:00+05:30</CreatedOn>
+  </Table>
   <Table1>
     <OrderId>5001</OrderId>
     <CustomerId>101</CustomerId>

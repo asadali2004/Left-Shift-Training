@@ -37,7 +37,10 @@ namespace ConnectedArchitecture
         // Connection String - Contains database server and authentication info
         private static string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=Customer–Order;Integrated Security=True;Encrypt=False;TrustServerCertificate=True;";
 
-        /* Commented to run DisconnectedArch.cs
+        // ===========================================================================================
+        // MAIN METHOD - Entry point for CONNECTED ARCHITECTURE
+        // ===========================================================================================
+        /*  COMMENT THIS OUT to run CONNECTED ARCHITECTURE
         static void Main(string[] args)
         {
             Console.WriteLine("========== CONNECTED ARCHITECTURE - ADO.NET ==========\n");
@@ -76,7 +79,7 @@ namespace ConnectedArchitecture
 
             Console.WriteLine("\n========== COMPLETED ==========");
         }
-        */ // End of commented Main
+        */  // End of Commented Main
 
         // ===========================================================================================
         // SELECT ALL - Read data using SqlDataReader (CONNECTION STAYS OPEN!)
