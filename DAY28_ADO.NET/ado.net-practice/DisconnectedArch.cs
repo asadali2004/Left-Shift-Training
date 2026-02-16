@@ -30,78 +30,78 @@ using Microsoft.Data.SqlClient;
 
 class Program1
 {
-    static void Main()
-    {
-        // Connection String - Contains database server and authentication info
-        string cs = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=Customer–Order;Integrated Security=True;Encrypt=False;TrustServerCertificate = True;";
+    // static void Main()
+    // {
+    //     // Connection String - Contains database server and authentication info
+    //     string cs = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=Customer–Order;Integrated Security=True;Encrypt=False;TrustServerCertificate = True;";
         
-        // SQL Query - Can fetch multiple tables in one go (separated by semicolon)
-        string sql = "SELECT CustomerId, FullName, City, Segment, IsActive, CreatedOn FROM dbo.Customers; SELECT OrderId, CustomerId, OrderDate, Amount, Status, PaymentMode FROM dbo.Orders";
+    //     // SQL Query - Can fetch multiple tables in one go (separated by semicolon)
+    //     string sql = "SELECT CustomerId, FullName, City, Segment, IsActive, CreatedOn FROM dbo.Customers; SELECT OrderId, CustomerId, OrderDate, Amount, Status, PaymentMode FROM dbo.Orders";
         
-        // DataSet - In-memory cache that can hold multiple tables
-        // Think of it as a "mini-database" in memory
-        DataSet ds = new DataSet();
+    //     // DataSet - In-memory cache that can hold multiple tables
+    //     // Think of it as a "mini-database" in memory
+    //     DataSet ds = new DataSet();
         
-        // STEP 1: FETCH DATA FROM DATABASE
-        using (var con = new SqlConnection(cs))  // Create connection
-        using (var cmd = new SqlCommand(sql, con))  // Create command
-        {
-            con.Open();  // Open connection temporarily
+    //     // STEP 1: FETCH DATA FROM DATABASE
+    //     using (var con = new SqlConnection(cs))  // Create connection
+    //     using (var cmd = new SqlCommand(sql, con))  // Create command
+    //     {
+    //         con.Open();  // Open connection temporarily
             
-            // SqlDataAdapter - Bridge between database and DataSet
-            // It automatically opens/closes connection and fills DataSet
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            adapter.Fill(ds);  // Fetch data and fill DataSet
+    //         // SqlDataAdapter - Bridge between database and DataSet
+    //         // It automatically opens/closes connection and fills DataSet
+    //         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+    //         adapter.Fill(ds);  // Fetch data and fill DataSet
             
-        } // Connection automatically closes here! (using statement)
+    //     } // Connection automatically closes here! (using statement)
         
-        // IMPORTANT: Connection is now CLOSED, but we still have data in DataSet
-        // This is the KEY concept of Disconnected Architecture
+    //     // IMPORTANT: Connection is now CLOSED, but we still have data in DataSet
+    //     // This is the KEY concept of Disconnected Architecture
         
-        // Export DataSet to XML file (optional - for demo purpose)
-        // Export DataSet to XML file (optional - for demo purpose)
-        ds.WriteXml("TestData");
+    //     // Export DataSet to XML file (optional - for demo purpose)
+    //     // Export DataSet to XML file (optional - for demo purpose)
+    //     ds.WriteXml("TestData");
 
-        // STEP 2: WORK WITH DATA (Connection is CLOSED!)
-        // Display how many tables were loaded
-        Console.WriteLine(ds.Tables.Count);  // Should print: 2 (Customers and Orders)
+    //     // STEP 2: WORK WITH DATA (Connection is CLOSED!)
+    //     // Display how many tables were loaded
+    //     Console.WriteLine(ds.Tables.Count);  // Should print: 2 (Customers and Orders)
         
-        // Display column names of first table (Customers)
-        foreach(DataColumn item in ds.Tables[0].Columns){
-            System.Console.WriteLine(item.ColumnName+"\t");
-        }
+    //     // Display column names of first table (Customers)
+    //     foreach(DataColumn item in ds.Tables[0].Columns){
+    //         System.Console.WriteLine(item.ColumnName+"\t");
+    //     }
         
-        // Display all rows from first table
-        foreach (DataRow row in ds.Tables[0].Rows)
-        {
-            foreach (var item in row.ItemArray)
-            {
-                Console.Write(item + "\t");
-            }
-            Console.WriteLine();
-        }
+    //     // Display all rows from first table
+    //     foreach (DataRow row in ds.Tables[0].Rows)
+    //     {
+    //         foreach (var item in row.ItemArray)
+    //         {
+    //             Console.Write(item + "\t");
+    //         }
+    //         Console.WriteLine();
+    //     }
         
-        // STEP 3: PERFORM CRUD OPERATIONS
-        // All operations work on in-memory DataSet first, then sync with DB
+    //     // STEP 3: PERFORM CRUD OPERATIONS
+    //     // All operations work on in-memory DataSet first, then sync with DB
         
-        // INSERT Operation
-        Console.WriteLine("\n--- INSERT OPERATION ---");
-        InsertCustomer(ds, cs);
-        Console.WriteLine("\nData After INSERT:");
-        DisplayTableData(ds);
+    //     // INSERT Operation
+    //     Console.WriteLine("\n--- INSERT OPERATION ---");
+    //     InsertCustomer(ds, cs);
+    //     Console.WriteLine("\nData After INSERT:");
+    //     DisplayTableData(ds);
 
-        // UPDATE Operation
-        Console.WriteLine("\n--- UPDATE OPERATION ---");
-        UpdateCustomer(ds, cs);
-        Console.WriteLine("\nData After UPDATE:");
-        DisplayTableData(ds);
+    //     // UPDATE Operation
+    //     Console.WriteLine("\n--- UPDATE OPERATION ---");
+    //     UpdateCustomer(ds, cs);
+    //     Console.WriteLine("\nData After UPDATE:");
+    //     DisplayTableData(ds);
 
-        // DELETE Operation
-        Console.WriteLine("\n--- DELETE OPERATION ---");
-        DeleteCustomer(ds, cs);
-        Console.WriteLine("\nData After DELETE:");
-        DisplayTableData(ds);
-    }
+    //     // DELETE Operation
+    //     Console.WriteLine("\n--- DELETE OPERATION ---");
+    //     DeleteCustomer(ds, cs);
+    //     Console.WriteLine("\nData After DELETE:");
+    //     DisplayTableData(ds);
+    // }
     
     // ===========================================================================================
     // HELPER METHOD: Display DataSet Table Data

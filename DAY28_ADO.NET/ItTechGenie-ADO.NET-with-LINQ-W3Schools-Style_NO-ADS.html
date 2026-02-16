@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ItTechGenie-ADO.NET with LINQ Operations (W3Schools-Style Tutorial)</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --card:#0f213d;
+      --soft:#13284a;
+      --text:#eaf0ff;
+      --muted:#b8c6e6;
+      --brand:#23c55e; /* w3-green-ish */
+      --brand2:#06b6d4;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 800px at 10% 0%, #152a4a 0%, var(--bg) 55%),
+                  radial-gradient(900px 600px at 100% 10%, #0b3b4a 0%, var(--bg) 50%);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    a{color:inherit; text-decoration:none}
+    a:hover{color:var(--brand)}
+
+    /* Top bar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(90deg, rgba(15,26,46,.92), rgba(15,33,61,.72));
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:12px 16px;
+      max-width:1400px;
+      margin:0 auto;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      font-weight:800;
+      letter-spacing:.5px;
+      color:#041016;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .brand b{font-size:14px; letter-spacing:.3px}
+    .brand small{color:var(--muted); font-size:12px}
+    .search{
+      margin-left:auto;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      width:min(520px, 52vw);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      border-radius: 999px;
+      padding:8px 12px;
+    }
+    .search input{
+      width:100%;
+      background:transparent;
+      border:0;
+      outline:none;
+      color:var(--text);
+      font-size:14px;
+    }
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      border-radius:999px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    /* Layout */
+    .wrap{
+      max-width:1400px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:16px;
+      padding:16px;
+    }
+
+    /* Left nav */
+    .sidebar{
+      position:sticky;
+      top:70px;
+      align-self:start;
+      background: linear-gradient(180deg, rgba(15,26,46,.92), rgba(15,33,61,.72));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      max-height: calc(100vh - 90px);
+      display:flex;
+      flex-direction:column;
+    }
+    .sidebar header{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:99px;background:var(--brand);
+      box-shadow: 0 0 0 4px rgba(35,197,94,.15);
+    }
+    .sidebar header .title{
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .nav{
+      overflow:auto;
+      padding:10px 10px 14px;
+    }
+    .nav a{
+      display:block;
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--muted);
+      border:1px solid transparent;
+      transition:.15s ease;
+    }
+    .nav a:hover{
+      background: rgba(35,197,94,.10);
+      border-color: rgba(35,197,94,.25);
+      color: var(--text);
+    }
+    .nav a.active{
+      background: rgba(35,197,94,.16);
+      border-color: rgba(35,197,94,.35);
+      color: var(--text);
+    }
+    .nav .group{
+      margin-top:10px;
+      padding:10px 10px 6px;
+      font-size:12px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      color:rgba(184,198,230,.85);
+    }
+
+    /* Content */
+    .content{
+      background: linear-gradient(180deg, rgba(15,26,46,.88), rgba(15,33,61,.60));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height: 800px;
+    }
+    .content .hero{
+      padding:18px 18px 10px;
+      border-bottom:1px solid var(--line);
+      background:
+        radial-gradient(900px 300px at 0% 0%, rgba(35,197,94,.20), transparent 60%),
+        radial-gradient(900px 300px at 100% 0%, rgba(6,182,212,.18), transparent 55%);
+    }
+    .hero h1{
+      margin:0 0 6px;
+      font-size:22px;
+      line-height:1.25;
+    }
+    .hero p{margin:0; color:var(--muted)}
+    .hero .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .badge b{color:var(--text)}
+
+    .article{
+      padding:18px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding:14px;
+      margin:14px 0;
+    }
+    .card h2, .card h3{
+      margin:0 0 8px;
+      line-height:1.2;
+    }
+    .card h2{font-size:18px}
+    .card h3{font-size:16px; color:var(--text)}
+    .card p{margin:8px 0; color:var(--muted)}
+    .hr{height:1px;background:var(--line); margin:12px 0}
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 1180px){
+      .wrap{grid-template-columns: 300px 1fr}
+      .right{display:none}
+    }
+    @media (max-width: 880px){
+      .wrap{grid-template-columns: 1fr}
+      .sidebar{position:relative; top:0; max-height:none}
+      .search{display:none}
+    }
+
+    /* Code */
+    .codebox{
+      border:1px solid rgba(6,182,212,.28);
+      background: rgba(6,182,212,.07);
+      border-radius: var(--radius);
+      padding:12px;
+      overflow:hidden;
+    }
+    pre{
+      margin:0;
+      overflow:auto;
+      padding:10px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.08);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height:1.55;
+      white-space: pre;
+    }
+    .codehead{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+    .codehead .lang{
+      font-size:12px; color:var(--muted)
+    }
+    .btn{
+      cursor:pointer;
+      user-select:none;
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      transition:.15s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(35,197,94,.35);
+      background: rgba(35,197,94,.12);
+    }
+    .btn:active{transform: translateY(0px)}
+
+    /* Callouts */
+    .callout{
+      border-radius: var(--radius);
+      padding:12px 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--muted);
+      margin:12px 0;
+    }
+    .callout .icon{
+      width:28px;height:28px;border-radius:10px;
+      display:grid; place-items:center;
+      font-weight:900;
+      color:#03130b;
+      flex:0 0 auto;
+    }
+    .callout.info .icon{background: rgba(6,182,212,.95)}
+    .callout.tip .icon{background: rgba(35,197,94,.95)}
+    .callout.warn .icon{background: rgba(245,158,11,.95)}
+    .callout.danger .icon{background: rgba(239,68,68,.95)}
+    .callout b{color:var(--text)}
+
+    /* Tooltips */
+    .tt{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:0 6px;
+      border-radius:10px;
+      border:1px dashed rgba(35,197,94,.45);
+      background: rgba(35,197,94,.08);
+      color: var(--text);
+      cursor:help;
+      line-height:1.4;
+    }
+    .tt .q{font-weight:900; color:rgba(35,197,94,.95)}
+    .tt:hover::after{
+      content: attr(data-tip);
+      position:absolute;
+      left:0;
+      top: calc(100% + 10px);
+      min-width: 220px;
+      max-width: 340px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(10,18,32,.98);
+      color: var(--muted);
+      box-shadow: var(--shadow);
+      z-index:999;
+      white-space: normal;
+    }
+
+    /* Tables */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid var(--line);
+    }
+    th, td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+      font-size:14px;
+    }
+    th{background: rgba(255,255,255,.06); text-align:left; color:var(--text)}
+    td{color:var(--muted)}
+    tr:last-child td{border-bottom:0}
+
+    /* Footer */
+    .footer{
+      padding:18px;
+      border-top:1px solid var(--line);
+      color: var(--muted);
+      font-size:13px;
+    }
+
+    /* mini diagram */
+    .diagram{
+      border:1px solid rgba(35,197,94,.28);
+      background: rgba(35,197,94,.07);
+      border-radius: var(--radius);
+      padding:12px;
+      overflow:auto;
+    }
+    .diagram svg{width:100%; height:auto; min-width: 520px}
+    .kbd{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding:2px 6px;
+      border-radius: 8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">TG</div>
+      <div class="brand">
+        <b>ItTechGenie</b>
+        <small>Current Project: <span class="pill">Databricks &amp; SQL Assessment Banks</span></small>
+      </div>
+
+      <div class="search" title="Search inside this page">
+        🔎 <input id="searchBox" placeholder="Search a topic… (example: DataReader, DataSet, Join, GroupBy)" />
+        <span class="pill">Ctrl + K</span>
+      </div>
+
+      <span class="pill">ADO.NET + LINQ</span>
+      <span class="pill">W3Schools-style</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="leftNav">
+      <header>
+        <span class="dot"></span>
+        <div>
+          <div class="title">ADO.NET with LINQ</div>
+          <div style="color:var(--muted);font-size:12px">Step-by-step tutorial page</div>
+        </div>
+      </header>
+
+      <nav class="nav" id="navLinks">
+        <div class="group">Getting Started</div>
+        <a href="#home" class="active">🏠 Home</a>
+        <a href="#what-is-adonet">1. What is ADO.NET?</a>
+        <a href="#why-adonet">2. Why use ADO.NET?</a>
+        <a href="#setup">3. Setup (DB + Project)</a>
+        <a href="#sample-db">4. Sample DB &amp; Tables</a>
+
+        <div class="group">ADO.NET Core Concepts</div>
+        <a href="#connected">5. Connected Architecture (DataReader)</a>
+        <a href="#disconnected">6. Disconnected (DataAdapter/DataSet)</a>
+        <a href="#datatable">7. DataTable Basics</a>
+        <a href="#parameters">8. Parameterized Queries</a>
+        <a href="#crud">9. CRUD (Select/Insert/Update/Delete)</a>
+        <a href="#stored-proc">10. Stored Procedures</a>
+        <a href="#transactions">11. Transactions</a>
+        <a href="#errors">12. Error Handling + using</a>
+
+        <div class="group">LINQ Operations on Data</div>
+        <a href="#linq-intro">13. LINQ for DataTable</a>
+        <a href="#linq-filter">14. Where/Select</a>
+        <a href="#linq-sort">15. OrderBy/ThenBy</a>
+        <a href="#linq-group">16. GroupBy</a>
+        <a href="#linq-join">17. Join (DataTable)</a>
+        <a href="#linq-agg">18. Aggregates</a>
+        <a href="#linq-first">19. First/Single/Any/All</a>
+        <a href="#linq-paging">20. Skip/Take (Paging)</a>
+
+        <div class="group">End-to-End</div>
+        <a href="#mini-project">21. Mini Project (Student Report)</a>
+        <a href="#mcq">22. Quick MCQs</a>
+        <a href="#interview">23. Interview Q&amp;A</a>
+        <a href="#practice">24. Practice Tasks</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content" id="mainContent">
+      <section class="hero" id="home">
+        <h1>ADO.NET with LINQ Operations</h1>
+        <p>Learn how to fetch data using <b>ADO.NET</b> and then run powerful <b>LINQ</b> operations on the results (DataTable/DataSet) — with real, copy‑paste code and a mini project.</p>
+        <div class="meta">
+          <span class="badge">✅ Topic: <b>ADO.NET</b></span>
+          <span class="badge">✅ Topic: <b>LINQ</b></span>
+          <span class="badge">✅ Includes: <b>SQL scripts + C# code</b></span>
+          <span class="badge">✅ Includes: <b>In-content + right ads placeholders</b></span>
+        </div>
+      </section>
+
+      <article class="article">
+<div class="box">In-content Ad Placeholder</div>
+        </div>
+
+        <!-- 1 -->
+        <section class="card" id="what-is-adonet">
+          <h2>1) What is ADO.NET?</h2>
+          <p>
+            <span class="tt" data-tip="ADO.NET is Microsoft's data access technology for .NET. It helps your C# code talk to databases like SQL Server, MySQL, etc.">
+              <span class="q">?</span> ADO.NET
+            </span>
+            is a set of .NET classes that lets your C# application connect to a database, run SQL commands, and read/write data.
+          </p>
+
+          <div class="two-col">
+            <div class="callout info">
+              <div class="icon">i</div>
+              <div>
+                <b>Think like this:</b>
+                <div>Database is a storage room 🗄️. ADO.NET is the delivery person 🚚 who brings data to your app and sends updates back.</div>
+              </div>
+            </div>
+
+            <div class="callout tip">
+              <div class="icon">✓</div>
+              <div>
+                <b>Where is it used?</b>
+                <div>Console apps, WinForms, WPF, ASP.NET MVC/Web API, services — anywhere you need database access.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <table>
+            <thead>
+              <tr><th>ADO.NET Class</th><th>What it does (simple)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tt" data-tip="Represents a connection to the database. Always open late and close early."><span class="q">?</span>SqlConnection</span></td><td>Opens a connection to SQL Server</td></tr>
+              <tr><td><span class="tt" data-tip="Holds SQL text (SELECT/INSERT/UPDATE/DELETE) or stored procedure name."><span class="q">?</span>SqlCommand</span></td><td>Executes a query/command</td></tr>
+              <tr><td><span class="tt" data-tip="Fast forward-only reader for connected mode. Best for large data reads."><span class="q">?</span>SqlDataReader</span></td><td>Reads rows one-by-one</td></tr>
+              <tr><td><span class="tt" data-tip="Fills DataSet/DataTable in disconnected mode."><span class="q">?</span>SqlDataAdapter</span></td><td>Moves data between DB and DataSet/DataTable</td></tr>
+              <tr><td><span class="tt" data-tip="In-memory storage for tables and relations."><span class="q">?</span>DataSet</span></td><td>Holds multiple DataTables (offline)</td></tr>
+              <tr><td><span class="tt" data-tip="In-memory table; can be filtered using LINQ."><span class="q">?</span>DataTable</span></td><td>Holds tabular data (offline)</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 2 -->
+        <section class="card" id="why-adonet">
+          <h2>2) Why use ADO.NET?</h2>
+          <p>ADO.NET is still important because it gives you:</p>
+          <ul>
+            <li><b>Full control</b> over SQL (great for performance and complex queries)</li>
+            <li><b>Lightweight</b> data access (no heavy ORM required)</li>
+            <li><b>Works everywhere</b> in .NET</li>
+            <li><b>Perfect base</b> to understand EF Core later</li>
+          </ul>
+
+          <div class="callout warn">
+            <div class="icon">!</div>
+            <div>
+              <b>Important:</b> Use <span class="kbd">parameters</span> for inputs to avoid SQL Injection.
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section class="card" id="setup">
+          <h2>3) Setup (DB + Project)</h2>
+
+          <div class="two-col">
+            <div class="card" style="margin:0">
+              <h3>Step A: Create a Console App</h3>
+              <ol>
+                <li>Open Visual Studio</li>
+                <li>Create Project → <b>Console App</b> (.NET)</li>
+                <li>Name: <b>AdonetLinqDemo</b></li>
+              </ol>
+
+              <div class="callout tip">
+                <div class="icon">✓</div>
+                <div>
+                  <b>NuGet package:</b> In most .NET versions, SQL Server provider is available via <b>Microsoft.Data.SqlClient</b> (recommended).
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin:0">
+              <h3>Step B: Install SQL Client</h3>
+              <p>In Visual Studio → Tools → NuGet Package Manager → Install:</p>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">Package Manager Console</div>
+                  <button class="btn" data-copy="#c1">Copy</button>
+                </div>
+                <pre id="c1">Install-Package Microsoft.Data.SqlClient</pre>
+              </div>
+
+              <p class="callout info">
+                <span class="icon">i</span>
+                <span><b>Connection string:</b> You will place it in code (or appsettings.json in web apps).</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 -->
+        <section class="card" id="sample-db">
+          <h2>4) Sample DB &amp; Tables (SQL Server)</h2>
+          <p>Run this SQL in SQL Server (SSMS). It creates a small DB for learning.</p>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">SQL</div>
+              <button class="btn" data-copy="#sql1">Copy</button>
+            </div>
+            <pre id="sql1">CREATE DATABASE ItTechGenieTrainingDB;
+GO
+USE ItTechGenieTrainingDB;
+GO
+
+CREATE TABLE Students (
+  StudentId INT IDENTITY(1,1) PRIMARY KEY,
+  FullName  NVARCHAR(80) NOT NULL,
+  City      NVARCHAR(60) NOT NULL,
+  Marks     INT NOT NULL,
+  IsActive  BIT NOT NULL DEFAULT(1),
+  CreatedOn DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TABLE Courses (
+  CourseId INT IDENTITY(1,1) PRIMARY KEY,
+  CourseName NVARCHAR(80) NOT NULL
+);
+
+CREATE TABLE Enrollments (
+  EnrollmentId INT IDENTITY(1,1) PRIMARY KEY,
+  StudentId INT NOT NULL FOREIGN KEY REFERENCES Students(StudentId),
+  CourseId  INT NOT NULL FOREIGN KEY REFERENCES Courses(CourseId),
+  EnrolledOn DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE)
+);
+
+INSERT INTO Courses (CourseName) VALUES
+('C# Fundamentals'),('ADO.NET'),('LINQ'),('SQL Server');
+
+INSERT INTO Students (FullName, City, Marks, IsActive) VALUES
+('Aarav Sharma','Chennai', 92, 1),
+('Diya Iyer','Bengaluru', 81, 1),
+('Kabir Nair','Hyderabad', 67, 1),
+('Meera Singh','Pune', 88, 1),
+('Rohan Verma','Delhi', 74, 1),
+('Isha Patel','Ahmedabad', 59, 0),
+('Vikram Rao','Mumbai', 95, 1);
+
+INSERT INTO Enrollments (StudentId, CourseId) VALUES
+(1,2),(1,3),(2,2),(2,4),(3,1),(4,3),(5,4),(7,2);</pre>
+          </div>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              <b>Goal:</b> We will fetch <b>Students</b> into a <b>DataTable</b>, then do LINQ filtering, sorting, grouping, and joining with <b>Enrollments</b>.
+            </div>
+          </div>
+        </section>
+
+        <!-- Diagram -->
+        <section class="card" id="sample-db">
+          <h2 id="sample-db-diagram">Database Flow Diagram</h2>
+          <div class="diagram">
+            <svg viewBox="0 0 980 260" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <style>
+                  .box{fill:rgba(255,255,255,.06);stroke:rgba(255,255,255,.18);stroke-width:2;rx:18;ry:18}
+                  .t{fill:#eaf0ff;font-family:ui-sans-serif,system-ui;font-size:16px;font-weight:700}
+                  .s{fill:#b8c6e6;font-family:ui-sans-serif,system-ui;font-size:13px}
+                  .line{stroke:rgba(35,197,94,.8);stroke-width:3;fill:none}
+                  .arrow{fill:rgba(35,197,94,.9)}
+                </style>
+              </defs>
+
+              <rect class="box" x="30" y="50" width="260" height="160"/>
+              <text class="t" x="60" y="85">Students</text>
+              <text class="s" x="60" y="112">StudentId (PK)</text>
+              <text class="s" x="60" y="132">FullName, City, Marks</text>
+              <text class="s" x="60" y="152">IsActive, CreatedOn</text>
+
+              <rect class="box" x="360" y="50" width="260" height="160"/>
+              <text class="t" x="390" y="85">Enrollments</text>
+              <text class="s" x="390" y="112">EnrollmentId (PK)</text>
+              <text class="s" x="390" y="132">StudentId (FK)</text>
+              <text class="s" x="390" y="152">CourseId (FK)</text>
+
+              <rect class="box" x="690" y="50" width="260" height="160"/>
+              <text class="t" x="720" y="85">Courses</text>
+              <text class="s" x="720" y="112">CourseId (PK)</text>
+              <text class="s" x="720" y="132">CourseName</text>
+
+              <path class="line" d="M290 130 L360 130"/>
+              <polygon class="arrow" points="360,130 346,123 346,137"/>
+              <text class="s" x="300" y="120">StudentId</text>
+
+              <path class="line" d="M620 150 L690 150"/>
+              <polygon class="arrow" points="690,150 676,143 676,157"/>
+              <text class="s" x="632" y="140">CourseId</text>
+            </svg>
+          </div>
+        </section>
+
+        <!-- 5 -->
+        <section class="card" id="connected">
+          <h2>5) Connected Architecture (SqlDataReader)</h2>
+          <p>
+            Connected mode means: <b>connection stays open</b> while you read data.
+            Best when you want fast, forward-only reading.
+          </p>
+
+          <div class="callout info">
+            <div class="icon">i</div>
+            <div>
+              <b>Simple mental model:</b> You are reading directly from the database stream. You can’t jump back.
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (DataReader)</div>
+              <button class="btn" data-copy="#c2">Copy</button>
+            </div>
+            <pre id="c2">using Microsoft.Data.SqlClient;
+
+string cs = @"Server=.;Database=ItTechGenieTrainingDB;Trusted_Connection=True;TrustServerCertificate=True;";
+
+using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand("SELECT StudentId, FullName, City, Marks FROM Students WHERE IsActive = 1", con);
+
+con.Open();
+using var reader = cmd.ExecuteReader();
+
+while (reader.Read())
+{
+    int id = reader.GetInt32(0);
+    string name = reader.GetString(1);
+    string city = reader.GetString(2);
+    int marks = reader.GetInt32(3);
+
+    Console.WriteLine($"{id} | {name} | {city} | {marks}");
+}</pre>
+          </div>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              <b>When to use DataReader:</b> Large data reads, reporting, exporting CSV, high-performance fetch.
+            </div>
+          </div>
+        </section>
+<div class="box">In-content Ad Placeholder</div>
+        </div>
+
+        <!-- 6 -->
+        <section class="card" id="disconnected">
+          <h2>6) Disconnected Architecture (DataAdapter + DataSet)</h2>
+          <p>
+            Disconnected mode means: fetch data into memory (<b>DataSet/DataTable</b>), then close connection.
+            After that, you can do LINQ operations <b>without keeping DB connected</b>.
+          </p>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              <b>This is our main path in this tutorial:</b> Fetch → DataTable → LINQ operations → show result.
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Fill DataTable)</div>
+              <button class="btn" data-copy="#c3">Copy</button>
+            </div>
+            <pre id="c3">using System.Data;
+using Microsoft.Data.SqlClient;
+
+string cs = @"Server=.;Database=ItTechGenieTrainingDB;Trusted_Connection=True;TrustServerCertificate=True;";
+
+DataTable students = new DataTable();
+
+using (var con = new SqlConnection(cs))
+using (var cmd = new SqlCommand("SELECT StudentId, FullName, City, Marks, IsActive FROM Students", con))
+using (var da = new SqlDataAdapter(cmd))
+{
+    con.Open();
+    da.Fill(students); // ✅ Data copied into memory
+}
+
+// ✅ Connection is closed here, but data is available
+Console.WriteLine("Rows loaded: " + students.Rows.Count);</pre>
+          </div>
+        </section>
+
+        <!-- 7 -->
+        <section class="card" id="datatable">
+          <h2>7) DataTable Basics</h2>
+          <p>A <b>DataTable</b> is an in-memory table. It has:</p>
+          <ul>
+            <li><b>Columns</b> (StudentId, FullName, City…)</li>
+            <li><b>Rows</b> (each student)</li>
+          </ul>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Loop DataTable)</div>
+              <button class="btn" data-copy="#c4">Copy</button>
+            </div>
+            <pre id="c4">foreach (DataRow row in students.Rows)
+{
+    Console.WriteLine($"{row["StudentId"]} | {row["FullName"]} | {row["City"]} | {row["Marks"]}");
+}</pre>
+          </div>
+
+          <div class="callout warn">
+            <div class="icon">!</div>
+            <div>
+              <b>Tip:</b> For safe typed access in LINQ, you will use <span class="tt" data-tip="Converts DataTable rows to IEnumerable&lt;DataRow&gt; so LINQ can work."><span class="q">?</span>AsEnumerable()</span> and <span class="tt" data-tip="Reads a column value as a specific type, ex: Field&lt;int&gt;(&quot;Marks&quot;)."><span class="q">?</span>Field&lt;T&gt;()</span>.
+            </div>
+          </div>
+        </section>
+
+        <!-- 8 -->
+        <section class="card" id="parameters">
+          <h2>8) Parameterized Queries (Must-have)</h2>
+          <p>Never build SQL like: <b>"... WHERE City = '" + city + "'"</b>. Use parameters.</p>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Safe Parameters)</div>
+              <button class="btn" data-copy="#c5">Copy</button>
+            </div>
+            <pre id="c5">using Microsoft.Data.SqlClient;
+
+string city = "Chennai";
+
+using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand("SELECT StudentId, FullName, City, Marks FROM Students WHERE City = @City", con);
+
+cmd.Parameters.AddWithValue("@City", city);
+
+con.Open();
+using var reader = cmd.ExecuteReader();
+while (reader.Read())
+{
+    Console.WriteLine(reader["FullName"]);
+}</pre>
+          </div>
+
+          <div class="callout danger">
+            <div class="icon">✕</div>
+            <div>
+              <b>Why?</b> Parameters protect you from SQL Injection and also help SQL Server reuse query plans.
+            </div>
+          </div>
+        </section>
+
+        <!-- 9 -->
+        <section class="card" id="crud">
+          <h2>9) CRUD using ADO.NET</h2>
+          <p>CRUD = Create, Read, Update, Delete.</p>
+
+          <div class="two-col">
+            <div class="card" style="margin:0">
+              <h3>SELECT (Read)</h3>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">C#</div>
+                  <button class="btn" data-copy="#c6">Copy</button>
+                </div>
+                <pre id="c6">using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand("SELECT COUNT(*) FROM Students", con);
+con.Open();
+int count = (int)cmd.ExecuteScalar();
+Console.WriteLine("Students count: " + count);</pre>
+              </div>
+            </div>
+
+            <div class="card" style="margin:0">
+              <h3>INSERT (Create)</h3>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">C#</div>
+                  <button class="btn" data-copy="#c7">Copy</button>
+                </div>
+                <pre id="c7">using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand(@"
+INSERT INTO Students (FullName, City, Marks, IsActive)
+VALUES (@Name, @City, @Marks, @IsActive)", con);
+
+cmd.Parameters.AddWithValue("@Name", "Anaya Kumar");
+cmd.Parameters.AddWithValue("@City", "Kolkata");
+cmd.Parameters.AddWithValue("@Marks", 78);
+cmd.Parameters.AddWithValue("@IsActive", 1);
+
+con.Open();
+int rows = cmd.ExecuteNonQuery();
+Console.WriteLine("Inserted rows: " + rows);</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="card" style="margin:0">
+              <h3>UPDATE</h3>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">C#</div>
+                  <button class="btn" data-copy="#c8">Copy</button>
+                </div>
+                <pre id="c8">int id = 3;
+int newMarks = 72;
+
+using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand("UPDATE Students SET Marks = @Marks WHERE StudentId = @Id", con);
+cmd.Parameters.AddWithValue("@Marks", newMarks);
+cmd.Parameters.AddWithValue("@Id", id);
+
+con.Open();
+int rows = cmd.ExecuteNonQuery();
+Console.WriteLine("Updated rows: " + rows);</pre>
+              </div>
+            </div>
+
+            <div class="card" style="margin:0">
+              <h3>DELETE</h3>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">C#</div>
+                  <button class="btn" data-copy="#c9">Copy</button>
+                </div>
+                <pre id="c9">int id = 6;
+
+using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand("DELETE FROM Students WHERE StudentId = @Id", con);
+cmd.Parameters.AddWithValue("@Id", id);
+
+con.Open();
+int rows = cmd.ExecuteNonQuery();
+Console.WriteLine("Deleted rows: " + rows);</pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10 -->
+        <section class="card" id="stored-proc">
+          <h2>10) Stored Procedure (Insert Student)</h2>
+          <p>Create stored procedure in SQL Server:</p>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">SQL</div>
+              <button class="btn" data-copy="#sql2">Copy</button>
+            </div>
+            <pre id="sql2">CREATE OR ALTER PROCEDURE dbo.AddStudent
+  @FullName NVARCHAR(80),
+  @City NVARCHAR(60),
+  @Marks INT
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  INSERT INTO Students (FullName, City, Marks, IsActive)
+  VALUES (@FullName, @City, @Marks, 1);
+
+  SELECT SCOPE_IDENTITY() AS NewStudentId;
+END;</pre>
+          </div>
+
+          <p>Call it from C#:</p>
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Stored Procedure)</div>
+              <button class="btn" data-copy="#c10">Copy</button>
+            </div>
+            <pre id="c10">using Microsoft.Data.SqlClient;
+using System.Data;
+
+using var con = new SqlConnection(cs);
+using var cmd = new SqlCommand("dbo.AddStudent", con);
+cmd.CommandType = CommandType.StoredProcedure;
+
+cmd.Parameters.AddWithValue("@FullName", "Sai Prakash");
+cmd.Parameters.AddWithValue("@City", "Jaipur");
+cmd.Parameters.AddWithValue("@Marks", 86);
+
+con.Open();
+var newId = cmd.ExecuteScalar(); // returns NewStudentId
+Console.WriteLine("New StudentId: " + newId);</pre>
+          </div>
+        </section>
+
+        <!-- 11 -->
+        <section class="card" id="transactions">
+          <h2>11) Transactions (Commit / Rollback)</h2>
+          <p>Use transactions when multiple commands must succeed together.</p>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Transaction)</div>
+              <button class="btn" data-copy="#c11">Copy</button>
+            </div>
+            <pre id="c11">using Microsoft.Data.SqlClient;
+
+using var con = new SqlConnection(cs);
+con.Open();
+
+using var tx = con.BeginTransaction();
+
+try
+{
+    // 1) Insert new student
+    using var insertCmd = new SqlCommand(@"
+        INSERT INTO Students (FullName, City, Marks, IsActive)
+        VALUES (@Name, @City, @Marks, 1);", con, tx);
+
+    insertCmd.Parameters.AddWithValue("@Name", "Neha Kulkarni");
+    insertCmd.Parameters.AddWithValue("@City", "Pune");
+    insertCmd.Parameters.AddWithValue("@Marks", 84);
+    insertCmd.ExecuteNonQuery();
+
+    // 2) Update another student marks
+    using var updateCmd = new SqlCommand("UPDATE Students SET Marks = Marks + 1 WHERE StudentId = 1", con, tx);
+    updateCmd.ExecuteNonQuery();
+
+    tx.Commit();
+    Console.WriteLine("Transaction committed ✅");
+}
+catch (Exception ex)
+{
+    tx.Rollback();
+    Console.WriteLine("Transaction rolled back ❌");
+    Console.WriteLine(ex.Message);
+}</pre>
+          </div>
+        </section>
+
+        <!-- 12 -->
+        <section class="card" id="errors">
+          <h2>12) Error Handling + using (Best Practice)</h2>
+          <p>Always wrap DB code with <b>using</b> blocks (or <b>using var</b>) so resources are disposed safely.</p>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              <b>Rule:</b> Open connection <b>late</b>, close <b>early</b>. Keep DB calls short and quick.
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Safe Pattern)</div>
+              <button class="btn" data-copy="#c12">Copy</button>
+            </div>
+            <pre id="c12">try
+{
+    using var con = new SqlConnection(cs);
+    using var cmd = new SqlCommand("SELECT TOP 5 FullName FROM Students ORDER BY Marks DESC", con);
+
+    con.Open();
+    using var reader = cmd.ExecuteReader();
+
+    while (reader.Read())
+        Console.WriteLine(reader.GetString(0));
+}
+catch (SqlException ex)
+{
+    Console.WriteLine("Database error: " + ex.Message);
+}
+catch (Exception ex)
+{
+    Console.WriteLine("General error: " + ex.Message);
+}</pre>
+          </div>
+        </section>
+
+        <!-- 13 -->
+        <section class="card" id="linq-intro">
+          <h2>13) LINQ for DataTable (Key Idea)</h2>
+          <p>
+            Once you have data in a <b>DataTable</b>, you can run LINQ queries.
+            This is super useful for <b>filtering</b>, <b>sorting</b>, <b>grouping</b>, and <b>joining</b> data in-memory.
+          </p>
+
+          <div class="callout info">
+            <div class="icon">i</div>
+            <div>
+              <b>Two steps:</b>
+              <ol style="margin:6px 0 0; padding-left:18px">
+                <li>Convert DataTable rows to IEnumerable using <span class="kbd">AsEnumerable()</span></li>
+                <li>Read columns using <span class="kbd">Field&lt;T&gt;("ColumnName")</span></li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Base LINQ Setup)</div>
+              <button class="btn" data-copy="#c13">Copy</button>
+            </div>
+            <pre id="c13">using System.Data;
+using System.Linq;
+
+// students is your DataTable filled from DB
+
+var rows = students.AsEnumerable(); // ✅ now LINQ can run
+
+// Example: list active students names
+var activeNames = rows
+    .Where(r => r.Field&lt;bool&gt;("IsActive") == true)
+    .Select(r => r.Field&lt;string&gt;("FullName"))
+    .ToList();
+
+activeNames.ForEach(Console.WriteLine);</pre>
+          </div>
+        </section>
+
+        <!-- 14 -->
+        <section class="card" id="linq-filter">
+          <h2>14) LINQ: Where + Select (Filter + Projection)</h2>
+
+          <div class="two-col">
+            <div class="card" style="margin:0">
+              <h3>Example A: Marks &gt;= 80</h3>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">C#</div>
+                  <button class="btn" data-copy="#c14">Copy</button>
+                </div>
+                <pre id="c14">var toppers = students.AsEnumerable()
+    .Where(r => r.Field&lt;int&gt;("Marks") &gt;= 80)
+    .Select(r => new
+    {
+        Id = r.Field&lt;int&gt;("StudentId"),
+        Name = r.Field&lt;string&gt;("FullName"),
+        Marks = r.Field&lt;int&gt;("Marks")
+    })
+    .ToList();
+
+foreach (var s in toppers)
+    Console.WriteLine($"{s.Id} | {s.Name} | {s.Marks}");</pre>
+              </div>
+            </div>
+
+            <div class="card" style="margin:0">
+              <h3>Example B: City == "Pune"</h3>
+              <div class="codebox">
+                <div class="codehead">
+                  <div class="lang">C#</div>
+                  <button class="btn" data-copy="#c15">Copy</button>
+                </div>
+                <pre id="c15">string city = "Pune";
+
+var puneStudents = students.AsEnumerable()
+    .Where(r => r.Field&lt;string&gt;("City") == city)
+    .Select(r => r.Field&lt;string&gt;("FullName"))
+    .ToList();
+
+Console.WriteLine("Students in Pune:");
+puneStudents.ForEach(Console.WriteLine);</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              <b>Where</b> = filter rows. <b>Select</b> = choose columns / shape the output.
+            </div>
+          </div>
+        </section>
+
+        <!-- 15 -->
+        <section class="card" id="linq-sort">
+          <h2>15) LINQ: OrderBy + ThenBy (Sorting)</h2>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C#</div>
+              <button class="btn" data-copy="#c16">Copy</button>
+            </div>
+            <pre id="c16">var sorted = students.AsEnumerable()
+    .OrderByDescending(r => r.Field&lt;int&gt;("Marks"))
+    .ThenBy(r => r.Field&lt;string&gt;("FullName"))
+    .Select(r => new
+    {
+        Name = r.Field&lt;string&gt;("FullName"),
+        Marks = r.Field&lt;int&gt;("Marks")
+    })
+    .ToList();
+
+Console.WriteLine("Sorted by Marks desc, then Name:");
+foreach (var s in sorted)
+    Console.WriteLine($"{s.Name} - {s.Marks}");</pre>
+          </div>
+        </section>
+
+        <!-- 16 -->
+        <section class="card" id="linq-group">
+          <h2>16) LINQ: GroupBy (Category / Bucket)</h2>
+          <p>Group students by city and show average marks.</p>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C#</div>
+              <button class="btn" data-copy="#c17">Copy</button>
+            </div>
+            <pre id="c17">var byCity = students.AsEnumerable()
+    .GroupBy(r => r.Field&lt;string&gt;("City"))
+    .Select(g => new
+    {
+        City = g.Key,
+        Count = g.Count(),
+        AvgMarks = (int)g.Average(x => x.Field&lt;int&gt;("Marks"))
+    })
+    .OrderByDescending(x => x.AvgMarks)
+    .ToList();
+
+foreach (var g in byCity)
+    Console.WriteLine($"{g.City} | Count={g.Count} | AvgMarks={g.AvgMarks}");</pre>
+          </div>
+        </section>
+
+        <!-- 17 -->
+        <section class="card" id="linq-join">
+          <h2>17) LINQ: Join (DataTable Join Like SQL JOIN)</h2>
+          <p>
+            We will fetch <b>Enrollments</b> and <b>Courses</b> into DataTables, then join all tables in memory.
+          </p>
+
+          <div class="callout info">
+            <div class="icon">i</div>
+            <div>
+              <b>Why join in LINQ?</b> Sometimes you want to join multiple tables after a single fetch or cached data.
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Fill 3 DataTables)</div>
+              <button class="btn" data-copy="#c18">Copy</button>
+            </div>
+            <pre id="c18">DataTable enrollments = new DataTable();
+DataTable courses = new DataTable();
+
+using (var con = new SqlConnection(cs))
+{
+    con.Open();
+
+    using (var da1 = new SqlDataAdapter("SELECT StudentId, FullName, City, Marks, IsActive FROM Students", con))
+        da1.Fill(students);
+
+    using (var da2 = new SqlDataAdapter("SELECT StudentId, CourseId FROM Enrollments", con))
+        da2.Fill(enrollments);
+
+    using (var da3 = new SqlDataAdapter("SELECT CourseId, CourseName FROM Courses", con))
+        da3.Fill(courses);
+}</pre>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (Join: Students → Enrollments → Courses)</div>
+              <button class="btn" data-copy="#c19">Copy</button>
+            </div>
+            <pre id="c19">var report =
+    from s in students.AsEnumerable()
+    join e in enrollments.AsEnumerable()
+        on s.Field&lt;int&gt;("StudentId") equals e.Field&lt;int&gt;("StudentId")
+    join c in courses.AsEnumerable()
+        on e.Field&lt;int&gt;("CourseId") equals c.Field&lt;int&gt;("CourseId")
+    where s.Field&lt;bool&gt;("IsActive") == true
+    select new
+    {
+        Student = s.Field&lt;string&gt;("FullName"),
+        City = s.Field&lt;string&gt;("City"),
+        Marks = s.Field&lt;int&gt;("Marks"),
+        Course = c.Field&lt;string&gt;("CourseName")
+    };
+
+foreach (var row in report)
+    Console.WriteLine($"{row.Student} | {row.City} | {row.Marks} | {row.Course}");</pre>
+          </div>
+        </section>
+<div class="box">In-content Ad Placeholder</div>
+        </div>
+
+        <!-- 18 -->
+        <section class="card" id="linq-agg">
+          <h2>18) LINQ Aggregates (Sum/Min/Max/Average)</h2>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C#</div>
+              <button class="btn" data-copy="#c20">Copy</button>
+            </div>
+            <pre id="c20">var rows = students.AsEnumerable();
+
+int maxMarks = rows.Max(r => r.Field&lt;int&gt;("Marks"));
+int minMarks = rows.Min(r => r.Field&lt;int&gt;("Marks"));
+double avgMarks = rows.Average(r => r.Field&lt;int&gt;("Marks"));
+int sumMarks = rows.Sum(r => r.Field&lt;int&gt;("Marks"));
+
+Console.WriteLine($"Max={maxMarks}, Min={minMarks}, Avg={avgMarks:0.00}, Sum={sumMarks}");</pre>
+          </div>
+        </section>
+
+        <!-- 19 -->
+        <section class="card" id="linq-first">
+          <h2>19) First / Single / Any / All</h2>
+
+          <table>
+            <thead>
+              <tr><th>Method</th><th>Meaning</th><th>When to use</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>First()</b></td><td>Gets first match (throws if none)</td><td>When you expect at least one row</td></tr>
+              <tr><td><b>FirstOrDefault()</b></td><td>First match or default</td><td>Safe when may not exist</td></tr>
+              <tr><td><b>Single()</b></td><td>Exactly one match (throws if 0 or &gt;1)</td><td>When you expect unique row</td></tr>
+              <tr><td><b>Any()</b></td><td>True if any match exists</td><td>Existence checks</td></tr>
+              <tr><td><b>All()</b></td><td>True if all satisfy condition</td><td>Validation / rules</td></tr>
+            </tbody>
+          </table>
+
+          <div class="codebox" style="margin-top:12px">
+            <div class="codehead">
+              <div class="lang">C# Examples</div>
+              <button class="btn" data-copy="#c21">Copy</button>
+            </div>
+            <pre id="c21">var rows = students.AsEnumerable();
+
+bool anyInactive = rows.Any(r => r.Field&lt;bool&gt;("IsActive") == false);
+bool allHaveMarks = rows.All(r => r.Field&lt;int&gt;("Marks") &gt;= 0);
+
+var firstTopper = rows
+    .Where(r => r.Field&lt;int&gt;("Marks") &gt;= 90)
+    .Select(r => r.Field&lt;string&gt;("FullName"))
+    .FirstOrDefault();
+
+Console.WriteLine("Any inactive? " + anyInactive);
+Console.WriteLine("All have marks? " + allHaveMarks);
+Console.WriteLine("First topper: " + firstTopper);</pre>
+          </div>
+        </section>
+
+        <!-- 20 -->
+        <section class="card" id="linq-paging">
+          <h2>20) Skip / Take (Paging)</h2>
+          <p>Paging is common in web apps: show 10 records per page.</p>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C#</div>
+              <button class="btn" data-copy="#c22">Copy</button>
+            </div>
+            <pre id="c22">int pageNumber = 2;
+int pageSize = 3;
+
+var page = students.AsEnumerable()
+    .OrderByDescending(r => r.Field&lt;int&gt;("Marks"))
+    .Skip((pageNumber - 1) * pageSize)
+    .Take(pageSize)
+    .Select(r => new
+    {
+        Name = r.Field&lt;string&gt;("FullName"),
+        Marks = r.Field&lt;int&gt;("Marks")
+    })
+    .ToList();
+
+Console.WriteLine($"Page {pageNumber}:");
+foreach (var s in page)
+    Console.WriteLine($"{s.Name} - {s.Marks}");</pre>
+          </div>
+        </section>
+
+        <!-- 21 -->
+        <section class="card" id="mini-project">
+          <h2>21) Mini Project: Student Report Generator</h2>
+          <p>Goal: Load tables → generate a report:</p>
+          <ul>
+            <li>Top 3 students by marks</li>
+            <li>City-wise averages</li>
+            <li>Active students with their enrolled courses</li>
+          </ul>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              <b>How to run:</b> Put everything into a single <b>Program.cs</b> and run.
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="codehead">
+              <div class="lang">C# (End-to-End Program.cs)</div>
+              <button class="btn" data-copy="#c23">Copy</button>
+            </div>
+            <pre id="c23">using System.Data;
+using System.Linq;
+using Microsoft.Data.SqlClient;
+
+string cs = @"Server=.;Database=ItTechGenieTrainingDB;Trusted_Connection=True;TrustServerCertificate=True;";
+
+DataTable students = new DataTable();
+DataTable enrollments = new DataTable();
+DataTable courses = new DataTable();
+
+// 1) Load data (Disconnected mode)
+using (var con = new SqlConnection(cs))
+{
+    con.Open();
+    new SqlDataAdapter("SELECT StudentId, FullName, City, Marks, IsActive FROM Students", con).Fill(students);
+    new SqlDataAdapter("SELECT StudentId, CourseId FROM Enrollments", con).Fill(enrollments);
+    new SqlDataAdapter("SELECT CourseId, CourseName FROM Courses", con).Fill(courses);
+}
+
+Console.WriteLine("=== Top 3 Students (by marks) ===");
+var top3 = students.AsEnumerable()
+    .OrderByDescending(r => r.Field&lt;int&gt;("Marks"))
+    .Take(3)
+    .Select(r => $"{r.Field&lt;string&gt;("FullName")} - {r.Field&lt;int&gt;("Marks")}")
+    .ToList();
+top3.ForEach(Console.WriteLine);
+
+Console.WriteLine("\n=== City-wise Average Marks ===");
+var cityAvg = students.AsEnumerable()
+    .GroupBy(r => r.Field&lt;string&gt;("City"))
+    .Select(g => new { City = g.Key, Avg = g.Average(x => x.Field&lt;int&gt;("Marks")) })
+    .OrderByDescending(x => x.Avg)
+    .ToList();
+
+foreach (var x in cityAvg)
+    Console.WriteLine($"{x.City} -> Avg: {x.Avg:0.00}");
+
+Console.WriteLine("\n=== Active Students with Courses ===");
+var report =
+    from s in students.AsEnumerable()
+    join e in enrollments.AsEnumerable()
+        on s.Field&lt;int&gt;("StudentId") equals e.Field&lt;int&gt;("StudentId")
+    join c in courses.AsEnumerable()
+        on e.Field&lt;int&gt;("CourseId") equals c.Field&lt;int&gt;("CourseId")
+    where s.Field&lt;bool&gt;("IsActive") == true
+    select new
+    {
+        Student = s.Field&lt;string&gt;("FullName"),
+        Course = c.Field&lt;string&gt;("CourseName")
+    };
+
+foreach (var row in report)
+    Console.WriteLine($"{row.Student} -> {row.Course}");</pre>
+          </div>
+
+          <div class="callout warn">
+            <div class="icon">!</div>
+            <div>
+              <b>Real-world use:</b> Many apps fetch data once (cache) and then slice/filter it multiple times using LINQ for dashboards.
+            </div>
+          </div>
+        </section>
+
+        <!-- 22 -->
+        <section class="card" id="mcq">
+          <h2>22) Quick MCQs</h2>
+          <p>Click to reveal answers.</p>
+
+          <details class="card" style="margin:10px 0;">
+            <summary><b>Q1.</b> Which ADO.NET object is best for fast, forward-only reading?</summary>
+            <div class="hr"></div>
+            <p><b>Answer:</b> SqlDataReader</p>
+          </details>
+
+          <details class="card" style="margin:10px 0;">
+            <summary><b>Q2.</b> What method fills a DataTable in disconnected mode?</summary>
+            <div class="hr"></div>
+            <p><b>Answer:</b> SqlDataAdapter.Fill()</p>
+          </details>
+
+          <details class="card" style="margin:10px 0;">
+            <summary><b>Q3.</b> Which LINQ method checks if at least one row matches?</summary>
+            <div class="hr"></div>
+            <p><b>Answer:</b> Any()</p>
+          </details>
+
+          <details class="card" style="margin:10px 0;">
+            <summary><b>Q4.</b> Why should we use parameterized queries?</summary>
+            <div class="hr"></div>
+            <p><b>Answer:</b> Security (SQL injection prevention) + query plan reuse/performance.</p>
+          </details>
+        </section>
+
+        <!-- 23 -->
+        <section class="card" id="interview">
+          <h2>23) Interview Q&amp;A (Short &amp; Practical)</h2>
+          <div class="card" style="margin:0">
+            <h3>Q1) Explain connected vs disconnected architecture.</h3>
+            <p><b>Connected:</b> connection stays open while reading (SqlDataReader). <b>Disconnected:</b> data is loaded into DataSet/DataTable and connection closes (SqlDataAdapter).</p>
+
+            <h3>Q2) When do you choose DataReader?</h3>
+            <p>When you want fast, sequential reading and you do not need random access or multiple tables in memory.</p>
+
+            <h3>Q3) How do you run LINQ on a DataTable?</h3>
+            <p>Use <span class="kbd">students.AsEnumerable()</span> then query DataRow using <span class="kbd">Field&lt;T&gt;()</span>.</p>
+
+            <h3>Q4) What is ExecuteScalar used for?</h3>
+            <p>To get a single value (COUNT, MAX, SCOPE_IDENTITY, etc.).</p>
+          </div>
+        </section>
+
+        <!-- 24 -->
+        <section class="card" id="practice">
+          <h2>24) Practice Tasks</h2>
+          <ol>
+            <li><b>Filter:</b> Show active students with marks &gt; 75 using LINQ.</li>
+            <li><b>Sort:</b> Show students sorted by City, then Marks desc.</li>
+            <li><b>Group:</b> Group by City and show Count + Max Marks.</li>
+            <li><b>Join:</b> Show student names with all enrolled courses (like SQL INNER JOIN) using LINQ.</li>
+            <li><b>Transaction:</b> Insert a student and enrollment in one transaction.</li>
+          </ol>
+
+          <div class="callout tip">
+            <div class="icon">✓</div>
+            <div>
+              If you want, I can generate a <b>second HTML page</b> with a full “Try It Yourself” section (input form + live filtering of sample JSON) to simulate LINQ behavior in browser.
+            </div>
+          </div>
+        </section>
+
+      </article>
+
+      <div class="footer">
+        <div><b>ItTechGenie</b> — ADO.NET + LINQ Tutorial Page</div>
+        <div style="opacity:.85">Tip: Use <span class="kbd">Ctrl + K</span> to focus search, and click any left menu item to jump to that section.</div>
+      </div>
+    </main>
+</div>
+
+  <script>
+    // Copy buttons
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const sel = btn.getAttribute('data-copy');
+        const el = document.querySelector(sel);
+        if (!el) return;
+
+        const text = el.innerText;
+        try{
+          await navigator.clipboard.writeText(text);
+          const old = btn.textContent;
+          btn.textContent = 'Copied ✓';
+          setTimeout(()=>btn.textContent = old, 900);
+        }catch(e){
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          const old = btn.textContent;
+          btn.textContent = 'Copied ✓';
+          setTimeout(()=>btn.textContent = old, 900);
+        }
+      });
+    });
+
+    // Sidebar active link highlight on scroll
+    const links = Array.from(document.querySelectorAll('#navLinks a[href^="#"]'));
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    const setActive = (id) => {
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if (visible && visible.target && visible.target.id) setActive(visible.target.id);
+    }, { rootMargin: "-20% 0px -65% 0px", threshold: [0.10, 0.2, 0.35, 0.5] });
+
+    sections.forEach(s => io.observe(s));
+
+    // Search inside page (Ctrl+K)
+    const search = document.getElementById('searchBox');
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        search?.focus();
+      }
+    });
+
+    // Simple search: scroll to first matching heading/card containing query
+    search?.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      if (!q) return;
+
+      const candidates = Array.from(document.querySelectorAll('section.card, .hero'));
+      const hit = candidates.find(el => el.innerText.toLowerCase().includes(q));
+      if (hit) hit.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  </script>
+</body>
+</html>
