@@ -1,0 +1,18 @@
+[
+  {
+    "ApplicantId": "CH100000",
+    "Name": "Asad",
+    "CurrentLocation": "Jalandhar",
+    "PreferredLocation": "Mumbai",
+    "CoreCompetency": "Java",
+    "PassingYear": 2026
+  },
+  {
+    "ApplicantId": "CH100001",
+    "Name": "Abhi",
+    "CurrentLocation": "Phagwara",
+    "PreferredLocation": "Delhi",
+    "CoreCompetency": "C#",
+    "PassingYear": 2025
+  }
+]
