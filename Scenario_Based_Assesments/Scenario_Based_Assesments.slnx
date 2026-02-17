@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/FlexibleInventorySystem_Prctice/">
+    <Project Path="FlexibleInventorySystem_Prctice/FlexibleInventorySystem_Prctice/FlexibleInventorySystem_Prctice.csproj" />
+  </Folder>
   <!-- 01_OOPs_Concepts Projects -->
   <Project Path="01_OOPs_Concepts/BikeRental/BikeRental.csproj" />
   <Project Path="01_OOPs_Concepts/StudentApp/StudentApp.csproj" />
@@ -15,6 +18,7 @@
   
   <!-- M1_Practice Projects (Root-level references preserve GitHub URLs) -->
   <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
+  <Project Path="CampusHire-AMS/CampusHire-AMS.csproj" />
   <Project Path="E-Commerce Inventory System/E-Commerce Inventory System.csproj" />
   <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
   <Project Path="Financial Trading Platform/Financial Trading Platform.csproj" />
