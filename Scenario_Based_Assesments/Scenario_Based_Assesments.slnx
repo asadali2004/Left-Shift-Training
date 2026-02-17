@@ -19,9 +19,11 @@
   <Project Path="Factory-Robot-Hazard-Analyzer/Factory-Robot-Hazard-Analyzer.csproj" />
   <Project Path="Financial Trading Platform/Financial Trading Platform.csproj" />
   <Project Path="Flip_Key/Flip_Key.csproj" />
+  <Project Path="Generic-Delegate-Practice/Generic-Delegate-Practice.csproj" />
   <Project Path="Global-Cargo-Solutions/Global-Cargo-Solutions.csproj" />
   <Project Path="GymStream/GymStream.csproj" />
   <Project Path="Hospital Patient Management System/Hospital Patient Management System.csproj" />
+  <Project Path="Hospital PMS Second/Hospital PMS Second.csproj" />
   <Project Path="Nunit-Assement-Q1/Nunit-Assement-Q1.csproj" />
   
   <!-- Questions_Practice Projects (21 Practice Scenarios) -->
