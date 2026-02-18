@@ -1,7 +1,7 @@
 <Solution>
-  <Folder Name="/FlexibleInventorySystem_Prctice/">
-    <Project Path="FlexibleInventorySystem_Prctice/FlexibleInventorySystem_Prctice/FlexibleInventorySystem_Prctice.csproj" />
-  </Folder>
+  
+    <Project Path="FlexibleInventorySystem_Prctice/FlexibleInventorySystem_Prctice.csproj" />
+  
   <!-- 01_OOPs_Concepts Projects -->
   <Project Path="01_OOPs_Concepts/BikeRental/BikeRental.csproj" />
   <Project Path="01_OOPs_Concepts/StudentApp/StudentApp.csproj" />
@@ -15,6 +15,7 @@
   <Project Path="04_String_Based_Assessments/PasswordGenerator/PasswordGenerator.csproj" />
   <Project Path="04_String_Based_Assessments/GoAirSecurity/GoAirSecurity.csproj" />
   <Project Path="04_String_Based_Assessments/ShopValidator/ShopValidator.csproj" />
+  <Project Path="Smart Banking System/Smart Banking System.csproj" />
   
   <!-- M1_Practice Projects (Root-level references preserve GitHub URLs) -->
   <Project Path="Stream_Buzz/Stream_Buzz.csproj" />
