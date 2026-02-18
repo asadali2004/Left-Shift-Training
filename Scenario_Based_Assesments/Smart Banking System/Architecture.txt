@@ -1,0 +1,49 @@
+Smart Banking System Architecture
+====================================
+
+Project Structure:
+
+Smart Banking System/
+├── Program.cs                          (Main entry point - minimal)
+├── Exceptions/
+│   ├── InsufficientBalanceException.cs
+│   ├── MinimumBalanceException.cs
+│   └── InvalidTransactionException.cs
+├── Models/
+│   ├── BankAccount.cs                  (Abstract base class)
+│   ├── SavingsAccount.cs               (Derived class)
+│   ├── CurrentAccount.cs               (Derived class)
+│   └── LoanAccount.cs                  (Derived class)
+├── Services/
+│   └── BankingSystem.cs                (Manager class - all LINQ queries)
+└── UI/
+    ├── MenuHelper.cs                   (Menu display)
+    └── AccountOperations.cs            (All user operations)
+
+
+Folder Descriptions:
+====================
+
+1. Exceptions/ - Custom Exception Classes
+   - Handles all business logic errors
+   - InsufficientBalanceException: Thrown when withdrawal exceeds balance
+   - MinimumBalanceException: Thrown when minimum balance constraint is violated
+   - InvalidTransactionException: Thrown for invalid transaction operations
+
+2. Models/ - Core Domain Classes
+   - BankAccount: Abstract base class defining core banking operations
+   - SavingsAccount: Implements savings account with 4% interest and $5000 minimum balance
+   - CurrentAccount: Implements current account with $50000 overdraft facility
+   - LoanAccount: Implements loan account with 8% interest, no deposits allowed
+
+3. Services/ - Business Logic Layer
+   - BankingSystem: Manages all accounts and implements LINQ queries
+   - Provides methods for account operations and analytics
+
+4. UI/ - User Interface Layer
+   - MenuHelper: Displays menu options to users
+   - AccountOperations: Handles all user input and account operations
+
+5. Program.cs - Entry Point
+   - Main method orchestrates the application
+   - Manages menu loop and user interaction flow
