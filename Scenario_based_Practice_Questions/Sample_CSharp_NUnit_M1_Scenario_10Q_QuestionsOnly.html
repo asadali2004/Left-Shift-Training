@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ItTechGenie-Subject - NUnit Question Bank</title>
+  <style>
+.itq-wrap{max-width:1100px;margin:0 auto;padding:18px 14px 110px 14px;font-family:Arial, Helvetica, sans-serif;}
+.itq-hero{border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px;background:linear-gradient(180deg, rgba(27,110,194,.10), rgba(255,255,255,0));}
+.itq-hero h1{margin:0 0 6px 0;font-size:22px;}
+.itq-hero .itq-sub{color:#4b5563;font-size:13px;margin:0;}
+.itq-info{margin-top:12px;border:1px dashed rgba(27,110,194,.35);background:rgba(27,110,194,.06);border-radius:14px;padding:12px;font-size:13px;color:#374151;line-height:1.5;}
+.itq-pills{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
+.itq-pill{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:999px;padding:5px 10px;font-size:12px;color:#374151;}
+.itq-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px;}
+.itq-card{border:1px solid rgba(0,0,0,.12);border-radius:18px;background:#fff;box-shadow:0 .25rem .75rem rgba(0,0,0,.05);overflow:hidden;transition:transform .14s ease,border-color .14s ease,background .14s ease;}
+.itq-card:hover{transform:translateY(-2px);border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.03);}
+.itq-head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;}
+.itq-no{min-width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(27,110,194,.10);border:1px solid rgba(27,110,194,.25);font-weight:700;color:#1b6ec2;}
+.itq-title{margin:0;font-size:16px;}
+.itq-tags{margin-top:6px;display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:#6b7280;}
+.itq-chip{padding:3px 8px;border-radius:999px;border:1px solid rgba(0,0,0,.10);background:rgba(0,0,0,.02);}
+.itq-level{font-weight:700;}
+.itq-level.mod{color:#b45309;}
+.itq-level.cx{color:#be123c;}
+.itq-body{padding:0 16px 16px 16px;}
+.itq-stmt{margin:0 0 10px 0;color:#374151;font-size:13px;line-height:1.55;white-space:pre-line;}
+.itq-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px 0;}
+.itq-btn{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:12px;padding:7px 10px;font-size:12px;cursor:pointer;transition:transform .12s ease,background .12s ease;}
+.itq-btn:hover{transform:translateY(-1px);background:rgba(0,0,0,.02);}
+.itq-btn.copy{border-color:rgba(27,110,194,.35);background:rgba(27,110,194,.06);}
+.itq-io{display:grid;gap:8px;margin:10px 0 12px 0;}
+.itq-io label{font-size:12px;color:#6b7280;font-weight:700;}
+.itq-io textarea{width:100%;min-height:92px;border-radius:14px;border:1px solid rgba(0,0,0,.12);padding:10px 12px;font-size:12px;line-height:1.45;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;background:#fff;}
+.itq-io .hint{font-size:12px;color:#6b7280;line-height:1.4;}
+.itq-code{border:1px solid rgba(0,0,0,.10);border-radius:16px;overflow:hidden;background:#0b1220;}
+.itq-codeHead{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.10);color:#e5e7eb;font-size:12px;}
+.itq-codeHead .itq-kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:2px 6px;border-radius:8px;}
+.itq-pre{margin:0;padding:12px;overflow:auto;}
+.itq-pre code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:12px;color:#e5e7eb;white-space:pre;}
+.itq-toast{position:fixed;right:14px;bottom:14px;z-index:9999;display:none;background:#111827;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+</style>
+</head>
+<body>
+  <div class="itq-wrap">
+    <section class="itq-hero">
+      <h1>C# Question Bank</h1>
+      <p class="itq-sub">NUnit Testing | 10 Scenario Questions (5 Moderate + 5 Complex) — Questions Only</p>
+
+      <div class="itq-info">
+        <strong>Instruction:</strong> Students should implement <strong>ONLY</strong> the methods marked with <strong>// ✅ TODO</strong>.<br/>
+        The code is written in a boilerplate style and tests will fail until TODO methods are implemented.<br/>
+        Each question includes a complex sample input (spaces, unicode, emoji, special characters). Replace it with your own as needed.
+      </div>
+
+      <div class="itq-pills">
+        <span class="itq-pill"><strong>Moderate:</strong> 5</span>
+        <span class="itq-pill"><strong>Complex:</strong> 5</span>
+        <span class="itq-pill"><strong>Focus:</strong> Assertions, Parameterized Tests, Setup, Exceptions, Async Tests, Golden Master</span>
+      </div>
+    </section>
+
+    <section class="itq-grid" aria-label="C# NUnit Scenario Questions">
+      <article class="itq-card" id="q1">
+  <header class="itq-head">
+    <div class="itq-no">1</div>
+    <div>
+      <h3 class="itq-title">Value Normalizer — Basics of NUnit Assertions</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">Assert</span><span class="itq-chip">AAA Pattern</span><span class="itq-chip">String Handling</span><span class="itq-chip itq-level mod">Moderate</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+User-entered numbers come with spaces, commas, and currency symbols.
+
+What to implement:
+- ValueNormalizer.NormalizeToInt(string raw)
+- Trim spaces, remove commas and currency symbols (₹, $, etc.)
+- Ignore decimals (tests expect truncation)
+- Throw ArgumentException for invalid or negative values
+
+NUnit focus:
+- Assert.AreEqual
+- Assert.Throws
+- AAA pattern
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput1">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput1">inputs:
+&quot;  10,500  &quot;
+&quot;₹ 1,999.25&quot;
+&quot; -42 &quot;
+&quot; 0 &quot;
+notes:
+&quot;trim spaces + strip currency symbols + validate negatives&quot; </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput1')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode1')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode1">using System; // ArgumentException
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q1
+{
+    // Production code (student implements TODO)
+    public static class ValueNormalizer
+    {
+        // ✅ TODO: Student must implement only this method
+        public static int NormalizeToInt(string raw)
+        {
+            // TODO:
+            // - handle spaces: &quot;  10,500  &quot;
+            // - handle currency: &quot;₹ 1,999.25&quot; (ignore decimals =&gt; 1999)
+            // - reject negatives: &quot;-42&quot;
+            // - reject null/empty/invalid text
+            throw new NotImplementedException();
+        }
+    }
+
+    // NUnit tests (do NOT change)
+    [TestFixture]
+    public class ValueNormalizerTests
+    {
+        [Test]
+        public void NormalizeToInt_Should_RemoveSpacesAndCommas()
+        {
+            // Arrange
+            var raw = &quot;  10,500  &quot;;                                             // input with spaces and comma
+
+            // Act
+            var result = ValueNormalizer.NormalizeToInt(raw);                    // call method
+
+            // Assert
+            Assert.AreEqual(10500, result);                                      // expected normalized value
+        }
+
+        [Test]
+        public void NormalizeToInt_Should_RemoveCurrencySymbolAndDecimals()
+        {
+            // Arrange
+            var raw = &quot;₹ 1,999.25&quot;;                                              // currency + decimals
+
+            // Act
+            var result = ValueNormalizer.NormalizeToInt(raw);                    // call method
+
+            // Assert
+            Assert.AreEqual(1999, result);                                       // tests expect decimals to be ignored
+        }
+
+        [Test]
+        public void NormalizeToInt_Should_Throw_ForNegative()
+        {
+            // Arrange
+            var raw = &quot; -42 &quot;;                                                   // negative with spaces
+
+            // Act + Assert
+            Assert.Throws&lt;ArgumentException&gt;(() =&gt; ValueNormalizer.NormalizeToInt(raw)); // must throw
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q2">
+  <header class="itq-head">
+    <div class="itq-no">2</div>
+    <div>
+      <h3 class="itq-title">CSV Inventory Parser — Parameterized Tests</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">TestCase</span><span class="itq-chip">Parameterized Tests</span><span class="itq-chip">Parsing</span><span class="itq-chip itq-level mod">Moderate</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Inventory CSV lines use delimiter &#x27;;&#x27;. Values include unicode (α/β), spaces, and currency.
+
+What to implement:
+- InventoryParser.ParseLine(string line, char delim) -&gt; InventoryItem
+- Parse SKU, Name, Price, Qty
+- Strip ₹, commas, spaces from price; keep unicode in SKU
+
+NUnit focus:
+- [TestCase] parameterized tests
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput2">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput2">csv lines:
+&quot;SKU-α12;Laptop Stand (Aluminium);₹ 1299.50;15&quot;
+&quot;SKU-β77;Noise-Cancel Headphones;₹ 7,999;4&quot;
+&quot;SKU-!@#;USB-C Hub (6-in-1);₹ 2,499.99;0&quot;
+delimiter=&quot;;&quot; </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput2')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode2')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode2">using System; // Exception
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q2
+{
+    public record InventoryItem(string Sku, string Name, decimal Price, int Qty); // model
+
+    public static class InventoryParser
+    {
+        // ✅ TODO: Student must implement only this method
+        public static InventoryItem ParseLine(string line, char delim)
+        {
+            // TODO:
+            // - split by delimiter
+            // - validate 4 columns
+            // - parse price: &quot;₹ 7,999&quot; =&gt; 7999
+            // - parse qty int
+            // - return InventoryItem
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class InventoryParserTests
+    {
+        [TestCase(&quot;SKU-α12;Laptop Stand (Aluminium);₹ 1299.50;15&quot;, &#x27;;&#x27;, &quot;SKU-α12&quot;, 1299.50, 15)]
+        [TestCase(&quot;SKU-β77;Noise-Cancel Headphones;₹ 7,999;4&quot;, &#x27;;&#x27;, &quot;SKU-β77&quot;, 7999, 4)]
+        [TestCase(&quot;SKU-!@#;USB-C Hub (6-in-1);₹ 2,499.99;0&quot;, &#x27;;&#x27;, &quot;SKU-!@#&quot;, 2499.99, 0)]
+        public void ParseLine_Should_ParseSkuPriceQty(string line, char delim, string sku, double price, int qty)
+        {
+            // Arrange + Act
+            var item = InventoryParser.ParseLine(line, delim);
+
+            // Assert
+            Assert.AreEqual(sku, item.Sku);
+            Assert.AreEqual((decimal)price, item.Price);
+            Assert.AreEqual(qty, item.Qty);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q3">
+  <header class="itq-head">
+    <div class="itq-no">3</div>
+    <div>
+      <h3 class="itq-title">Password Validator — Setup/TearDown + Constraint Asserts</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">SetUp</span><span class="itq-chip">Constraints</span><span class="itq-chip">Validation</span><span class="itq-chip itq-level mod">Moderate</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Registration validates passwords (min length, upper, digit, special).
+Inputs include spaces and emoji.
+
+What to implement:
+- PasswordValidator.Validate(string password, PasswordRules rules) -&gt; ValidationResult
+- Trim leading/trailing spaces (keep internal spaces)
+- Return errors list instead of throwing
+
+NUnit focus:
+- [SetUp] for common rules
+- Assert.That with constraints
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput3">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput3">passwords:
+&quot; Abc@123! &quot;
+&quot; 1234 &quot;
+&quot; P@ss w0rd ✅ &quot;
+rules:
+minLen=8, mustHaveUpper=true, mustHaveDigit=true, mustHaveSpecial=true </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput3')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode3')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode3">using System; // String
+using System.Collections.Generic; // List
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q3
+{
+    public record PasswordRules(int MinLen, bool MustHaveUpper, bool MustHaveDigit, bool MustHaveSpecial);
+    public record ValidationResult(bool IsValid, List&lt;string&gt; Errors);
+
+    public static class PasswordValidator
+    {
+        // ✅ TODO: Student must implement only this method
+        public static ValidationResult Validate(string password, PasswordRules rules)
+        {
+            // TODO:
+            // - trim leading/trailing spaces
+            // - check length &gt;= MinLen
+            // - check uppercase if required
+            // - check digit if required
+            // - check special char if required (non-letter/digit)
+            // - return ValidationResult
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class PasswordValidatorTests
+    {
+        private PasswordRules _rules;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _rules = new PasswordRules(8, true, true, true);                    // common rules
+        }
+
+        [Test]
+        public void Validate_Should_ReturnInvalid_ForShortPassword()
+        {
+            var r = PasswordValidator.Validate(&quot;1234&quot;, _rules);                  // short
+
+            Assert.That(r.IsValid, Is.False);
+            Assert.That(r.Errors, Does.Contain(&quot;MIN_LEN&quot;));
+        }
+
+        [Test]
+        public void Validate_Should_Allow_InternalSpaces_AndUnicode()
+        {
+            var r = PasswordValidator.Validate(&quot; P@ss w0rd ✅ &quot;, _rules);
+
+            Assert.That(r.IsValid, Is.True);
+            Assert.That(r.Errors, Is.Empty);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q4">
+  <header class="itq-head">
+    <div class="itq-no">4</div>
+    <div>
+      <h3 class="itq-title">Order Total Calculator — Data-driven Tests (TestCaseSource)</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">TestCaseSource</span><span class="itq-chip">Money Parsing</span><span class="itq-chip">Data Driven</span><span class="itq-chip itq-level mod">Moderate</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Checkout calculates total from cart items and applies coupon percent.
+Inputs include ₹, commas, and special chars in coupon.
+
+What to implement:
+- OrderCalculator.CalculateTotal(List&lt;CartItem&gt; items, string couponCode)
+- Parse price strings safely (₹, commas)
+- Apply coupon percent from string like &quot;SAVE@20%#FEB&quot;
+
+NUnit focus:
+- TestCaseSource data-driven testing
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput4">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput4">cart items:
+{&quot;id&quot;:&quot;P-001&quot;,&quot;name&quot;:&quot;Mouse&quot;,&quot;qty&quot;:2,&quot;price&quot;:&quot;₹ 499.50&quot;}
+{&quot;id&quot;:&quot;P-002&quot;,&quot;name&quot;:&quot;Keyboard&quot;,&quot;qty&quot;:1,&quot;price&quot;:&quot;₹ 1,999&quot;}
+coupon=&quot;SAVE@20%#FEB&quot;
+address=&quot;12/B, 2nd Street, &#x27;MG Road&#x27; 🏠&quot; </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput4')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode4')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode4">using System; // Exception
+using System.Collections.Generic; // List
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q4
+{
+    public record CartItem(string Id, string Name, int Qty, string PriceText);  // price as text
+
+    public static class OrderCalculator
+    {
+        // ✅ TODO: Student must implement only this method
+        public static decimal CalculateTotal(List&lt;CartItem&gt; items, string couponCode)
+        {
+            // TODO:
+            // - subtotal = sum(qty * parsedPrice)
+            // - parse price: &quot;₹ 1,999&quot; =&gt; 1999
+            // - if couponCode contains &quot;%&quot;: apply discount percentage
+            throw new NotImplementedException();
+        }
+
+        private static decimal ParseMoney(string raw)
+        {
+            raw = (raw ?? &quot;&quot;).Replace(&quot;₹&quot;, &quot;&quot;).Replace(&quot;,&quot;, &quot;&quot;).Trim();         // strip common chars
+            return decimal.Parse(raw);                                          // parse decimal
+        }
+    }
+
+    [TestFixture]
+    public class OrderCalculatorTests
+    {
+        public static IEnumerable&lt;TestCaseData&gt; Carts()
+        {
+            yield return new TestCaseData(
+                new List&lt;CartItem&gt;{
+                    new(&quot;P-001&quot;,&quot;Mouse&quot;,2,&quot;₹ 499.50&quot;),
+                    new(&quot;P-002&quot;,&quot;Keyboard&quot;,1,&quot;₹ 1,999&quot;)
+                },
+                &quot;SAVE@20%#FEB&quot;,
+                2398.40m // (2*499.50 + 1999) = 2998.00 ; 20% off =&gt; 2398.40
+            ).SetName(&quot;Cart_with_coupon_percent&quot;);
+        }
+
+        [TestCaseSource(nameof(Carts))]
+        public void CalculateTotal_Should_ApplyCoupon(List&lt;CartItem&gt; items, string coupon, decimal expected)
+        {
+            var total = OrderCalculator.CalculateTotal(items, coupon);
+            Assert.AreEqual(expected, total);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q5">
+  <header class="itq-head">
+    <div class="itq-no">5</div>
+    <div>
+      <h3 class="itq-title">Audit Log Filter — Assert.Multiple</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">Assert.Multiple</span><span class="itq-chip">Collections</span><span class="itq-chip">String Filter</span><span class="itq-chip itq-level mod">Moderate</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Audit service filters logs by ACTION and detects unicode presence.
+Inputs include quotes, spaces, unicode, and special characters.
+
+What to implement:
+- AuditFilter.Filter(IEnumerable&lt;string&gt; logs, string action)
+- AuditFilter.HasUnicode(string text)
+
+NUnit focus:
+- Assert.Multiple for grouped assertions
+
+✅ Student task: Implement ONLY the TODO methods.</p>
+
+    <div class="itq-io">
+      <label for="itqInput5">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput5">audit messages:
+&quot;[2026-02-17 10:05] USER=&#x27;Sana @ Chennai&#x27; ACTION=&#x27;LOGIN&#x27; IP=&#x27;10.0.0.5&#x27;&quot;
+&quot;[2026-02-17 10:06] USER=&#x27;Sana @ Chennai&#x27; ACTION=&#x27;CREATE&#x27; ITEM=&#x27;SKU-β77&#x27; NOTE=&#x27;New stock ✅&#x27;&quot;
+filters:
+action=CREATE, containsUnicode=true </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput5')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode5')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode5">using System; // String
+using System.Collections.Generic; // List
+using System.Linq; // LINQ
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q5
+{
+    public static class AuditFilter
+    {
+        // ✅ TODO: Student must implement only this method
+        public static IEnumerable&lt;string&gt; Filter(IEnumerable&lt;string&gt; logs, string action)
+        {
+            // TODO:
+            // - return only logs where ACTION=&#x27;...&#x27; equals action (case-insensitive)
+            // - ignore null/empty lines
+            throw new NotImplementedException();
+        }
+
+        // ✅ TODO: Student must implement only this method
+        public static bool HasUnicode(string text)
+        {
+            // TODO:
+            // - return true if any char code &gt; 127
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class AuditFilterTests
+    {
+        [Test]
+        public void Filter_Should_ReturnOnlyCreate_AndDetectUnicode()
+        {
+            var logs = new[]
+            {
+                &quot;[2026-02-17 10:05] USER=&#x27;Sana @ Chennai&#x27; ACTION=&#x27;LOGIN&#x27; IP=&#x27;10.0.0.5&#x27;&quot;,
+                &quot;[2026-02-17 10:06] USER=&#x27;Sana @ Chennai&#x27; ACTION=&#x27;CREATE&#x27; ITEM=&#x27;SKU-β77&#x27; NOTE=&#x27;New stock ✅&#x27;&quot;,
+                &quot;[2026-02-17 10:07] USER=&#x27;Ravi&#x27; ACTION=&#x27;CREATE&#x27; ITEM=&#x27;SKU-123&#x27; NOTE=&#x27;Ok&#x27;&quot;
+            };
+
+            var result = AuditFilter.Filter(logs, &quot;CREATE&quot;).ToList();
+
+            Assert.Multiple(() =&gt;
+            {
+                Assert.AreEqual(2, result.Count);
+                Assert.That(AuditFilter.HasUnicode(result[0]), Is.True);
+                Assert.That(AuditFilter.HasUnicode(result[1]), Is.False);
+            });
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q6">
+  <header class="itq-head">
+    <div class="itq-no">6</div>
+    <div>
+      <h3 class="itq-title">ExecuteWithRetry — Exceptions + Retry Count</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">Exceptions</span><span class="itq-chip">Retry Logic</span><span class="itq-chip">State-based</span><span class="itq-chip itq-level cx">Complex</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Retry only on TimeoutException.
+Do not retry on InvalidOperationException.
+
+What to implement:
+- Retry.ExecuteWithRetry(Func&lt;string&gt; action, int maxRetries)
+
+NUnit focus:
+- Assert.Throws
+- attempt counting
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput6">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput6">api retry:
+endpoint=&quot;https://api.example.com/orders?id=O-9001&amp;tag=Q4%20Sale&quot;
+failuresBeforeSuccess=2
+exceptions:
+TimeoutException, InvalidOperationException</textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput6')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode6')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode6">using System; // Func, Exception
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q6
+{
+    public static class Retry
+    {
+        // ✅ TODO: Student must implement only this method
+        public static string ExecuteWithRetry(Func&lt;string&gt; action, int maxRetries)
+        {
+            // TODO:
+            // - validate maxRetries &gt;= 0
+            // - try action
+            // - if TimeoutException and retries left =&gt; retry
+            // - if other exception =&gt; rethrow immediately
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class RetryTests
+    {
+        [Test]
+        public void ExecuteWithRetry_Should_Retry_OnTimeout_AndEventuallySucceed()
+        {
+            int attempts = 0;
+
+            string Action()
+            {
+                attempts++;
+                if (attempts &lt;= 2) throw new TimeoutException(&quot;timeout&quot;);
+                return &quot;OK&quot;;
+            }
+
+            var result = Retry.ExecuteWithRetry(Action, maxRetries: 3);
+
+            Assert.AreEqual(&quot;OK&quot;, result);
+            Assert.AreEqual(3, attempts);
+        }
+
+        [Test]
+        public void ExecuteWithRetry_Should_NotRetry_OnInvalidOperation()
+        {
+            int attempts = 0;
+
+            string Action()
+            {
+                attempts++;
+                throw new InvalidOperationException(&quot;bad request&quot;);
+            }
+
+            Assert.Throws&lt;InvalidOperationException&gt;(() =&gt; Retry.ExecuteWithRetry(Action, 5));
+            Assert.AreEqual(1, attempts);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q7">
+  <header class="itq-head">
+    <div class="itq-no">7</div>
+    <div>
+      <h3 class="itq-title">Async Event Processor — async/await NUnit Test</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">Async Tests</span><span class="itq-chip">Task</span><span class="itq-chip">Deterministic</span><span class="itq-chip itq-level cx">Complex</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Process shipment events asynchronously.
+Return &#x27;Delivered&#x27; if any event type is Delivered else &#x27;InProgress&#x27;.
+
+What to implement:
+- AsyncProcessor.GetFinalStatusAsync(string[] events, int delayMs)
+
+NUnit focus:
+- async Task test method
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput7">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput7">async pipeline:
+events:
+&quot;PickedUp|2026-02-17 10:05|Agent: R@hul&quot;
+&quot;InTransit|2026-02-17 21:45|Hub#02 (BLR)&quot;
+&quot;Delivered|2026-02-18 09:20|Agent: Priya ✅&quot;
+delayMs=25</textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput7')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode7')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode7">using System; // String
+using System.Threading.Tasks; // Task
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q7
+{
+    public static class AsyncProcessor
+    {
+        // ✅ TODO: Student must implement only this method
+        public static async Task&lt;string&gt; GetFinalStatusAsync(string[] events, int delayMs)
+        {
+            // TODO:
+            // - validate events not null
+            // - await Task.Delay(delayMs) for each event (simulate IO)
+            // - detect type before first &#x27;|&#x27;
+            // - if any type == &quot;Delivered&quot; =&gt; return &quot;Delivered&quot;
+            // - else return &quot;InProgress&quot;
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class AsyncProcessorTests
+    {
+        [Test]
+        public async Task GetFinalStatusAsync_Should_ReturnDelivered_WhenDeliveredEventExists()
+        {
+            var events = new[]
+            {
+                &quot;PickedUp|2026-02-17 10:05|Agent: R@hul&quot;,
+                &quot;InTransit|2026-02-17 21:45|Hub#02 (BLR)&quot;,
+                &quot;Delivered|2026-02-18 09:20|Agent: Priya ✅&quot;
+            };
+
+            var status = await AsyncProcessor.GetFinalStatusAsync(events, delayMs: 1);
+
+            Assert.AreEqual(&quot;Delivered&quot;, status);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q8">
+  <header class="itq-head">
+    <div class="itq-no">8</div>
+    <div>
+      <h3 class="itq-title">Money Transfer Rules — Custom Exception + Boundary Tests</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">Boundary</span><span class="itq-chip">Custom Exception</span><span class="itq-chip">Rules</span><span class="itq-chip itq-level cx">Complex</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Transfer rules:
+- amount &lt;= 0 =&gt; code &#x27;NEGATIVE&#x27;
+- amount &gt; balance =&gt; code &#x27;INSUFFICIENT&#x27;
+- amount &gt; dailyLimit =&gt; code &#x27;LIMIT&#x27;
+
+What to implement:
+- TransferService.Transfer(decimal balance, decimal dailyLimit, decimal amount)
+
+NUnit focus:
+- boundary (exact daily limit)
+- assert on exception properties
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput8">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput8">money transfers:
+from=&quot;ACC-101&quot;
+to=&quot;ACC-202&quot;
+amount=&quot;₹ 3,200.00&quot;
+note=&quot;Rent &amp; Groceries #A-12&quot;
+limits:
+dailyLimit=&quot;₹ 10,000&quot;
+balanceFrom=&quot;₹ 10,500.75&quot; </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput8')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode8')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode8">using System; // Exception
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q8
+{
+    public class TransferRuleException : Exception
+    {
+        public string Code { get; }
+        public TransferRuleException(string code, string message) : base(message) { Code = code; }
+    }
+
+    public static class TransferService
+    {
+        // ✅ TODO: Student must implement only this method
+        public static decimal Transfer(decimal balance, decimal dailyLimit, decimal amount)
+        {
+            // TODO:
+            // - if amount &lt;= 0 =&gt; throw code &quot;NEGATIVE&quot;
+            // - if amount &gt; balance =&gt; throw code &quot;INSUFFICIENT&quot;
+            // - if amount &gt; dailyLimit =&gt; throw code &quot;LIMIT&quot;
+            // - else return balance - amount
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class TransferServiceTests
+    {
+        [Test]
+        public void Transfer_Should_Allow_ExactDailyLimit()
+        {
+            var newBal = TransferService.Transfer(balance: 10500.75m, dailyLimit: 10000m, amount: 10000m);
+            Assert.AreEqual(500.75m, newBal);
+        }
+
+        [Test]
+        public void Transfer_Should_Throw_Limit_WhenExceeds()
+        {
+            var ex = Assert.Throws&lt;TransferRuleException&gt;(() =&gt;
+                TransferService.Transfer(balance: 10500.75m, dailyLimit: 10000m, amount: 10000.01m));
+
+            Assert.That(ex!.Code, Is.EqualTo(&quot;LIMIT&quot;));
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q9">
+  <header class="itq-head">
+    <div class="itq-no">9</div>
+    <div>
+      <h3 class="itq-title">CSV Exporter — Golden Master Output Testing</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">Golden Master</span><span class="itq-chip">Escaping</span><span class="itq-chip">String Output</span><span class="itq-chip itq-level cx">Complex</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Export rows into CSV with delimiter &#x27;;&#x27;.
+If a field contains &#x27;;&#x27;, wrap it in quotes.
+Keep unicode intact.
+
+What to implement:
+- CsvExporter.ToCsv(string[][] rows, char delim) -&gt; string
+- Header must be: Sku;Name;Qty;Price (using delim)
+- Exact output match required
+
+NUnit focus:
+- golden master string comparison
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput9">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput9">report export:
+format=&quot;CSV;delim=;&quot;
+rows:
+&quot;SKU-α12;Laptop Stand;15;₹ 1299.50&quot;
+&quot;SKU-β77;Headphones;Noise-Cancel;4;₹ 7999&quot;
+escapeRules:
+- if field contains &#x27;;&#x27; wrap with quotes
+- keep unicode intact</textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput9')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode9')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode9">using System; // String
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q9
+{
+    public static class CsvExporter
+    {
+        // ✅ TODO: Student must implement only this method
+        public static string ToCsv(string[][] rows, char delim)
+        {
+            // TODO:
+            // - build header line + newline
+            // - escape fields containing delim by wrapping with quotes
+            // - join with newline (\n)
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class CsvExporterTests
+    {
+        [Test]
+        public void ToCsv_Should_EscapeDelimiter_AndKeepUnicode()
+        {
+            var rows = new[]
+            {
+                new[] {&quot;SKU-α12&quot;, &quot;Laptop Stand&quot;, &quot;15&quot;, &quot;₹ 1299.50&quot;},
+                new[] {&quot;SKU-β77&quot;, &quot;Headphones;Noise-Cancel&quot;, &quot;4&quot;, &quot;₹ 7999&quot;}
+            };
+
+            var csv = CsvExporter.ToCsv(rows, &#x27;;&#x27;);
+
+            var expected =
+                &quot;Sku;Name;Qty;Price\n&quot; +
+                &quot;SKU-α12;Laptop Stand;15;₹ 1299.50\n&quot; +
+                &quot;SKU-β77;&quot;Headphones;Noise-Cancel&quot;;4;₹ 7999&quot;;
+
+            Assert.AreEqual(expected, csv);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+
+<article class="itq-card" id="q10">
+  <header class="itq-head">
+    <div class="itq-no">10</div>
+    <div>
+      <h3 class="itq-title">Stock Rule Engine — Branch Coverage via TestCaseSource</h3>
+      <div class="itq-tags"><span class="itq-chip">NUnit</span><span class="itq-chip">TestCaseSource</span><span class="itq-chip">Branch Coverage</span><span class="itq-chip">Rules</span><span class="itq-chip itq-level cx">Complex</span></div>
+    </div>
+  </header>
+
+  <div class="itq-body">
+    <p class="itq-stmt">Scenario:
+Rules:
+- qty &lt;= 0 =&gt; OutOfStock
+- qty &lt; 5  =&gt; LowStock
+- else     =&gt; Available
+
+What to implement:
+- StockRuleEngine.Evaluate(int qty) -&gt; string
+
+NUnit focus:
+- branch coverage edge cases
+
+✅ Student task: Implement ONLY the TODO method.</p>
+
+    <div class="itq-io">
+      <label for="itqInput10">Sample Input (Paste your own complex input here)</label>
+      <textarea id="itqInput10">rule engine:
+rules:
+&quot;IF qty &lt;= 0 THEN status=&#x27;OutOfStock&#x27;&quot;
+&quot;IF qty &lt; 5 THEN status=&#x27;LowStock&#x27;&quot;
+&quot;ELSE status=&#x27;Available&#x27;&quot;
+inputs:
+(&quot;SKU-β77&quot;,4), (&quot;SKU-α12&quot;,15), (&quot;SKU-!@#&quot;,0)
+note=&quot;rules contain symbols: &lt;= &lt; = &#x27; &#x27;&quot; </textarea>
+      <div class="hint">
+        ✅ Inputs below are intentionally complex (spaces, quotes, ₹, commas, emoji, unicode α/β, special chars @ # % !).
+        Replace with your own sample input as required.
+      </div>
+      <div class="itq-actions">
+        <button type="button" class="itq-btn" onclick="itqCopyInput('itqInput10')">Copy input</button>
+      </div>
+    </div>
+
+    <div class="itq-actions">
+      <button type="button" class="itq-btn copy" onclick="itqCopy('itqCode10')">Copy code</button>
+    </div>
+
+    <div class="itq-code">
+      <div class="itq-codeHead">
+        <span>NUnit scenario (students implement ONLY TODO methods)</span>
+        <span class="itq-kbd">Ctrl+C</span>
+      </div>
+      <pre class="itq-pre"><code id="itqCode10">using System; // String
+using System.Collections.Generic; // IEnumerable
+using NUnit.Framework; // NUnit
+
+namespace ItTechGenie.M1.NUnit.Q10
+{
+    public static class StockRuleEngine
+    {
+        // ✅ TODO: Student must implement only this method
+        public static string Evaluate(int qty)
+        {
+            // TODO:
+            // - qty &lt;= 0 =&gt; &quot;OutOfStock&quot;
+            // - qty &lt; 5  =&gt; &quot;LowStock&quot;
+            // - else     =&gt; &quot;Available&quot;
+            throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class StockRuleEngineTests
+    {
+        public static IEnumerable&lt;TestCaseData&gt; Cases()
+        {
+            yield return new TestCaseData(0, &quot;OutOfStock&quot;).SetName(&quot;qty_0&quot;);
+            yield return new TestCaseData(-1, &quot;OutOfStock&quot;).SetName(&quot;qty_negative&quot;);
+            yield return new TestCaseData(1, &quot;LowStock&quot;).SetName(&quot;qty_1&quot;);
+            yield return new TestCaseData(4, &quot;LowStock&quot;).SetName(&quot;qty_4&quot;);
+            yield return new TestCaseData(5, &quot;Available&quot;).SetName(&quot;qty_5&quot;);
+            yield return new TestCaseData(15, &quot;Available&quot;).SetName(&quot;qty_15&quot;);
+        }
+
+        [TestCaseSource(nameof(Cases))]
+        public void Evaluate_Should_ReturnExpected(int qty, string expected)
+        {
+            var status = StockRuleEngine.Evaluate(qty);
+            Assert.AreEqual(expected, status);
+        }
+    }
+}</code></pre>
+    </div>
+  </div>
+</article>
+    </section>
+  </div>
+
+  <div id="itqToast" class="itq-toast" aria-live="polite"></div>
+  <script>
+(function(){
+  function showToast(text){
+    var t = document.getElementById("itqToast");
+    if(!t) return;
+    t.textContent = text;
+    t.style.display = "block";
+    clearTimeout(t._hide);
+    t._hide = setTimeout(function(){ t.style.display = "none"; }, 1400);
+  }
+
+  window.itqCopy = function(codeId){
+    var el = document.getElementById(codeId);
+    if(!el) return;
+    var text = el.innerText || el.textContent || "";
+    navigator.clipboard.writeText(text).then(function(){
+      showToast("Code copied");
+    }).catch(function(){
+      showToast("Copy failed (browser blocked)");
+    });
+  };
+
+  window.itqCopyInput = function(textareaId){
+    var el = document.getElementById(textareaId);
+    if(!el) return;
+    navigator.clipboard.writeText(el.value || "").then(function(){
+      showToast("Input copied");
+    }).catch(function(){
+      showToast("Copy failed");
+    });
+  };
+})();
+</script>
+</body>
+</html>
