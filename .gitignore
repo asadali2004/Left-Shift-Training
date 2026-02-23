@@ -1,5 +1,7 @@
 .\secret
 .\app
+/secret/
+/app/
 
 # .NET build outputs
 **/bin/
@@ -9,3 +11,64 @@
 *.suo
 *.userosscache
 *.sln.docstates
+
+# ASP.NET (Web Forms / .NET Framework) local artifacts
+DAY30_ASP.NET/**/packages/
+DAY30_ASP.NET/**/App_Data/*.mdf
+DAY30_ASP.NET/**/App_Data/*.ldf
+DAY30_ASP.NET/**/App_Data/*.db
+DAY30_ASP.NET/**/*.pdb
+DAY30_ASP.NET/**/*.cache
+
+# Visual Studio / IDE files
+**/.vs/
+**/.vscode/
+*.sln.ide
+*.vcxproj.user
+*.userprefs
+*.rsuser
+*.ncrunchsolution
+*.ncrunchproject
+_ReSharper*/
+*.DotSettings.user
+
+# Build, logs, and test artifacts
+**/bin/
+**/obj/
+**/TestResults/
+**/artifacts/
+*.log
+*.tlog
+
+# Publish output
+**/publish/
+**/PubTmp/
+**/app.publish/
+*.publishsettings
+*.pubxml.user
+
+# NuGet / package restore artifacts
+**/packages/
+!**/packages/build/
+!**/packages/repositories.config
+*.nupkg
+*.snupkg
+
+# ASP.NET / IIS local files
+**/App_Data/*.mdf
+**/App_Data/*.ldf
+**/App_Data/*.db
+*.pdb
+*.cache
+*.bak
+*.tmp
+
+# Local environment and secrets (keep templates if needed)
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.Development.json
+
+# Frontend dependencies (if present in any subproject)
+**/node_modules/
