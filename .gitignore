@@ -72,3 +72,7 @@ appsettings.Development.json
 
 # Frontend dependencies (if present in any subproject)
 **/node_modules/
+
+# Practice projects: skip downloaded third-party client libraries
+# Keep your own files in wwwroot/css and wwwroot/js, but ignore vendor assets in wwwroot/lib
+**/wwwroot/lib/
