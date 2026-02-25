@@ -1,14 +1,19 @@
 using System.Diagnostics;
+using EmpMVC.Models;
 using Microsoft.AspNetCore.Mvc;
-using SimpleMVC.Models;
 
-namespace SimpleMVC.Controllers
+namespace EmpMVC.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View("../Student/AddStudenty");
+            return View("../Employee/AddEmp");  
+        }
+
+        public IActionResult AddEmp()
+        {
+            return View("../Employee/AddEmp");
         }
 
         public IActionResult Privacy()

@@ -1,14 +1,14 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SimpleMVC.Models;
+using WebApplication1.Models;
 
-namespace SimpleMVC.Controllers
+namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View("../Student/AddStudenty");
+            return View();
         }
 
         public IActionResult Privacy()
