@@ -1,6 +1,4 @@
-using SimpleMVC.Middleware;
-
-namespace SimpleMVC
+namespace Client_Server
 {
     public class Program
     {
@@ -17,10 +15,11 @@ namespace SimpleMVC
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
-            app.UseMiddleware<ValidateNameLength>();
-
+            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -30,7 +29,6 @@ namespace SimpleMVC
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
-
 
             app.Run();
         }

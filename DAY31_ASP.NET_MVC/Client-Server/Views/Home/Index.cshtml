@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h2>ViewBag and ViewData Demo</h2>
+    <hr />
+
+    <!-- ViewBag Example -->
+    <div>
+        <h4>Using ViewBag</h4>
+        <h5>Fruits from ViewBag:</h5>
+        <ul>
+            @foreach(var fruit in ViewBag.ListOfFruits)
+            {
+                <li>@fruit</li>
+            }
+        </ul>
+    </div>
+
+    <hr />
+
+    <!-- ViewData Example -->
+    <div>
+        <h4>Using ViewData</h4>
+        <h5>Fruits from ViewData:</h5>
+        <ul>
+            @foreach(var fruit in ViewData["fruits"] as List<String>)
+            {
+                <li>@fruit</li>
+            }
+        </ul>
+        <p><strong>Message:</strong> @ViewData["Message"]</p>
+        <p><strong>Count:</strong> @ViewData["Count"]</p>
+    </div>
+
+    <hr />
+
+    <!-- Other ViewBag Data -->
+    <div>
+        <h4>Countries</h4>
+        @foreach(var country in ViewBag.Countries.Split(","))
+        {
+            <p>@country.Trim()</p>
+        }
+    </div>
+
+    <hr />
+
+    <div>
+        <p>@ViewBag.MyVariable</p>
+        <p>@ViewBag.KuchBhi</p>
+        
+        <h4>Loop Example:</h4>
+        @for(int i = 0; i < ViewBag.NumberOfLines; i++)
+        {
+            <p>Line @i</p>
+        }
+    </div>
+</div>
