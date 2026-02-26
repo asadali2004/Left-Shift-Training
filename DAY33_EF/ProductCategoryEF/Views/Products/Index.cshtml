@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProductCategoryEF.Models.Products>
+
+<form method="get">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." />
+    <button type="submit">Search</button>
+</form>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Category.Name</td>
+        </tr>
+    }
+</table>
+
+<div>
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <a href="?page=@i&search=@ViewBag.Search">@i</a>
+    }
+</div>

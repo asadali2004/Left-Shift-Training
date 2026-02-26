@@ -1,0 +1,23 @@
+﻿@model IEnumerable<DBFirstDemo1.Models.Restaurants>
+
+<h2>Restaurants</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.Name</td>
+                <td>@r.City</td>
+            </tr>
+        }
+    </tbody>
+</table>
