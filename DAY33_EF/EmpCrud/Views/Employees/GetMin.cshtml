@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Average Salary";
+}
+
+<h1>Employee Minimum Salary</h1>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h4 class="card-title">Minimum Salary</h4>
+        <p class="card-text display-4 text-success">₹@ViewBag.MinSalary.ToString("N2")</p>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
