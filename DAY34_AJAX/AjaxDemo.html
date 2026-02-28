@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple TODO AJAX Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 24px auto;
+            padding: 0 12px;
+            line-height: 1.5;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .row {
+            margin-bottom: 12px;
+        }
+
+        select,
+        button {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            background: #fafafa;
+            margin-top: 10px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TODO Fake API (AJAX)</h1>
+
+    <div class="row">
+        <button id="loadBtn">Load TODOs</button>
+        <span id="status" class="muted">Click "Load TODOs"</span>
+    </div>
+
+    <div class="row">
+        <label for="todoSelect">Select TODO:</label>
+        <select id="todoSelect" disabled>
+            <option value="">-- Load TODOs first --</option>
+        </select>
+    </div>
+
+    <div id="todoDetails" class="card" style="display:none;"></div>
+
+    <script>
+        var loadBtn = document.getElementById("loadBtn");
+        var statusText = document.getElementById("status");
+        var todoSelect = document.getElementById("todoSelect");
+        var todoDetails = document.getElementById("todoDetails");
+        var todoList = [];
+
+        function renderTodo(todo) {
+            todoDetails.style.display = "block";
+            todoDetails.innerHTML =
+                "<strong>ID:</strong> " + todo.id + "<br>" +
+                "<strong>User ID:</strong> " + todo.userId + "<br>" +
+                "<strong>Title:</strong> " + todo.title + "<br>" +
+                "<strong>Status:</strong> " + (todo.completed ? "Completed" : "Pending");
+        }
+
+        loadBtn.addEventListener("click", function () {
+            statusText.textContent = "Loading...";
+            todoSelect.disabled = true;
+            todoSelect.innerHTML = "<option value=''>Loading...</option>";
+            todoDetails.style.display = "none";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://jsonplaceholder.typicode.com/todos?_limit=20", true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    todoList = JSON.parse(xhr.responseText);
+
+                    todoSelect.innerHTML = "<option value=''>-- Choose a TODO --</option>";
+                    for (var i = 0; i < todoList.length; i++) {
+                        var todo = todoList[i];
+                        var option = document.createElement("option");
+                        option.value = todo.id;
+                        option.textContent = "#" + todo.id + " - " + todo.title;
+                        todoSelect.appendChild(option);
+                    }
+
+                    todoSelect.disabled = false;
+                    statusText.textContent = "Loaded " + todoList.length + " TODO items";
+                } else {
+                    statusText.textContent = "Error: " + xhr.status;
+                    todoSelect.innerHTML = "<option value=''>-- Failed to load --</option>";
+                }
+            };
+
+            xhr.onerror = function () {
+                statusText.textContent = "Network error while loading TODOs";
+                todoSelect.innerHTML = "<option value=''>-- Network error --</option>";
+            };
+
+            xhr.send();
+        });
+
+        todoSelect.addEventListener("change", function () {
+            var selectedId = parseInt(todoSelect.value, 10);
+            if (!selectedId) {
+                todoDetails.style.display = "none";
+                return;
+            }
+
+            for (var i = 0; i < todoList.length; i++) {
+                if (todoList[i].id === selectedId) {
+                    renderTodo(todoList[i]);
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

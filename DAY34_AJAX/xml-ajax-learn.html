@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>XML & AJAX — Learn by Doing</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #0d0f14;
+    --surface:   #161920;
+    --surface2:  #1e2130;
+    --border:    #2a2f45;
+    --accent:    #00d4aa;
+    --accent2:   #7c6af7;
+    --accent3:   #f5a623;
+    --text:      #e8eaf0;
+    --muted:     #7a7f96;
+    --danger:    #ff5f6d;
+    --success:   #00d4aa;
+    --code-bg:   #111420;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1040 50%, #0d1a14 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(0,212,170,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(124,106,247,0.08) 0%, transparent 50%);
+  }
+  header .inner { position: relative; max-width: 900px; margin: auto; }
+  header .badge {
+    display: inline-block;
+    background: rgba(0,212,170,0.12);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  header h1 span { color: var(--accent); }
+  header p { color: var(--muted); font-size: 15px; max-width: 560px; }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ── SECTION TITLES ── */
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; margin-top: 48px;
+  }
+  .section-label .num {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .section-label h2 { font-size: 20px; font-weight: 700; }
+  .section-label p  { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* ── CONCEPT BOX ── */
+  .concept {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .concept::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent2);
+  }
+  .concept.green::before  { background: var(--accent); }
+  .concept.orange::before { background: var(--accent3); }
+  .concept.red::before    { background: var(--danger); }
+
+  .concept h3 {
+    font-size: 14px; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap-8px;
+    color: var(--accent2);
+  }
+  .concept.green h3  { color: var(--accent); }
+  .concept.orange h3 { color: var(--accent3); }
+  .concept p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .concept strong { color: var(--text); }
+
+  /* ── ANALOGY BOX ── */
+  .analogy {
+    background: rgba(124,106,247,0.07);
+    border: 1px dashed rgba(124,106,247,0.35);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: #a89cf7;
+  }
+  .analogy::before { content: '💡 Real Life: '; font-weight: 700; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+  .code-block .cb-header {
+    background: var(--surface2);
+    padding: 8px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-block .cb-header span { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .code-block pre {
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #c9d1d9;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .kw  { color: #ff7b72; }   /* keywords */
+  .fn  { color: #d2a8ff; }   /* functions */
+  .str { color: #a5d6ff; }   /* strings */
+  .cm  { color: #546e7a; font-style: italic; } /* comments */
+  .num { color: #79c0ff; }   /* numbers */
+  .prop{ color: #ffa657; }   /* properties */
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 0; margin: 20px 0;
+  }
+  .flow-step {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    text-align: center;
+    min-width: 120px;
+    flex: 1;
+  }
+  .flow-step .icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .flow-step .label { color: var(--muted); font-size: 11px; display: block; }
+  .flow-step .val   { color: var(--text); font-weight: 600; font-size: 12px; }
+  .flow-arrow {
+    color: var(--accent); font-size: 20px;
+    padding: 0 8px; flex-shrink: 0;
+  }
+
+  /* ── LIVE DEMO AREA ── */
+  .demo-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .demo-box .demo-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .demo-box .demo-header .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .demo-box .demo-header span { font-size: 13px; color: var(--muted); }
+
+  .demo-body { padding: 24px; }
+
+  /* controls */
+  .ctrl-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+
+  input[type=text], select {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    padding: 9px 14px;
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  input[type=text]:focus, select:focus { border-color: var(--accent); }
+  input[type=text] { width: 220px; }
+
+  .btn {
+    padding: 9px 20px;
+    border: none; border-radius: 7px;
+    font-family: 'Sora', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-primary  { background: var(--accent);  color: #0d0f14; }
+  .btn-secondary{ background: var(--accent2); color: white; }
+  .btn-clear    { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+  .btn:hover    { opacity: .85; transform: translateY(-1px); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+  /* status bar */
+  .status-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: var(--code-bg);
+    border-radius: 7px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 40px;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--muted); flex-shrink: 0;
+    transition: background .3s;
+  }
+  .status-dot.loading { background: var(--accent3); animation: pulse 1s infinite; }
+  .status-dot.success { background: var(--success); }
+  .status-dot.error   { background: var(--danger); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* step log */
+  .step-log {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    min-height: 60px;
+    max-height: 160px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+  }
+  .log-line { padding: 2px 0; }
+  .log-line.send  { color: var(--accent3); }
+  .log-line.recv  { color: var(--accent); }
+  .log-line.parse { color: var(--accent2); }
+  .log-line.info  { color: var(--muted); }
+  .log-line.err   { color: var(--danger); }
+
+  /* results grid */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .result-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    animation: fadeIn .4s ease;
+  }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  .result-card .track-num { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .result-card img {
+    width: 100%; aspect-ratio: 1;
+    border-radius: 8px; object-fit: cover;
+    margin-bottom: 10px;
+    background: var(--border);
+  }
+  .result-card .track-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; line-height: 1.4; }
+  .result-card .artist     { font-size: 12px; color: var(--accent); }
+  .result-card .album      { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* XML viewer */
+  .xml-viewer {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    max-height: 200px;
+    overflow-y: auto;
+    color: #a8b3c1;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .xml-tag   { color: #79c0ff; }
+  .xml-attr  { color: #ffa657; }
+  .xml-val   { color: #a5d6ff; }
+  .xml-text  { color: #c9d1d9; }
+
+  /* tabs */
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+  .tab {
+    padding: 7px 16px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    transition: all .2s;
+  }
+  .tab.active { background: var(--accent2); color: white; border-color: var(--accent2); }
+
+  /* note boxes */
+  .note {
+    background: rgba(245,166,35,0.08);
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #f5c96a;
+    margin: 12px 0;
+  }
+  .note::before { content: '⚠️  '; }
+
+  /* table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  th { background: var(--surface2); padding: 10px 14px; text-align: left; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  td code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  /* responsive */
+  @media(max-width:600px) {
+    header { padding: 28px 20px; }
+    .page  { padding: 24px 16px 60px; }
+    .flow  { flex-direction: column; align-items: stretch; }
+    .flow-arrow { transform: rotate(90deg); text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ HEADER -->
+<header>
+  <div class="inner">
+    <div class="badge">Beginner Tutorial</div>
+    <h1>XML &amp; <span>AJAX</span> — Learn by Doing</h1>
+    <p>Understand HTTP Request, HTTP Response, XMLHttpRequest, JSON.stringify, and XML Parsing — all in one place with a live demo.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ══ SECTION 1: What is HTTP Request/Response ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#f5a623">1</div>
+    <div>
+      <h2>What is an HTTP Request &amp; Response?</h2>
+      <p>The foundation of everything on the web</p>
+    </div>
+  </div>
+
+  <div class="concept orange">
+    <h3>📤 HTTP REQUEST — You asking the server</h3>
+    <p>Every time your browser (or your code) needs data from a server, it sends an <strong>HTTP Request</strong>. It's like sending a letter to a library asking for a specific book.</p>
+  </div>
+
+  <div class="analogy">Think of it like ordering food at a restaurant. You (browser) tell the waiter (HTTP) what you want. The kitchen (server) prepares it and sends it back.</div>
+
+  <div class="concept green">
+    <h3>📥 HTTP RESPONSE — Server replying back</h3>
+    <p>After the server receives your request, it sends back an <strong>HTTP Response</strong>. This response contains a <strong>status code</strong> (was it successful?) and the <strong>data</strong> you asked for (HTML, JSON, or XML).</p>
+  </div>
+
+  <p style="font-size:14px; color:var(--muted); margin: 16px 0 8px">The full flow looks like this:</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <span class="icon">🖥️</span>
+      <span class="val">Your Browser</span>
+      <span class="label">sends request</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <span class="icon">📡</span>
+      <span class="val">Internet</span>
+      <span class="label">carries it</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <span class="icon">🗄️</span>
+      <span class="val">Server</span>
+      <span class="label">processes</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <span class="icon">📦</span>
+      <span class="val">Response</span>
+      <span class="label">XML / JSON data</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <span class="icon">✅</span>
+      <span class="val">Your Page</span>
+      <span class="label">displays result</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <h3>📋 HTTP Status Codes — What the server is saying</h3>
+    <p>Every response comes with a number that tells you if things went well or not.</p>
+  </div>
+
+  <table>
+    <tr><th>Code</th><th>Meaning</th><th>Real Life Analogy</th></tr>
+    <tr><td><code>200</code></td><td>OK — success!</td><td>Order delivered perfectly ✅</td></tr>
+    <tr><td><code>404</code></td><td>Not Found</td><td>Restaurant doesn't have that dish ❌</td></tr>
+    <tr><td><code>500</code></td><td>Server Error</td><td>Kitchen caught fire 🔥</td></tr>
+    <tr><td><code>403</code></td><td>Forbidden</td><td>You're not allowed in VIP section 🚫</td></tr>
+  </table>
+
+
+  <!-- ══ SECTION 2: XMLHttpRequest ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#7c6af7">2</div>
+    <div>
+      <h2>XMLHttpRequest — The Engine Behind AJAX</h2>
+      <p>The browser's built-in tool to talk to servers</p>
+    </div>
+  </div>
+
+  <div class="concept">
+    <h3>🔧 What is XMLHttpRequest (XHR)?</h3>
+    <p><strong>XMLHttpRequest</strong> is a built-in browser object that lets JavaScript send and receive data from a server <strong>without reloading the page</strong>. jQuery's <code>$.ajax()</code> and the modern <code>fetch()</code> are both built on top of this same idea.</p>
+  </div>
+
+  <div class="analogy">XHR is like a phone call your code makes. It dials the server, waits for an answer, and when the server picks up and responds — your JavaScript code handles whatever comes back.</div>
+
+  <p style="font-size:14px; color:var(--muted); margin:16px 0 6px">The raw XHR code (so you understand what's happening under the hood):</p>
+
+  <div class="code-block">
+    <div class="cb-header"><span>javascript — XMLHttpRequest the raw way</span></div>
+    <pre>
+<cm>// Step 1: Create the XHR object</cm>
+<kw>var</kw> xhr = <kw>new</kw> <fn>XMLHttpRequest</fn>();
+
+<cm>// Step 2: Configure it — method (GET/POST), URL, async(true=don't freeze page)</cm>
+xhr.<fn>open</fn>(<str>"GET"</str>, <str>"https://some-api.com/data.xml"</str>, <kw>true</kw>);
+
+<cm>// Step 3: Tell it what format to expect back</cm>
+xhr.<prop>responseType</prop> = <str>"document"</str>;  <cm>// "document" = parse XML automatically</cm>
+
+<cm>// Step 4: What to do when the server responds</cm>
+xhr.<prop>onload</prop> = <kw>function</kw>() {
+    <kw>if</kw> (xhr.<prop>status</prop> === <num>200</num>) {
+        <cm>// SUCCESS — xhr.responseXML is the parsed XML</cm>
+        <kw>var</kw> xml = xhr.<prop>responseXML</prop>;
+        console.<fn>log</fn>(<str>"Got XML!"</str>, xml);
+    } <kw>else</kw> {
+        console.<fn>log</fn>(<str>"Error: "</str> + xhr.<prop>status</prop>);
+    }
+};
+
+<cm>// Step 5: Handle network failures</cm>
+xhr.<prop>onerror</prop> = <kw>function</kw>() {
+    console.<fn>log</fn>(<str>"Network error!"</str>);
+};
+
+<cm>// Step 6: Actually SEND the request</cm>
+xhr.<fn>send</fn>();  <cm>// nothing happens until you call this!</cm>
+    </pre>
+  </div>
+
+  <div class="note">Notice: nothing happens until <code>xhr.send()</code>. Steps 1–5 are just setup. Step 6 fires the actual request.</div>
+
+
+  <!-- ══ SECTION 3: $.ajax() ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#00d4aa; color:#0d0f14">3</div>
+    <div>
+      <h2>jQuery $.ajax() — The Easy Wrapper</h2>
+      <p>Same thing as XHR but much cleaner to write</p>
+    </div>
+  </div>
+
+  <div class="concept green">
+    <h3>💚 Why use $.ajax()?</h3>
+    <p>jQuery's <strong>$.ajax()</strong> wraps the messy XHR code above into a clean, readable format. Under the hood it still creates an XMLHttpRequest — it just handles all the boring parts for you.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="cb-header"><span>javascript — Same request with jQuery $.ajax()</span></div>
+    <pre>
+<fn>$</fn>.<fn>ajax</fn>({
+    <prop>type</prop>:        <str>'GET'</str>,                     <cm>// HTTP method</cm>
+    <prop>url</prop>:         <str>'https://some-api.com/data.xml'</str>, <cm>// where to send</cm>
+    <prop>dataType</prop>:    <str>'xml'</str>,                    <cm>// tell jQuery: expect XML back</cm>
+
+    <cm>// runs when server replies successfully</cm>
+    <prop>success</prop>: <kw>function</kw>(xmlResponse) {
+        console.<fn>log</fn>(<str>'Got XML!'</str>, xmlResponse);
+        <cm>// xmlResponse is already a parsed XML Document</cm>
+    },
+
+    <cm>// runs if something goes wrong</cm>
+    <prop>error</prop>: <kw>function</kw>(xhr, status, err) {
+        console.<fn>log</fn>(<str>'Failed: '</str> + err);
+    }
+});
+    </pre>
+  </div>
+
+  <p style="font-size:14px; color:var(--muted); margin:12px 0">Same result, far less code. This is why everyone uses jQuery for AJAX.</p>
+
+
+  <!-- ══ SECTION 4: JSON.stringify ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#ff5f6d">4</div>
+    <div>
+      <h2>JSON.stringify() &amp; JSON.parse()</h2>
+      <p>Converting between JavaScript objects and text</p>
+    </div>
+  </div>
+
+  <div class="concept red">
+    <h3>❓ Why do we need to "stringify"?</h3>
+    <p>When you send data over the internet, you can only send <strong>text (strings)</strong>. But in JavaScript you work with <strong>objects</strong>. <code>JSON.stringify()</code> converts your object into a text string so it can travel over HTTP. On the other side, <code>JSON.parse()</code> converts it back to an object.</p>
+  </div>
+
+  <div class="analogy">It's like packing a 3D model into a flat box (stringify) to ship it, then assembling it on the other side (parse). You can't ship assembled furniture easily — you flatten it first.</div>
+
+  <div class="code-block">
+    <div class="cb-header"><span>javascript — JSON.stringify() and JSON.parse() explained</span></div>
+    <pre>
+<cm>// ── You have a JavaScript OBJECT ──────────────────</cm>
+<kw>var</kw> student = {
+    <prop>id</prop>:     <num>1</num>,
+    <prop>name</prop>:   <str>"Alice"</str>,
+    <prop>course</prop>: <str>"Computer Science"</str>
+};
+
+<cm>// You CANNOT send this object directly over HTTP</cm>
+<cm>// You must convert it to a STRING first</cm>
+
+<kw>var</kw> stringified = JSON.<fn>stringify</fn>(student);
+<cm>// Result: '{"id":1,"name":"Alice","course":"Computer Science"}'</cm>
+<cm>//          ↑ This is now a plain text string — sendable!</cm>
+
+console.<fn>log</fn>(<kw>typeof</kw> student);      <cm>// "object"</cm>
+console.<fn>log</fn>(<kw>typeof</kw> stringified);  <cm>// "string"  ← now it can travel</cm>
+
+
+<cm>// ── On the receiving end: convert back ─────────────</cm>
+<kw>var</kw> received = <str>'{"id":1,"name":"Alice","course":"Computer Science"}'</str>;
+
+<kw>var</kw> parsed = JSON.<fn>parse</fn>(received);
+<cm>// Result: { id: 1, name: "Alice", course: "Computer Science" }</cm>
+
+console.<fn>log</fn>(parsed.<prop>name</prop>);   <cm>// "Alice"  ← back to normal object!</cm>
+console.<fn>log</fn>(parsed.<prop>id</prop>);     <cm>// 1</cm>
+    </pre>
+  </div>
+
+  <table>
+    <tr><th>Method</th><th>Does what</th><th>Direction</th></tr>
+    <tr><td><code>JSON.stringify(obj)</code></td><td>Object → String (text)</td><td>Before sending to server</td></tr>
+    <tr><td><code>JSON.parse(str)</code></td><td>String → Object</td><td>After receiving from server</td></tr>
+  </table>
+
+
+  <!-- ══ SECTION 5: What is XML ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#f5a623; color:#0d0f14">5</div>
+    <div>
+      <h2>What is XML? How to Parse it?</h2>
+      <p>Reading structured data from tags</p>
+    </div>
+  </div>
+
+  <div class="concept orange">
+    <h3>📄 XML — eXtensible Markup Language</h3>
+    <p>XML looks similar to HTML but it's <strong>data-focused, not display-focused</strong>. Every piece of data is wrapped in custom tags you define. APIs use XML to send structured information.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="cb-header"><span>xml — Example XML response from an API</span></div>
+    <pre>
+<span class="xml-tag">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="xml-tag">&lt;feed&gt;</span>
+    <span class="xml-tag">&lt;entry&gt;</span>
+        <span class="xml-tag">&lt;trackName&gt;</span><span class="xml-text">Blinding Lights</span><span class="xml-tag">&lt;/trackName&gt;</span>
+        <span class="xml-tag">&lt;artistName&gt;</span><span class="xml-text">The Weeknd</span><span class="xml-tag">&lt;/artistName&gt;</span>
+        <span class="xml-tag">&lt;album&gt;</span><span class="xml-text">After Hours</span><span class="xml-tag">&lt;/album&gt;</span>
+    <span class="xml-tag">&lt;/entry&gt;</span>
+    <span class="xml-tag">&lt;entry&gt;</span>
+        <span class="xml-tag">&lt;trackName&gt;</span><span class="xml-text">Shape of You</span><span class="xml-tag">&lt;/trackName&gt;</span>
+        <span class="xml-tag">&lt;artistName&gt;</span><span class="xml-text">Ed Sheeran</span><span class="xml-tag">&lt;/artistName&gt;</span>
+        <span class="xml-tag">&lt;album&gt;</span><span class="xml-text">Divide</span><span class="xml-tag">&lt;/album&gt;</span>
+    <span class="xml-tag">&lt;/entry&gt;</span>
+<span class="xml-tag">&lt;/feed&gt;</span>
+    </pre>
+  </div>
+
+  <div class="code-block">
+    <div class="cb-header"><span>javascript — Parsing XML with getElementsByTagName</span></div>
+    <pre>
+<cm>// xmlDoc = the parsed XML document (comes from AJAX response)</cm>
+
+<cm>// Get ALL &lt;entry&gt; tags — returns a list (like an array)</cm>
+<kw>var</kw> entries = xmlDoc.<fn>getElementsByTagName</fn>(<str>"entry"</str>);
+
+<cm>// Loop through each entry</cm>
+<kw>for</kw> (<kw>var</kw> i = <num>0</num>; i &lt; entries.<prop>length</prop>; i++) {
+
+    <kw>var</kw> entry = entries[i];
+
+    <cm>// Get text inside a specific tag</cm>
+    <kw>var</kw> trackName = entry
+        .<fn>getElementsByTagName</fn>(<str>"trackName"</str>)[<num>0</num>]  <cm>// [0] = first match</cm>
+        .<prop>textContent</prop>;                          <cm>// .textContent = the text inside</cm>
+
+    <kw>var</kw> artist = entry
+        .<fn>getElementsByTagName</fn>(<str>"artistName"</str>)[<num>0</num>]
+        .<prop>textContent</prop>;
+
+    console.<fn>log</fn>(trackName + <str>" by "</str> + artist);
+}
+    </pre>
+  </div>
+
+
+  <!-- ══ SECTION 6: LIVE DEMO ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#7c6af7">6</div>
+    <div>
+      <h2>🚀 Live Demo — iTunes API (Real XML)</h2>
+      <p>See every step happen in real time with logs</p>
+    </div>
+  </div>
+
+  <p style="font-size:13px; color:var(--muted); margin-bottom:16px">
+    This calls the <strong>iTunes Search API</strong> — a free, real public API that returns XML. Watch the step-by-step log to see exactly what's happening at each stage.
+  </p>
+
+  <div class="demo-box">
+    <div class="demo-header">
+      <div class="dot" style="background:#ff5f6d"></div>
+      <div class="dot" style="background:#f5a623"></div>
+      <div class="dot" style="background:#00d4aa"></div>
+      <span>Live AJAX Demo — iTunes XML Search</span>
+    </div>
+    <div class="demo-body">
+
+      <!-- Controls -->
+      <div class="ctrl-row">
+        <input type="text" id="searchInput" placeholder="Artist (e.g. Taylor Swift)" value="Coldplay" />
+        <select id="limitSelect">
+          <option value="3">3 results</option>
+          <option value="5" selected>5 results</option>
+          <option value="8">8 results</option>
+        </select>
+        <button class="btn btn-primary" id="btnFetch">▶ Fetch XML</button>
+        <button class="btn btn-clear" id="btnClear">Clear</button>
+      </div>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Ready — enter an artist name and click Fetch XML</span>
+      </div>
+
+      <!-- Step Log -->
+      <p style="font-size:11px; color:var(--muted); margin-bottom:6px; font-family:monospace">STEP-BY-STEP LOG:</p>
+      <div class="step-log" id="stepLog">
+        <div class="log-line info">// Waiting for you to click Fetch XML...</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('results')">🎵 Results</button>
+        <button class="tab" onclick="switchTab('xml')">📄 Raw XML</button>
+        <button class="tab" onclick="switchTab('parsed')">🔍 Parsed Data</button>
+      </div>
+
+      <!-- Tab: Results -->
+      <div id="tab-results">
+        <div class="results-grid" id="resultsGrid">
+          <div style="color:var(--muted); font-size:13px; padding:20px 0; grid-column:1/-1">
+            Results will appear here after you fetch...
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: XML -->
+      <div id="tab-xml" style="display:none">
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px">This is the raw XML text that came back from the server:</p>
+        <div class="xml-viewer" id="xmlViewer">// Raw XML will appear here...</div>
+      </div>
+
+      <!-- Tab: Parsed -->
+      <div id="tab-parsed" style="display:none">
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px">After parsing: each XML tag extracted into a JavaScript object:</p>
+        <div class="xml-viewer" id="parsedViewer">// Parsed objects will appear here...</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══ SECTION 7: Full Code Walkthrough ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#00d4aa; color:#0d0f14">7</div>
+    <div>
+      <h2>The Complete Code — Fully Commented</h2>
+      <p>Every single line explained</p>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <div class="cb-header"><span>javascript — Complete AJAX + XML code used in this demo</span></div>
+    <pre>
+<cm>// ─────────────────────────────────────────────────────
+//  STEP 1: When user clicks the button
+// ─────────────────────────────────────────────────────</cm>
+<fn>$</fn>(<str>'#btnFetch'</str>).<fn>click</fn>(<kw>function</kw>() {
+
+    <cm>// Read what the user typed</cm>
+    <kw>var</kw> artist = <fn>$</fn>(<str>'#searchInput'</str>).<fn>val</fn>().<fn>trim</fn>();
+    <kw>var</kw> limit  = <fn>$</fn>(<str>'#limitSelect'</str>).<fn>val</fn>();
+
+    <cm>// Validation: don't call API with empty input</cm>
+    <kw>if</kw> (!artist) {
+        <fn>log</fn>(<str>'⚠️ Please enter an artist name'</str>, <str>'err'</str>);
+        <kw>return</kw>;
+    }
+
+    <cm>// ─────────────────────────────────────────────────
+    //  STEP 2: Build the URL
+    //  We use encodeURIComponent() to make the artist
+    //  name URL-safe (spaces → %20, etc.)
+    // ─────────────────────────────────────────────────</cm>
+    <kw>var</kw> url =
+        <str>'https://itunes.apple.com/search?'</str> +
+        <str>'term='</str>     + <fn>encodeURIComponent</fn>(artist) +
+        <str>'&amp;media=music'</str>   +   <cm>// only music results</cm>
+        <str>'&amp;limit='</str>  + limit  +   <cm>// how many results</cm>
+        <str>'&amp;callback=?'</str>;           <cm>// needed for JSONP cross-origin</cm>
+
+    <fn>log</fn>(<str>'📤 SENDING REQUEST to: '</str> + url, <str>'send'</str>);
+
+    <cm>// ─────────────────────────────────────────────────
+    //  STEP 3: Make the AJAX Call
+    //  dataType: 'jsonp' = cross-origin request trick
+    // ─────────────────────────────────────────────────</cm>
+    <fn>$</fn>.<fn>ajax</fn>({
+        <prop>url</prop>:      url,
+        <prop>dataType</prop>: <str>'jsonp'</str>,  <cm>// iTunes returns JSON(P) for cross-origin</cm>
+
+        <prop>beforeSend</prop>: <kw>function</kw>() {
+            <cm>// Runs before the request is sent</cm>
+            <fn>log</fn>(<str>'⏳ Request sent — waiting for server...'</str>, <str>'send'</str>);
+            setStatus(<str>'loading'</str>, <str>'Waiting for server response...'</str>);
+        },
+
+        <prop>success</prop>: <kw>function</kw>(data) {
+            <cm>// ─────────────────────────────────────────
+            //  STEP 4: Server responded successfully!
+            //  'data' here is already parsed JSON
+            //  (iTunes API returns JSON, not XML, for browser calls)
+            //  We'll CONVERT it to XML to practice parsing!
+            // ─────────────────────────────────────────</cm>
+
+            <fn>log</fn>(<str>'📥 RESPONSE RECEIVED — Status 200 OK'</str>, <str>'recv'</str>);
+            <fn>log</fn>(<str>'📦 Data contains: '</str> + data.results.length + <str>' tracks'</str>, <str>'recv'</str>);
+
+            <cm>// Build XML string from the JSON data (for practice!)</cm>
+            <kw>var</kw> xmlString = <fn>buildXML</fn>(data.results);
+            <fn>log</fn>(<str>'🔄 Converted to XML for parsing practice'</str>, <str>'parse'</str>);
+
+            <cm>// Parse the XML string into an XML Document</cm>
+            <kw>var</kw> parser = <kw>new</kw> <fn>DOMParser</fn>();
+            <kw>var</kw> xmlDoc = parser.<fn>parseFromString</fn>(xmlString, <str>'text/xml'</str>);
+            <fn>log</fn>(<str>'✅ XML Parsed with DOMParser'</str>, <str>'parse'</str>);
+
+            <cm>// Extract data from XML tags</cm>
+            <kw>var</kw> tracks = xmlDoc.<fn>getElementsByTagName</fn>(<str>'track'</str>);
+            <fn>log</fn>(<str>'🔍 Extracted '</str> + tracks.length + <str>' &lt;track&gt; elements'</str>, <str>'parse'</str>);
+
+            <cm>// Display everything</cm>
+            <fn>displayResults</fn>(tracks);
+            <fn>showRawXML</fn>(xmlString);
+            <fn>showParsed</fn>(tracks);
+
+            setStatus(<str>'success'</str>, <str>'✅ Done! Got '</str> + tracks.length + <str>' results.'</str>);
+        },
+
+        <prop>error</prop>: <kw>function</kw>(xhr, status) {
+            <cm>// Server error or network failure</cm>
+            <fn>log</fn>(<str>'❌ AJAX Error: '</str> + status, <str>'err'</str>);
+            setStatus(<str>'error'</str>, <str>'❌ Request failed: '</str> + status);
+        }
+    });
+});
+    </pre>
+  </div>
+
+
+  <!-- ══ SECTION 8: Summary ══ -->
+  <div class="section-label">
+    <div class="num" style="background:#f5a623; color:#0d0f14">8</div>
+    <div>
+      <h2>Quick Reference — Everything in One Place</h2>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>Concept</th><th>What it does</th><th>When you use it</th></tr>
+    <tr><td><code>HTTP Request</code></td><td>Your code asking the server for data</td><td>Every AJAX call</td></tr>
+    <tr><td><code>HTTP Response</code></td><td>Server sending data back</td><td>Handled in success/onload</td></tr>
+    <tr><td><code>XMLHttpRequest</code></td><td>Browser's raw AJAX engine</td><td>Under the hood always</td></tr>
+    <tr><td><code>$.ajax()</code></td><td>jQuery wrapper — easier to write</td><td>Day-to-day AJAX calls</td></tr>
+    <tr><td><code>JSON.stringify()</code></td><td>Object → String (to send)</td><td>POST requests with data</td></tr>
+    <tr><td><code>JSON.parse()</code></td><td>String → Object (to use)</td><td>After receiving JSON text</td></tr>
+    <tr><td><code>DOMParser</code></td><td>Parses XML string into a document</td><td>When you get XML back</td></tr>
+    <tr><td><code>getElementsByTagName()</code></td><td>Finds XML elements by tag name</td><td>Extracting XML data</td></tr>
+    <tr><td><code>.textContent</code></td><td>Gets text inside an XML/HTML tag</td><td>Reading XML values</td></tr>
+    <tr><td><code>status 200</code></td><td>Request succeeded</td><td>Check in error handling</td></tr>
+  </table>
+
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+// ── Helpers ─────────────────────────────────────────────────
+function log(msg, type) {
+  var div = document.getElementById('stepLog');
+  var line = document.createElement('div');
+  line.className = 'log-line ' + (type || 'info');
+  line.textContent = msg;
+  div.appendChild(line);
+  div.scrollTop = div.scrollHeight;
+}
+
+function clearLog() {
+  document.getElementById('stepLog').innerHTML = '';
+}
+
+function setStatus(state, msg) {
+  var dot  = document.getElementById('statusDot');
+  var text = document.getElementById('statusText');
+  dot.className  = 'status-dot ' + state;
+  text.textContent = msg;
+}
+
+function switchTab(name) {
+  ['results','xml','parsed'].forEach(function(t) {
+    document.getElementById('tab-' + t).style.display = t === name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(function(btn, i) {
+    btn.classList.toggle('active', ['results','xml','parsed'][i] === name);
+  });
+}
+
+// ── Build XML from JSON data (for practice) ─────────────────
+function buildXML(results) {
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n<library>\n';
+  results.forEach(function(item) {
+    var name  = (item.trackName    || item.collectionName || 'Unknown').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var artist= (item.artistName   || 'Unknown').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    var album = (item.collectionName || '—').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    var price = item.trackPrice || item.collectionPrice || 0;
+    var art   = item.artworkUrl100 || '';
+    var url   = item.trackViewUrl  || item.collectionViewUrl || '#';
+    xml += '  <track>\n';
+    xml += '    <name>'   + name   + '</name>\n';
+    xml += '    <artist>' + artist + '</artist>\n';
+    xml += '    <album>'  + album  + '</album>\n';
+    xml += '    <price>'  + price  + '</price>\n';
+    xml += '    <artwork>'+ art    + '</artwork>\n';
+    xml += '    <link>'   + url    + '</link>\n';
+    xml += '  </track>\n';
+  });
+  xml += '</library>';
+  return xml;
+}
+
+// ── Display result cards ─────────────────────────────────────
+function displayResults(tracks) {
+  var grid = document.getElementById('resultsGrid');
+  grid.innerHTML = '';
+  for (var i = 0; i < tracks.length; i++) {
+    var t     = tracks[i];
+    var name   = getTag(t, 'name');
+    var artist = getTag(t, 'artist');
+    var album  = getTag(t, 'album');
+    var art    = getTag(t, 'artwork');
+    var link   = getTag(t, 'link');
+
+    var card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML =
+      '<div class="track-num">Track ' + (i+1) + '</div>' +
+      (art ? '<img src="' + art + '" alt="artwork" loading="lazy"/>' : '') +
+      '<div class="track-name">' + name + '</div>' +
+      '<div class="artist">🎤 ' + artist + '</div>' +
+      '<div class="album">💿 ' + album + '</div>';
+    grid.appendChild(card);
+  }
+}
+
+// ── Show raw XML ─────────────────────────────────────────────
+function showRawXML(xmlString) {
+  var highlighted = xmlString
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/(&lt;\/?[\w]+&gt;)/g, '<span class="xml-tag">$1</span>')
+    .replace(/(&lt;\?[^&]*&gt;)/g, '<span class="xml-tag">$1</span>');
+  document.getElementById('xmlViewer').innerHTML = highlighted;
+}
+
+// ── Show parsed objects ──────────────────────────────────────
+function showParsed(tracks) {
+  var out = '';
+  for (var i = 0; i < tracks.length; i++) {
+    var t = tracks[i];
+    out += '// Track ' + (i+1) + '\n';
+    out += '{\n';
+    out += '  name:   "' + getTag(t,'name')   + '",\n';
+    out += '  artist: "' + getTag(t,'artist') + '",\n';
+    out += '  album:  "' + getTag(t,'album')  + '",\n';
+    out += '  price:  "' + getTag(t,'price')  + '"\n';
+    out += '}\n\n';
+  }
+  document.getElementById('parsedViewer').textContent = out;
+}
+
+// ── Helper: get text content from XML tag ────────────────────
+function getTag(element, tagName) {
+  var nodes = element.getElementsByTagName(tagName);
+  if (nodes.length > 0 && nodes[0].textContent) {
+    return nodes[0].textContent;
+  }
+  return '—';
+}
+
+// ── MAIN: Fetch Button ───────────────────────────────────────
+$('#btnFetch').click(function() {
+  var artist = $('#searchInput').val().trim();
+  var limit  = $('#limitSelect').val();
+
+  clearLog();
+  log('🖱️  Button clicked — starting process...', 'info');
+
+  if (!artist) {
+    log('⚠️  Validation failed — input is empty!', 'err');
+    setStatus('error', '⚠️ Please enter an artist name');
+    return;
+  }
+
+  log('✅  Validation passed — artist: "' + artist + '"', 'info');
+  log('📝  JSON.stringify is NOT needed here (GET request, no body)', 'info');
+  log('🔧  encodeURIComponent("' + artist + '") = "' + encodeURIComponent(artist) + '"', 'parse');
+
+  var url = 'https://itunes.apple.com/search?' +
+            'term='   + encodeURIComponent(artist) +
+            '&media=music' +
+            '&limit=' + limit +
+            '&callback=?';
+
+  log('📤  SENDING HTTP REQUEST → ' + url.substring(0,60) + '...', 'send');
+  setStatus('loading', '⏳ Sending HTTP Request...');
+
+  $('#btnFetch').prop('disabled', true).text('Fetching...');
+
+  $.ajax({
+    url:      url,
+    dataType: 'jsonp',
+
+    success: function(data) {
+      log('📥  HTTP RESPONSE received — Status: 200 OK', 'recv');
+      log('📦  Response contains ' + data.results.length + ' result objects', 'recv');
+      log('🔄  Converting JSON → XML string (for XML parsing practice)...', 'parse');
+
+      var xmlString = buildXML(data.results);
+      log('✅  XML string built — ' + xmlString.length + ' characters', 'parse');
+
+      log('🔧  Creating DOMParser to parse XML string...', 'parse');
+      var parser = new DOMParser();
+      var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+      log('✅  XML parsed into Document object', 'parse');
+
+      var tracks = xmlDoc.getElementsByTagName('track');
+      log('🔍  getElementsByTagName("track") → found ' + tracks.length + ' elements', 'parse');
+      log('🏷️  Reading .textContent from each tag...', 'parse');
+
+      displayResults(tracks);
+      showRawXML(xmlString);
+      showParsed(tracks);
+
+      log('🎉  All done! Results displayed.', 'recv');
+      setStatus('success', '✅ Done! Fetched ' + tracks.length + ' tracks for "' + artist + '"');
+      $('#btnFetch').prop('disabled', false).text('▶ Fetch XML');
+    },
+
+    error: function(xhr, status) {
+      log('❌  HTTP Request FAILED — ' + status, 'err');
+      setStatus('error', '❌ Failed: ' + status);
+      $('#btnFetch').prop('disabled', false).text('▶ Fetch XML');
+    }
+  });
+});
+
+// ── Clear Button ─────────────────────────────────────────────
+$('#btnClear').click(function() {
+  clearLog();
+  log('// Cleared — ready for next request...', 'info');
+  document.getElementById('resultsGrid').innerHTML =
+    '<div style="color:var(--muted); font-size:13px; padding:20px 0; grid-column:1/-1">Results will appear here after you fetch...</div>';
+  document.getElementById('xmlViewer').textContent    = '// Raw XML will appear here...';
+  document.getElementById('parsedViewer').textContent = '// Parsed objects will appear here...';
+  setStatus('', 'Ready — enter an artist name and click Fetch XML');
+  document.getElementById('statusDot').className = 'status-dot';
+});
+
+// Enter key support
+$('#searchInput').keypress(function(e) {
+  if (e.which === 13) $('#btnFetch').click();
+});
+</script>
+</body>
+</html>
